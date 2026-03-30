@@ -7,6 +7,8 @@ export const state = {
   activeDays: -1 as number,
   chart: null as echarts.ECharts | null,
   modalSelectedTrainName: "" as string,
+  modalSelectedArrival: null as any,
+  modalStationName: "" as string,
   stationFromInsight: false as boolean,
   filteredStations: [] as any[],
   displayedCount: 0 as number,

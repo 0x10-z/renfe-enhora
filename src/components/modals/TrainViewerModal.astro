@@ -4,8 +4,37 @@
     <button type="button" class="train-viewer-close" id="train-viewer-close" aria-label="Cerrar imagen ampliada">×</button>
     <img id="train-viewer-image" class="train-viewer-image" src="" alt="Foto aproximada de la serie de tren" loading="lazy" />
     <div class="train-viewer-info">
-      <h3 id="train-viewer-title">Serie aproximada</h3>
-      <p id="train-viewer-train-name" class="train-viewer-train-name">Servicio detectado: -</p>
+      <div class="train-viewer-header">
+        <div>
+          <h3 id="train-viewer-title">Serie aproximada</h3>
+          <p id="train-viewer-train-name" class="train-viewer-train-name">Servicio detectado: -</p>
+        </div>
+        <span id="train-viewer-badge" class="badge"></span>
+      </div>
+
+      <div id="train-viewer-route" class="train-viewer-route" style="display:none">
+        <span id="train-viewer-origin" class="train-viewer-station train-viewer-station--muted"></span>
+        <svg class="train-viewer-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span id="train-viewer-current" class="train-viewer-station train-viewer-station--current"></span>
+        <svg class="train-viewer-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span id="train-viewer-dest" class="train-viewer-station train-viewer-station--muted"></span>
+      </div>
+
+      <div id="train-viewer-times" class="train-viewer-times" style="display:none">
+        <div class="train-viewer-time-block">
+          <span class="train-viewer-time-label">Programada</span>
+          <span id="train-viewer-scheduled" class="train-viewer-time-val"></span>
+        </div>
+        <div class="train-viewer-time-block">
+          <span class="train-viewer-time-label">Estimada</span>
+          <span id="train-viewer-estimated" class="train-viewer-time-val"></span>
+        </div>
+        <div class="train-viewer-time-block">
+          <span class="train-viewer-time-label">Retraso</span>
+          <span id="train-viewer-delay" class="train-viewer-time-val"></span>
+        </div>
+      </div>
+
       <p class="train-viewer-note">Renfe utiliza diferentes series de tren y esta foto es orientativa, por lo que puede no ajustarse al 100% al material exacto de cada servicio.</p>
       <p class="modal-train-preview-license">Foto tomada de Wikipedia bajo licencia <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.es" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a>.</p>
     </div>

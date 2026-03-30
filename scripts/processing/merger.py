@@ -55,6 +55,7 @@ def build_station_arrivals(
     # Single pass through stop_times.txt
     arrivals_by_stop: Dict[str, List[dict]] = defaultdict(list)
     trip_first: Dict[str, tuple] = {}  # {trip_id: (min_seq, stop_id)}
+    trip_last:  Dict[str, tuple] = {}  # {trip_id: (max_seq, stop_id)}
     all_active_stops: Set[str] = set()  # all stops that appear in active trips
 
     stop_times_path = gtfs_dir / "stop_times.txt"
@@ -68,10 +69,13 @@ def build_station_arrivals(
             all_active_stops.add(stop_id)
             seq = int(row.get("stop_sequence") or 0)
 
-            # Track origin (first stop of trip)
+            # Track origin (first stop) and destination (last stop)
             prev = trip_first.get(trip_id)
             if prev is None or seq < prev[0]:
                 trip_first[trip_id] = (seq, stop_id)
+            last = trip_last.get(trip_id)
+            if last is None or seq > last[0]:
+                trip_last[trip_id] = (seq, stop_id)
 
             # Check if this stop is in the lookahead window
             time_str = (row.get("arrival_time") or row.get("departure_time") or "").strip()
@@ -88,10 +92,14 @@ def build_station_arrivals(
 
     log.info(f"Stops with arrivals in window: {len(arrivals_by_stop)} / {len(all_active_stops)} active")
 
-    # Build origin name lookup
+    # Build origin and destination name lookups
     trip_origins = {
         tid: stops.get(sid, {}).get("name", sid)
         for tid, (_, sid) in trip_first.items()
+    }
+    trip_destinations = {
+        tid: stops.get(sid, {}).get("name", sid)
+        for tid, (_, sid) in trip_last.items()
     }
 
     # Enrich and classify each arrival
@@ -134,7 +142,7 @@ def build_station_arrivals(
                     "trip_id": a["trip_id"],
                     "route_id": trip["route_id"],
                     "train_name": train_name,
-                    "headsign": trip["headsign"],
+                    "headsign": trip["headsign"] or trip_destinations.get(a["trip_id"], ""),
                     "origin": trip_origins.get(a["trip_id"], ""),
                     "scheduled_time": a["scheduled"].strftime("%H:%M"),
                     "estimated_time": estimated_str,

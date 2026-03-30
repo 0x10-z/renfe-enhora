@@ -630,12 +630,17 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
 
   :global(.origin-main) { font-weight: 500; font-size: 0.875rem; }
   :global(.origin-dest) { font-size: 0.72rem; color: var(--text-sub); margin-top: 0.1rem; }
+  :global(.origin-route) { display: flex; align-items: center; gap: 0.2rem; margin-top: 0.2rem; flex-wrap: wrap; }
+  :global(.route-stop) { font-size: 0.68rem; color: var(--text-muted); }
+  :global(.route-stop--current) { font-weight: 700; color: var(--accent); }
+  :global(.route-sep) { font-size: 0.65rem; color: var(--text-sub); }
   :global(.route-tag) {
     display: inline-block; font-size: 0.63rem; font-family: var(--font-mono); font-weight: 700;
     background: var(--accent-bg); color: var(--accent);
     padding: 0.1rem 0.35rem; border-radius: 3px; margin-right: 0.35rem; vertical-align: middle;
   }
   :global(.cancelled-row td) { opacity: 0.55; }
+  :global(#modal-arrivals-body tr) { cursor: pointer; }
 
   /* Chips (modal header) */
   :global(.chip) {
@@ -870,13 +875,38 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
   }
   .train-viewer-close:hover { color: var(--text); border-color: var(--border-bright); }
   .train-viewer-image {
-    width: 100%; max-height: 65vh; object-fit: contain;
+    width: 100%; max-height: 38vh; object-fit: contain;
     border-radius: var(--radius-sm); border: 1px solid var(--border);
     background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
   }
   .train-viewer-info { margin-top: 0.75rem; }
-  .train-viewer-train-name { font-size: 0.78rem; font-family: var(--font-mono); color: var(--text); margin-top: 0.2rem; }
-  .train-viewer-note { font-size: 0.74rem; color: var(--text-muted); margin-top: 0.45rem; line-height: 1.35; }
+  .train-viewer-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+  .train-viewer-train-name { font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-muted); margin-top: 0.2rem; }
+  .train-viewer-route {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-top: 0.75rem; padding: 0.6rem 0.85rem;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); font-size: 0.82rem;
+    color: var(--text);
+  }
+  .train-viewer-station { font-weight: 500; }
+  .train-viewer-station--muted { color: var(--text-muted); font-weight: 400; }
+  .train-viewer-station--current { font-weight: 700; color: var(--accent); }
+  .train-viewer-arrow { color: var(--text-muted); flex-shrink: 0; }
+  .train-viewer-times {
+    display: flex; gap: 0; margin-top: 0.6rem;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .train-viewer-time-block {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 0.5rem 0.4rem; border-right: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .train-viewer-time-block:last-child { border-right: none; }
+  .train-viewer-time-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.25rem; }
+  .train-viewer-time-val { font-size: 0.9rem; font-weight: 600; font-family: var(--font-mono); color: var(--text); }
+  .train-viewer-note { font-size: 0.74rem; color: var(--text-muted); margin-top: 0.65rem; line-height: 1.35; }
 
   @media (max-width: 640px) {
     .modal-backdrop { padding: 0; align-items: flex-end; }

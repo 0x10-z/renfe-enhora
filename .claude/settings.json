@@ -10,7 +10,10 @@
       "Bash(python -c \":*)",
       "Bash(python -c \"from datetime import datetime, timezone; import time; print\\(''now\\(\\):'', datetime.now\\(\\)\\); print\\(''utcnow\\(\\):'', datetime.utcnow\\(\\)\\); print\\(''local tz offset:'', -time.timezone/3600, ''h''\\)\")",
       "Bash(python -c \"from scripts.output.writer import write_history; print\\(''OK''\\)\")",
-      "Bash(pip install:*)"
+      "Bash(pip install:*)",
+      "Bash(grep -l \"00626\" public/data/ave-larga-distancia/stations/*.json)",
+      "Bash(python -m scripts.main larga)",
+      "Bash(python -m scripts.main ave-larga-distancia)"
     ]
   }
 }

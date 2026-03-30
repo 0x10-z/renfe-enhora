@@ -43,6 +43,7 @@ export async function fetchModalStation(stationId: string) {
 
 export function renderModal(data: any) {
   const arrivals: any[] = data.arrivals ?? [];
+  state.modalStationName = data.name ?? "";
 
   document.getElementById("modal-meta")!.textContent = arrivals.length
     ? `${arrivals.length} llegada${arrivals.length !== 1 ? "s" : ""} · próximos 60 min`
@@ -89,8 +90,16 @@ export function modalRowHTML(a: any): string {
     en_hora: "time-on-time", retraso_leve: "time-leve", retraso_alto: "time-alto", cancelado: "time-cancel",
   };
   const routeTag = (a.train_name || a.route_id) ? `<span class="route-tag">${esc(a.train_name || a.route_id)}</span>` : "";
-  const destText = a.headsign || a.origin || "—";
-  const origin = `<div class="origin-main">${routeTag}${esc(destText)}</div>`;
+  const destText = a.headsign || "—";
+  const current = state.modalStationName;
+  const routeParts: string[] = [];
+  if (a.origin && a.origin !== current) routeParts.push(`<span class="route-stop">${esc(a.origin)}</span>`);
+  routeParts.push(`<span class="route-stop route-stop--current">${esc(current)}</span>`);
+  if (a.headsign && a.headsign !== current) routeParts.push(`<span class="route-stop">${esc(a.headsign)}</span>`);
+  const routeLine = routeParts.length > 1
+    ? `<div class="origin-route">${routeParts.join('<span class="route-sep">›</span>')}</div>`
+    : "";
+  const origin = `<div class="origin-main">${routeTag}${esc(destText)}</div>${routeLine}`;
   const dest   = "";
   const estTime = a.estimated_time
     ? `<span class="time-cell ${timeClass[a.status] ?? ""}">${esc(a.estimated_time)}</span>`
@@ -113,35 +122,80 @@ export function attachModalTrainPreview(arrivals: any[]) {
   preview.style.display = "flex";
 
   const first = arrivals.find((a) => a.train_name) ?? arrivals[0];
-  setModalTrainPreview(first?.train_name);
+  setModalTrainPreview(first?.train_name, first);
 
-  document.querySelectorAll<HTMLTableRowElement>("#modal-arrivals-body tr").forEach((row) => {
-    const update = () => setModalTrainPreview(row.dataset.trainName);
-    row.addEventListener("mouseenter", update);
-    row.addEventListener("click", update);
+  document.querySelectorAll<HTMLTableRowElement>("#modal-arrivals-body tr").forEach((row, i) => {
+    const arrival = arrivals[i];
+    row.addEventListener("mouseenter", () => setModalTrainPreview(row.dataset.trainName, arrival));
+    row.addEventListener("click", () => {
+      setModalTrainPreview(row.dataset.trainName, arrival);
+      openTrainViewer();
+    });
   });
 }
 
-export function setModalTrainPreview(trainName?: string) {
+export function setModalTrainPreview(trainName?: string, arrival?: any) {
   const type = getTrainType(trainName);
   const image = document.getElementById("modal-train-preview-image") as HTMLImageElement;
   const label = document.getElementById("modal-train-preview-type") as HTMLElement;
   const name = document.getElementById("modal-train-preview-name") as HTMLElement;
   state.modalSelectedTrainName = trainName ?? "";
+  state.modalSelectedArrival = arrival ?? null;
   image.src = getTrainImage(trainName);
   label.textContent = TRAIN_TYPE_LABELS[type] ?? "Tren";
   name.textContent = `Servicio detectado: ${trainName ?? "-"}`;
 }
 
 export function openTrainViewer() {
+  const a = state.modalSelectedArrival;
   const type = getTrainType(state.modalSelectedTrainName);
-  const image = document.getElementById("train-viewer-image") as HTMLImageElement;
-  const title = document.getElementById("train-viewer-title") as HTMLElement;
-  const name = document.getElementById("train-viewer-train-name") as HTMLElement;
 
-  image.src = getTrainImage(state.modalSelectedTrainName);
-  title.textContent = TRAIN_TYPE_LABELS[type] ?? "Serie aproximada";
-  name.textContent = `Servicio detectado: ${state.modalSelectedTrainName || "-"}`;
+  (document.getElementById("train-viewer-image") as HTMLImageElement).src = getTrainImage(state.modalSelectedTrainName);
+  (document.getElementById("train-viewer-title") as HTMLElement).textContent = TRAIN_TYPE_LABELS[type] ?? "Serie aproximada";
+  (document.getElementById("train-viewer-train-name") as HTMLElement).textContent = `Servicio: ${state.modalSelectedTrainName || "—"}`;
+
+  // Badge
+  const badge = document.getElementById("train-viewer-badge") as HTMLElement;
+  const statusLabel: Record<string, string> = { en_hora: "En hora", retraso_leve: "Leve", retraso_alto: "Alto", cancelado: "Cancelado" };
+  badge.className = `badge badge-${a?.status ?? "en_hora"}`;
+  badge.textContent = `● ${statusLabel[a?.status] ?? "—"}`;
+
+  // Route: origin → [current station] → dest
+  const routeEl = document.getElementById("train-viewer-route") as HTMLElement;
+  const origin = a?.origin || "";
+  const dest = a?.headsign || "";
+  const current = state.modalStationName;
+  const arrows = routeEl.querySelectorAll<HTMLElement>(".train-viewer-arrow");
+  const currentEl = document.getElementById("train-viewer-current") as HTMLElement;
+
+  if (origin || dest) {
+    (document.getElementById("train-viewer-origin") as HTMLElement).textContent = origin || "—";
+    currentEl.textContent = current;
+    (document.getElementById("train-viewer-dest") as HTMLElement).textContent = dest || "—";
+    // Hide arrows if extremes are missing or same as current
+    arrows[0].style.display = origin && origin !== current ? "" : "none";
+    arrows[1].style.display = dest && dest !== current ? "" : "none";
+    routeEl.style.display = "flex";
+  } else {
+    routeEl.style.display = "none";
+  }
+
+  // Times
+  const timesEl = document.getElementById("train-viewer-times") as HTMLElement;
+  if (a?.scheduled_time) {
+    const timeClass: Record<string, string> = { en_hora: "time-on-time", retraso_leve: "time-leve", retraso_alto: "time-alto", cancelado: "time-cancel" };
+    (document.getElementById("train-viewer-scheduled") as HTMLElement).textContent = a.scheduled_time;
+    const estEl = document.getElementById("train-viewer-estimated") as HTMLElement;
+    estEl.textContent = a.estimated_time ?? "—";
+    estEl.className = `train-viewer-time-val ${timeClass[a.status] ?? ""}`;
+    const delayEl = document.getElementById("train-viewer-delay") as HTMLElement;
+    delayEl.textContent = a.delay_min != null && a.delay_min > 0 ? `+${a.delay_min}m` : "—";
+    delayEl.className = `train-viewer-time-val ${a.status === "retraso_alto" ? "delay-alto" : a.status === "retraso_leve" ? "delay-leve" : ""}`;
+    timesEl.style.display = "flex";
+  } else {
+    timesEl.style.display = "none";
+  }
+
   (document.getElementById("train-viewer-modal") as HTMLElement).style.display = "flex";
 }
 
