@@ -143,7 +143,16 @@ def build_station_arrivals(
                 }
             )
 
-        station_data[stop_id] = {"name": stop_name, "arrivals": enriched}
+        # Deduplicate: same train number + scheduled time + headsign
+        seen: set = set()
+        deduped = []
+        for a in enriched:
+            key = (a["train_name"], a["scheduled_time"], a["headsign"])
+            if key not in seen:
+                seen.add(key)
+                deduped.append(a)
+
+        station_data[stop_id] = {"name": stop_name, "arrivals": deduped}
 
     # Include all active stops that had no arrivals in the window
     for stop_id in all_active_stops:

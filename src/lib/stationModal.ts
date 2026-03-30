@@ -1,6 +1,6 @@
 import { state } from "./store";
 import { esc, timeAgo } from "./utils";
-import { getTrainType, getTrainImage, TRAIN_TYPE_LABELS } from "./trainTypes";
+import { getTrainType, getTrainImage, TRAIN_TYPE_LABELS } from "../utils/trains";
 
 export function openModal(stationId: string, name: string, fromInsight = false) {
   state.stationFromInsight = fromInsight;
