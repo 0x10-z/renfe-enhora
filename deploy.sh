@@ -67,3 +67,6 @@ echo "[deploy] Pushing to GitHub…" | tee -a "$LOG_FILE"
 git push origin master
 
 echo "[deploy] Done — data publicada en $(date '+%H:%M:%S')" | tee -a "$LOG_FILE"
+
+# Borrar caché GTFS tras finalizar el pipeline
+rm -rf .cache/gtfs
