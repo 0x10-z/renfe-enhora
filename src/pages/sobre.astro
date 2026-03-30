@@ -1,0 +1,586 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Metodología"
+  description="Cómo funciona enhora.info: fuentes de datos, metodología de cálculo de retrasos y automatización del pipeline."
+>
+  <div class="sobre-page">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">Proyecto abierto · Sin ánimo de lucro</div>
+      <h1>¿Qué es enhora.info?</h1>
+      <p class="hero-lead">
+        enhora.info es un tablero de seguimiento de puntualidad de los trenes Renfe en España.
+        Recoge datos en abierto publicados por Renfe, los procesa automáticamente cada hora
+        y los presenta de forma clara para que cualquier persona pueda ver, en tiempo real
+        y a lo largo del tiempo, cómo funciona la red ferroviaria española.
+      </p>
+      <p class="hero-sub">
+        El objetivo no es criticar ni señalar, sino <strong>documentar</strong>.
+        Si los retrasos mejoran, aquí se verá. Si empeoran, también.
+      </p>
+    </div>
+
+    <!-- Objetivo -->
+    <section class="section">
+      <div class="section-label">01 · Objetivo</div>
+      <h2>Concienciar sobre la infraestructura ferroviaria</h2>
+      <div class="prose">
+        <p>
+          El ferrocarril es una infraestructura esencial. Millones de personas en España
+          dependen de él cada día para ir al trabajo, a la universidad o a visitar a su
+          familia. Sin embargo, la información sobre su puntualidad real suele quedarse en
+          estadísticas anuales de difícil acceso o en titulares puntuales.
+        </p>
+        <p>
+          enhora.info nace para llenar ese hueco: ofrecer una visión continua y verificable de
+          cómo funciona la red, con datos públicos y metodología transparente. Así,
+          ciudadanos, periodistas, investigadores o simplemente viajeros habituales pueden
+          consultar la situación actual y la evolución histórica de los retrasos.
+        </p>
+        <p>
+          Este proyecto no tiene ninguna afiliación con Renfe ni con ninguna
+          administración pública. Es un proyecto independiente construido sobre datos
+          abiertos.
+        </p>
+      </div>
+    </section>
+
+    <!-- Datos -->
+    <section class="section">
+      <div class="section-label">02 · Fuentes de datos</div>
+      <h2>Datos abiertos de Renfe</h2>
+      <div class="prose">
+        <p>
+          Renfe publica sus datos de transporte en el portal
+          <a href="https://data.renfe.com" target="_blank" rel="noopener">data.renfe.com</a>
+          bajo licencia <strong>Creative Commons Attribution 4.0 (CC BY 4.0)</strong>,
+          lo que permite su uso, distribución y análisis citando la fuente.
+        </p>
+      </div>
+
+      <div class="data-cards">
+        <div class="data-card">
+          <div class="data-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div>
+            <div class="data-card-title">GTFS Estático</div>
+            <div class="data-card-desc">
+              Horarios programados, estaciones y rutas. Se actualiza cuando Renfe
+              publica un nuevo horario (aproximadamente con cada cambio de servicio).
+              Contiene dos feeds: <em>Cercanías</em> y <em>AVE / Larga y Media Distancia</em>.
+            </div>
+            <div class="data-card-meta">Formato: ZIP con CSV · Caché: 24h</div>
+          </div>
+        </div>
+
+        <div class="data-card">
+          <div class="data-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="data-card-title">GTFS-RT (Tiempo real)</div>
+            <div class="data-card-desc">
+              Actualizaciones en vivo de cada tren: retrasos acumulados por parada
+              para Cercanías, y retraso global del trayecto para Larga Distancia.
+              Se consulta en cada ejecución del pipeline, cada hora.
+            </div>
+            <div class="data-card-meta">Formato: JSON / Protocol Buffer · Sin caché</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout--info">
+        <strong>Nota sobre AVE y Larga Distancia:</strong> Renfe publica un feed de
+        tiempo real para trenes de larga distancia con el retraso agregado del tren,
+        no por parada individual. Para Cercanías sí existe el detalle por parada.
+        Los servicios de Media Distancia sin feed RT aparecen como "en hora" al no
+        existir información de retrasos disponible.
+      </div>
+    </section>
+
+    <!-- Metodología -->
+    <section class="section">
+      <div class="section-label">03 · Metodología</div>
+      <h2>Cómo se calculan los retrasos</h2>
+      <div class="prose">
+        <p>
+          En cada ejecución, el pipeline cruza los horarios programados (GTFS estático)
+          con los datos en tiempo real (GTFS-RT) para el tramo de <strong>60 minutos
+          hacia adelante</strong> desde el momento actual. Solo se analizan los trenes
+          que tienen llegada prevista en ese intervalo.
+        </p>
+      </div>
+
+      <div class="thresholds">
+        <div class="threshold">
+          <span class="badge badge-en_hora">En hora</span>
+          <span class="threshold-desc">Retraso igual o inferior a <strong>1 minuto</strong></span>
+        </div>
+        <div class="threshold">
+          <span class="badge badge-retraso_leve">Retraso leve</span>
+          <span class="threshold-desc">Entre <strong>1 y 5 minutos</strong> de retraso</span>
+        </div>
+        <div class="threshold">
+          <span class="badge badge-retraso_alto">Retraso alto</span>
+          <span class="threshold-desc">Más de <strong>5 minutos</strong> de retraso</span>
+        </div>
+        <div class="threshold">
+          <span class="badge badge-cancelado">Cancelado</span>
+          <span class="threshold-desc">El tren figura como cancelado en el feed RT</span>
+        </div>
+      </div>
+
+      <div class="prose" style="margin-top:1.25rem">
+        <p>
+          Cuando no hay datos de tiempo real disponibles para un tren (el feed RT no lo
+          incluye), se asume que está <em>en hora</em>. Esto puede subestimar los retrasos
+          reales en servicios sin cobertura RT completa.
+        </p>
+        <p>
+          El retraso que se muestra es el retraso en la <strong>llegada a la estación
+          consultada</strong>, no el retraso de salida en origen. Un tren que sale con
+          retraso puede recuperar o acumular tiempo a lo largo del trayecto.
+        </p>
+      </div>
+    </section>
+
+    <!-- Automatización -->
+    <section class="section">
+      <div class="section-label">04 · Automatización</div>
+      <h2>Cómo se publican los datos</h2>
+      <div class="prose">
+        <p>
+          Todo el proceso es completamente automático. Un servidor privado (VPS) ejecuta
+          el pipeline cada hora mediante una tarea programada (<em>cron job</em>). Los datos
+          generados se publican en este sitio web sin intervención manual.
+        </p>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipeline-step">
+          <div class="pipeline-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="pipeline-body">
+            <div class="pipeline-title">Cada hora</div>
+            <div class="pipeline-desc">El cron job lanza el script en el VPS</div>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="pipeline-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="pipeline-body">
+            <div class="pipeline-title">Descarga GTFS</div>
+            <div class="pipeline-desc">Horarios estáticos (caché 24h) + datos RT en vivo</div>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="pipeline-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="pipeline-body">
+            <div class="pipeline-title">Procesa y cruza</div>
+            <div class="pipeline-desc">Calcula retrasos para los próximos 60 minutos</div>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="pipeline-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div class="pipeline-body">
+            <div class="pipeline-title">Publica en GitHub</div>
+            <div class="pipeline-desc">JSON generado → commit automático → push</div>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="pipeline-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="pipeline-body">
+            <div class="pipeline-title">Vercel redeploy</div>
+            <div class="pipeline-desc">El sitio se reconstruye con los nuevos datos</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout--neutral">
+        El pipeline está escrito en <strong>Python</strong>. El sitio web es un sitio
+        estático generado con <strong>Astro</strong> y publicado en <strong>Vercel</strong>.
+        Los datos se almacenan como ficheros JSON en el repositorio de GitHub, sin base
+        de datos.
+      </div>
+    </section>
+
+    <!-- Limitaciones -->
+    <section class="section">
+      <div class="section-label">05 · Limitaciones</div>
+      <h2>Qué no mide este proyecto</h2>
+      <div class="limitations">
+        <div class="limitation">
+          <span class="lim-icon">·</span>
+          <div>
+            <strong>Trenes sin cobertura RT</strong><br>
+            Los servicios de Media Distancia sin feed de tiempo real aparecen siempre
+            como "en hora". No es que no tengan retrasos — es que Renfe no publica esa
+            información públicamente.
+          </div>
+        </div>
+        <div class="limitation">
+          <span class="lim-icon">·</span>
+          <div>
+            <strong>Retrasos inferiores a 1 minuto</strong><br>
+            Los trenes que llegan con menos de 60 segundos de retraso se contabilizan
+            como puntuales, siguiendo el criterio oficial de Renfe.
+          </div>
+        </div>
+        <div class="limitation">
+          <span class="lim-icon">·</span>
+          <div>
+            <strong>Causas del retraso</strong><br>
+            El feed GTFS-RT proporciona el dato de retraso pero no su causa (incidencia
+            técnica, congestión, meteorología, etc.). No es posible desglosar por motivo.
+          </div>
+        </div>
+        <div class="limitation">
+          <span class="lim-icon">·</span>
+          <div>
+            <strong>Ventana de 60 minutos</strong><br>
+            Cada snapshot cubre únicamente los trenes con llegada en la próxima hora.
+            Los servicios nocturnos o de baja frecuencia pueden no aparecer en todas
+            las ejecuciones.
+          </div>
+        </div>
+        <div class="limitation">
+          <span class="lim-icon">·</span>
+          <div>
+            <strong>Histórico desde el inicio del proyecto</strong><br>
+            Solo hay datos desde que este proyecto empezó a funcionar. No existe
+            historial anterior a esa fecha.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Código -->
+    <section class="section">
+      <div class="section-label">06 · Transparencia</div>
+      <h2>Código abierto</h2>
+      <div class="prose">
+        <p>
+          Todo el código de este proyecto —el pipeline de Python y el sitio web en
+          Astro— es público. Cualquier persona puede revisarlo, auditarlo o reutilizarlo
+          bajo los términos de su licencia.
+        </p>
+        <p>
+          Si encuentras un error en los datos, en el método de cálculo o en el código,
+          puedes reportarlo abriendo un issue en el repositorio.
+        </p>
+      </div>
+      <div class="cta-row">
+        <a href="https://github.com/0x10-z/renfe-enhora" class="cta-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Ver en GitHub
+        </a>
+        <a href="/" class="cta-btn cta-btn--secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          Ver el tablero
+        </a>
+      </div>
+    </section>
+
+  </div>
+</Layout>
+
+<style>
+  .sobre-page {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    padding: 0.2rem 0.65rem;
+    border-radius: 99px;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+  .hero-lead {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 0.875rem;
+  }
+  .hero-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 3.5rem;
+  }
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    margin-bottom: 0.5rem;
+  }
+  .section h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Prose */
+  .prose {
+    color: var(--text-muted);
+    line-height: 1.75;
+    font-size: 0.925rem;
+  }
+  .prose p + p { margin-top: 0.875rem; }
+  .prose strong { color: var(--text); }
+  .prose a { color: var(--accent); }
+  .prose em { font-style: italic; }
+
+  /* Data cards */
+  .data-cards {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  @media (min-width: 640px) {
+    .data-cards { grid-template-columns: 1fr 1fr; }
+  }
+  .data-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    display: flex;
+    gap: 0.875rem;
+    align-items: flex-start;
+    box-shadow: var(--shadow-sm);
+  }
+  .data-card-icon {
+    color: var(--accent);
+    flex-shrink: 0;
+    padding-top: 0.1rem;
+  }
+  .data-card-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.375rem;
+  }
+  .data-card-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+  .data-card-meta {
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    color: var(--text-sub);
+  }
+
+  /* Callout */
+  .callout {
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    font-size: 0.85rem;
+    line-height: 1.65;
+    margin-top: 1.25rem;
+  }
+  .callout strong { font-weight: 600; }
+  .callout--info {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    color: var(--text-muted);
+  }
+  .callout--info strong { color: var(--accent); }
+  .callout--neutral {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  /* Thresholds */
+  .thresholds {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+  }
+  .threshold {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+  }
+  .threshold-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+  .threshold-desc strong { color: var(--text); }
+
+  /* Badges (same as estaciones page) */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-en_hora      { background: var(--green-bg);  color: var(--green); }
+  .badge-retraso_leve { background: var(--yellow-bg); color: var(--yellow); }
+  .badge-retraso_alto { background: var(--orange-bg); color: var(--orange); }
+  .badge-cancelado    { background: var(--red-bg);    color: var(--red); }
+
+  /* Pipeline */
+  .pipeline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+  .pipeline-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    flex: 1;
+    min-width: 110px;
+  }
+  .pipeline-icon {
+    color: var(--accent);
+    flex-shrink: 0;
+    padding-top: 0.1rem;
+  }
+  .pipeline-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  .pipeline-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .pipeline-arrow {
+    color: var(--text-sub);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  @media (max-width: 640px) {
+    .pipeline { flex-direction: column; }
+    .pipeline-arrow { transform: rotate(90deg); align-self: flex-start; margin-left: 0.5rem; }
+  }
+
+  /* Limitations */
+  .limitations {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .limitation {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    border-bottom: 1px solid var(--border);
+  }
+  .limitation:last-child { border-bottom: none; }
+  .limitation strong { color: var(--text); }
+  .lim-icon {
+    color: var(--accent);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    line-height: 1.6;
+    font-weight: 700;
+  }
+
+  /* CTA */
+  .cta-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.15s, background 0.15s;
+    background: var(--text);
+    color: #fff;
+  }
+  .cta-btn:hover { opacity: 0.85; }
+  .cta-btn--secondary {
+    background: var(--bg-card);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .cta-btn--secondary:hover { background: var(--bg-card-hover); opacity: 1; }
+</style>

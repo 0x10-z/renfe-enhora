@@ -1,0 +1,32 @@
+---
+import { readFileSync } from "fs";
+import { resolve } from "path";
+import Layout from "../../layouts/Layout.astro";
+import StationBoard from "../../components/StationBoard.astro";
+
+export function getStaticPaths() {
+  try {
+    const raw = readFileSync(resolve("public/data/cercanias/stats.json"), "utf-8");
+    const { stations } = JSON.parse(raw);
+    return stations.map((s: any) => ({
+      params: { id: s.id },
+      props: { name: s.name },
+    }));
+  } catch {
+    return [];
+  }
+}
+
+const { id } = Astro.params;
+const { name } = Astro.props;
+---
+
+<Layout title={name}>
+  <StationBoard
+    id={id}
+    name={name}
+    dataName="cercanias"
+    serviceSlug="cercanias"
+    serviceLabel="Cercanías"
+  />
+</Layout>

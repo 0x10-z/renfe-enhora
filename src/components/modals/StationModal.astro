@@ -1,0 +1,62 @@
+<!-- Station detail modal -->
+<div id="station-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-name" style="display:none">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <button type="button" class="modal-back" id="modal-back" aria-label="Volver" style="display:none">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="modal-title-wrap">
+        <div id="modal-dot" class="station-dot-lg"></div>
+        <div>
+          <h2 id="modal-name"></h2>
+          <p class="station-meta" id="modal-meta">Cargando llegadas…</p>
+        </div>
+      </div>
+      <div class="modal-header-right">
+        <div id="modal-chips" class="summary-chips"></div>
+        <button type="button" class="modal-close" id="modal-close" aria-label="Cerrar">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="board-wrap">
+        <table class="board">
+          <thead>
+            <tr>
+              <th>Tren / Destino</th>
+              <th>Programada</th>
+              <th>Estimada</th>
+              <th>Retraso</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="modal-arrivals-body"></tbody>
+        </table>
+        <div id="modal-no-arrivals" class="empty-state" style="display:none">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.25"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+          <p>Sin llegadas en los próximos 60 minutos</p>
+        </div>
+        <div id="modal-error" class="empty-state" style="display:none">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.25"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          <p>No se pudieron cargar los datos.</p>
+        </div>
+      </div>
+      <div id="modal-train-preview" class="modal-train-preview" style="display:none">
+        <div class="modal-train-preview-img-wrap">
+          <img id="modal-train-preview-image" class="modal-train-preview-image" src="" alt="Serie aproximada del tren" loading="lazy" />
+        </div>
+        <div class="modal-train-preview-copy">
+          <p class="modal-train-preview-helper">Pasa el raton o pulsa una fila para actualizar la serie aproximada.</p>
+          <p id="modal-train-preview-type" class="modal-train-preview-type">Tren</p>
+          <p id="modal-train-preview-name" class="modal-train-preview-name">Servicio detectado: -</p>
+          <p class="modal-train-preview-note">Renfe utiliza distintas series de tren. La imagen es aproximada y puede no coincidir al 100% con la composicion real del servicio.</p>
+          <p class="modal-train-preview-license">Foto tomada de Wikipedia bajo licencia <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.es" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a>.</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <span id="modal-updated" class="muted"></span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+# ── Renfe Retrasos — VPS Cron Setup ──────────────────────────────────────────
+#
+# Edit with:  crontab -e
+#
+# The pipeline runs every hour.
+# Logs rotate automatically (logrotate or just the rolling file in logs/).
+#
+# 1. Make the deploy script executable:
+#    chmod +x /home/0x10/renfe-enhora/deploy.sh
+#
+# 2. Configure Git for the deploy user:
+#    git config --global user.name  "Renfe Bot"
+#    git config --global user.email "bot@example.com"
+#
+# 3. Set up SSH key for passwordless push:
+#    ssh-keygen -t ed25519 -C "renfe-bot"
+#    # Add the public key to your GitHub repo → Settings → Deploy Keys (with write access)
+#
+# 4. Ensure Python deps are installed:
+#    cd /home/0x10/renfe-enhora
+#    python3 -m venv venv
+#    source venv/bin/activate
+#    pip install -r requirements.txt
+#
+# 5. Add to crontab:
+
+0 * * * * /home/0x10/renfe-enhora/deploy.sh >> /home/0x10/renfe-enhora/logs/cron.log 2>&1
+
+# ── Optional: log rotation (add to /etc/logrotate.d/renfe) ───────────────────
+# /home/0x10/renfe-enhora/logs/*.log {
+#     daily
+#     rotate 7
+#     compress
+#     missingok
+#     notifempty
+# }
