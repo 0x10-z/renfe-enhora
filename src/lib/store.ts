@@ -9,6 +9,7 @@ export const state = {
   modalSelectedTrainName: "" as string,
   modalSelectedArrival: null as any,
   modalStationName: "" as string,
+  modalStationId: "" as string,
   stationFromInsight: false as boolean,
   filteredStations: [] as any[],
   displayedCount: 0 as number,

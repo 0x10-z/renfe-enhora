@@ -594,7 +594,7 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     font-weight: 600; color: var(--text-muted); white-space: nowrap;
   }
   :global(.board td) {
-    padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle;
+    padding: 1rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle;
   }
   :global(.board tbody tr:last-child td) { border-bottom: none; }
   :global(.board tbody tr:hover td) { background: var(--bg-card-hover); }
@@ -630,10 +630,8 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
 
   :global(.origin-main) { font-weight: 500; font-size: 0.875rem; }
   :global(.origin-dest) { font-size: 0.72rem; color: var(--text-sub); margin-top: 0.1rem; }
-  :global(.origin-route) { display: flex; align-items: center; gap: 0.2rem; margin-top: 0.2rem; flex-wrap: wrap; }
-  :global(.route-stop) { font-size: 0.68rem; color: var(--text-muted); }
-  :global(.route-stop--current) { font-weight: 700; color: var(--accent); }
-  :global(.route-sep) { font-size: 0.65rem; color: var(--text-sub); }
+  :global(.origin-from) { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; }
+  :global(.route-sep) { color: var(--text-sub); margin-right: 0.2em; }
   :global(.route-tag) {
     display: inline-block; font-size: 0.63rem; font-family: var(--font-mono); font-weight: 700;
     background: var(--accent-bg); color: var(--accent);
@@ -822,7 +820,22 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     flex-shrink: 0;
     font-size: 0.75rem;
     color: var(--text-sub);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
   }
+  .modal-page-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .modal-page-link:hover { text-decoration: underline; }
   .station-meta { font-size: 0.8rem; color: var(--text-sub); margin-top: 0.15rem; }
   .summary-chips { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
 

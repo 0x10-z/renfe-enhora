@@ -4,6 +4,7 @@ import { getTrainType, getTrainImage, TRAIN_TYPE_LABELS } from "../utils/trains"
 
 export function openModal(stationId: string, name: string, fromInsight = false) {
   state.stationFromInsight = fromInsight;
+  state.modalStationId = stationId;
   const backBtn = document.getElementById("modal-back")!;
   backBtn.style.display = fromInsight ? "flex" : "none";
 
@@ -49,6 +50,8 @@ export function renderModal(data: any) {
     ? `${arrivals.length} llegada${arrivals.length !== 1 ? "s" : ""} · próximos 60 min`
     : "Sin llegadas próximas";
   document.getElementById("modal-updated")!.textContent = `Actualizado ${timeAgo(data.generated_at)}`;
+  const pageLink = document.getElementById("modal-page-link") as HTMLAnchorElement;
+  pageLink.href = `/${state.activeSvc}/${state.modalStationId}`;
 
   const delayed   = arrivals.filter(a => ["retraso_leve","retraso_alto"].includes(a.status));
   const cancelled = arrivals.filter(a => a.status === "cancelado");
@@ -90,16 +93,11 @@ export function modalRowHTML(a: any): string {
     en_hora: "time-on-time", retraso_leve: "time-leve", retraso_alto: "time-alto", cancelado: "time-cancel",
   };
   const routeTag = (a.train_name || a.route_id) ? `<span class="route-tag">${esc(a.train_name || a.route_id)}</span>` : "";
-  const destText = a.headsign || "—";
-  const current = state.modalStationName;
-  const routeParts: string[] = [];
-  if (a.origin && a.origin !== current) routeParts.push(`<span class="route-stop">${esc(a.origin)}</span>`);
-  routeParts.push(`<span class="route-stop route-stop--current">${esc(current)}</span>`);
-  if (a.headsign && a.headsign !== current) routeParts.push(`<span class="route-stop">${esc(a.headsign)}</span>`);
-  const routeLine = routeParts.length > 1
-    ? `<div class="origin-route">${routeParts.join('<span class="route-sep">›</span>')}</div>`
+  const destText = a.headsign || a.origin || "—";
+  const fromLine = a.origin && a.origin !== state.modalStationName && a.origin !== destText
+    ? `<div class="origin-from"><span class="route-sep">desde</span> ${esc(a.origin)}</div>`
     : "";
-  const origin = `<div class="origin-main">${routeTag}${esc(destText)}</div>${routeLine}`;
+  const origin = `<div class="origin-main">${routeTag}${esc(destText)}</div>${fromLine}`;
   const dest   = "";
   const estTime = a.estimated_time
     ? `<span class="time-cell ${timeClass[a.status] ?? ""}">${esc(a.estimated_time)}</span>`

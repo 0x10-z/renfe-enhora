@@ -22,6 +22,7 @@ const { id, name, dataName, serviceSlug, serviceLabel } = Astro.props;
   class="station-page"
   data-id={id}
   data-service={dataName}
+  data-name={name}
 >
   <!-- Breadcrumb -->
   <nav class="breadcrumb" aria-label="Navegación">
@@ -113,7 +114,10 @@ const { id, name, dataName, serviceSlug, serviceLabel } = Astro.props;
   </div>
 
 <style>
-  .station-page { }
+  .station-page {
+    max-width: 920px;
+    margin: 0 auto;
+  }
 
   /* Breadcrumb */
   .breadcrumb {
@@ -122,7 +126,7 @@ const { id, name, dataName, serviceSlug, serviceLabel } = Astro.props;
     gap: 0.4rem;
     font-size: 0.78rem;
     color: var(--text-sub);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
   }
   .breadcrumb a {
@@ -140,7 +144,7 @@ const { id, name, dataName, serviceSlug, serviceLabel } = Astro.props;
     align-items: flex-start;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 1.75rem;
+    margin-bottom: 2.25rem;
     flex-wrap: wrap;
   }
 
@@ -221,7 +225,7 @@ const { id, name, dataName, serviceSlug, serviceLabel } = Astro.props;
     border-bottom: 1px solid var(--border);
   }
   .board th {
-    padding: 0.7rem 1rem;
+    padding: 0.85rem 1.25rem;
     text-align: left;
     font-size: 0.63rem;
     text-transform: uppercase;
@@ -231,8 +235,8 @@ const { id, name, dataName, serviceSlug, serviceLabel } = Astro.props;
     white-space: nowrap;
   }
   .board td {
-    padding: 0.875rem 1rem;
-    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+    border-bottom: 2px solid var(--border);
     vertical-align: middle;
   }
   .board tbody tr:last-child td { border-bottom: none; }
@@ -276,6 +280,8 @@ const { id, name, dataName, serviceSlug, serviceLabel } = Astro.props;
 
   :global(.origin-main) { font-weight: 500; font-size: 0.875rem; }
   :global(.origin-dest) { font-size: 0.72rem; color: var(--text-sub); margin-top: 0.1rem; }
+  :global(.origin-from) { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; }
+  :global(.route-sep) { color: var(--text-sub); margin-right: 0.2em; }
   :global(.route-tag) {
     display: inline-block; font-size: 0.63rem; font-family: var(--font-mono); font-weight: 700;
     background: var(--accent-bg); color: var(--accent);
@@ -475,6 +481,7 @@ const { id, name, dataName, serviceSlug, serviceLabel } = Astro.props;
   const root = document.querySelector<HTMLElement>(".station-page")!;
   const id = root.dataset.id!;
   const dataService = root.dataset.service!;
+  const stationName = root.dataset.name!;
   const fetchUrl = () => `/data/${dataService}/stations/${encodeURIComponent(id)}.json?t=${Date.now()}`;
 
   let countdownTimer: ReturnType<typeof setInterval> | null = null;
@@ -596,9 +603,13 @@ const { id, name, dataName, serviceSlug, serviceLabel } = Astro.props;
       en_hora: "time-on-time", retraso_leve: "time-leve", retraso_alto: "time-alto", cancelado: "time-cancel",
     };
 
-    const routeTag = a.route_id ? `<span class="route-tag">${esc(a.route_id)}</span>` : "";
-    const origin = `<div class="origin-main">${routeTag}${esc(a.origin || a.headsign || "—")}</div>`;
-    const dest = a.headsign && a.origin ? `<div class="origin-dest">→ ${esc(a.headsign)}</div>` : "";
+    const routeTag = (a.train_name || a.route_id) ? `<span class="route-tag">${esc(a.train_name || a.route_id)}</span>` : "";
+    const destText = a.headsign || a.origin || "—";
+    const fromLine = a.origin && a.origin !== stationName && a.origin !== destText
+      ? `<div class="origin-from"><span class="route-sep">desde</span> ${esc(a.origin)}</div>`
+      : "";
+    const origin = `<div class="origin-main">${routeTag}${esc(destText)}</div>${fromLine}`;
+    const dest = "";
 
     const estTime = a.estimated_time
       ? `<span class="time-cell ${timeClass[a.status] ?? ""}">${esc(a.estimated_time)}</span>`
