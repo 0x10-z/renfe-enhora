@@ -24,6 +24,9 @@ trap 'rm -f "$LOCKFILE"' EXIT
 cd "$REPO_DIR"
 mkdir -p logs
 
+# Borrar caché GTFS para forzar recarga
+rm -rf .cache/gtfs
+
 # Activate virtualenv if present
 if [ -f "$REPO_DIR/venv/bin/activate" ]; then
     source "$REPO_DIR/venv/bin/activate"
