@@ -96,10 +96,11 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
           <button class="range-btn" data-days="90">90d</button>
           <button class="range-btn" data-days="0">Todo</button>
           <button class="range-btn active" data-days="-1">Por hora</button>
+          <button class="range-btn" data-days="-2">Mapa de calor</button>
         </div>
       </div>
       <div class="chart-card">
-        <div id="echart-main" style="height:220px;width:100%"></div>
+        <div id="echart-main" style="height:220px;width:100%;transition:height 0.2s"></div>
       </div>
     </section>
 
@@ -1007,9 +1008,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     const percEl = document.getElementById("sub-percentiles")!;
     if (percs && s.delayed > 0) {
       percEl.innerHTML =
-        `<span class="perc-label">p50</span>${percs.p50}m` +
-        `<span class="perc-sep">·</span><span class="perc-label">p75</span>${percs.p75}m` +
-        `<span class="perc-sep">·</span><span class="perc-label">p90</span>${percs.p90}m`;
+        `<span class="perc-label">p50</span> ${percs.p50}m` +
+        `<span class="perc-sep"> · </span><span class="perc-label">p75</span> ${percs.p75}m` +
+        `<span class="perc-sep"> · </span><span class="perc-label">p90</span> ${percs.p90}m`;
     } else {
       percEl.innerHTML = "";
     }

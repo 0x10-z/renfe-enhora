@@ -271,9 +271,116 @@ import Layout from "../layouts/Layout.astro";
       </div>
     </section>
 
+    <!-- FAQ estadística -->
+    <section class="section">
+      <div class="section-label">06 · Preguntas frecuentes</div>
+      <h2>¿Qué significan los indicadores estadísticos?</h2>
+
+      <div class="faq">
+
+        <details class="faq-item">
+          <summary class="faq-q">¿Qué es el percentil p50 (mediana)?</summary>
+          <div class="faq-a">
+            <p>
+              Si hay 100 trenes con retraso ordenados de menor a mayor, el <strong>p50</strong>
+              es el valor que está exactamente en el medio: la mitad llega con ese retraso o menos,
+              y la otra mitad tarda más. También se llama <em>mediana</em>.
+            </p>
+            <p>
+              Por ejemplo, un p50 de 8 minutos significa que <strong>al menos la mitad de los trenes
+              retrasados llegan con 8 minutos o menos</strong> de retraso. Es la medida más
+              representativa del retraso "típico".
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">¿Y el p75 y el p90?</summary>
+          <div class="faq-a">
+            <p>
+              El <strong>p75</strong> es el valor que solo supera 1 de cada 4 trenes retrasados.
+              Si es 19 minutos, el 75% de los trenes retrasados llegan en 19 minutos o menos.
+            </p>
+            <p>
+              El <strong>p90</strong> es el valor que el 90% de los trenes retrasados
+              <em>no supera</em>. Si el p90 es 30 minutos, significa que 9 de cada 10 trenes
+              retrasados llegaron con <strong>30 minutos o menos</strong> de retraso —solo el
+              10% restante lo superó. No al revés: no significa que el 90% llegara con más
+              de 30 minutos.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">¿Por qué no basta con la media de retrasos?</summary>
+          <div class="faq-a">
+            <p>
+              La media es fácil de calcular, pero puede engañar. Un único tren con 2 horas de
+              retraso eleva la media de todos los demás aunque el resto lleguen con 5 minutos.
+            </p>
+            <p>
+              Los percentiles describen la <strong>distribución real</strong>: puedes saber si los
+              retrasos son generalmente pequeños con algún caso extremo aislado, o si todos los
+              trenes acumulan retraso de forma parecida. Ambas situaciones pueden tener la misma
+              media, pero son muy diferentes en la práctica.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">¿Qué es la línea de tendencia del gráfico histórico?</summary>
+          <div class="faq-a">
+            <p>
+              Es una <strong>regresión lineal</strong> calculada sobre el porcentaje diario de
+              trenes con retraso. En términos sencillos, es la "línea recta que mejor se ajusta"
+              a los datos pasados y permite ver si los retrasos están mejorando o empeorando
+              globalmente a lo largo del tiempo.
+            </p>
+            <p>
+              Una línea que sube indica tendencia a empeorar; si baja, a mejorar.
+              Es una aproximación simple —no tiene en cuenta estacionalidad ni eventos puntuales—
+              pero útil para detectar derivas a largo plazo que no se aprecian día a día.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">¿Qué muestra el gráfico "Por hora"?</summary>
+          <div class="faq-a">
+            <p>
+              Agrupa todos los datos históricos por <strong>franja horaria</strong>
+              (independientemente del día concreto) y calcula el porcentaje medio de trenes
+              retrasados en cada hora del día. Permite detectar si hay horas que sistemáticamente
+              concentran más retrasos: picos de entrada al trabajo, horas punta de tarde, etc.
+            </p>
+            <p>
+              La opacidad de las barras indica cuántas muestras hay para esa franja: las horas
+              nocturnas con pocos trenes tienen barras más tenues porque la estimación es menos fiable.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">¿Por qué algunos trenes siempre aparecen "en hora"?</summary>
+          <div class="faq-a">
+            <p>
+              Los servicios de <strong>Media Distancia sin cobertura de tiempo real</strong>
+              aparecen siempre como en hora porque Renfe no publica ese dato en su feed público
+              GTFS-RT. No es que no tengan retrasos: es que la información no está disponible.
+            </p>
+            <p>
+              Este es un límite del sistema de datos abiertos de Renfe, no del pipeline de
+              enhora.info. Los datos de Cercanías y AVE/Larga Distancia sí tienen cobertura RT.
+            </p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
     <!-- Código -->
     <section class="section">
-      <div class="section-label">06 · Transparencia</div>
+      <div class="section-label">07 · Transparencia</div>
       <h2>Código abierto</h2>
       <div class="prose">
         <p>
@@ -583,4 +690,54 @@ import Layout from "../layouts/Layout.astro";
     border: 1px solid var(--border);
   }
   .cta-btn--secondary:hover { background: var(--bg-card-hover); opacity: 1; }
+
+  /* FAQ */
+  .faq {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    list-style: none;
+    background: var(--bg-card);
+    transition: background 0.15s;
+    gap: 1rem;
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q::after {
+    content: "+";
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  details[open] .faq-q { background: var(--bg-card-hover); }
+  details[open] .faq-q::after { content: "−"; }
+  .faq-q:hover { background: var(--bg-card-hover); }
+  .faq-a {
+    padding: 0 1.25rem 1.1rem;
+    background: var(--bg-card);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.72;
+  }
+  .faq-a p + p { margin-top: 0.6rem; }
+  .faq-a strong { color: var(--text); }
+  .faq-a em { font-style: italic; }
 </style>

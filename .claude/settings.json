@@ -6,7 +6,8 @@
       "Bash(python3 -c \"import json; d=json.load\\(open\\(''''d:/Workroot/renfe-enhora/public/data/ave-larga-distancia/stations/01003.json''''\\)\\); print\\(json.dumps\\(d.get\\(''''arrivals'''',[][:3]\\), indent=2, ensure_ascii=False\\)\\)\")",
       "Bash(python3 -c \":*)",
       "Bash(node -e \"const fs=require\\(''fs''\\); for\\(const s of [''cercanias'',''ave-larga-distancia'']\\){try{const d=JSON.parse\\(fs.readFileSync\\(''/d/Workroot/renfe-enhora/public/data/''+s+''/history.json''\\)\\); const r=d.records||[]; console.log\\(s+'': ''+r.length+'' registros''\\); if\\(r.length\\) console.log\\(''ultimo:'',JSON.stringify\\(r[r.length-1]\\)\\); }catch\\(e\\){console.log\\(s+'': ERROR ''+e.message\\);}}\")",
-      "Bash(npx astro:*)"
+      "Bash(npx astro:*)",
+      "Bash(python -c \":*)"
     ]
   }
 }

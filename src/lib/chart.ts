@@ -25,7 +25,15 @@ export function getOrCreateChart(): echarts.ECharts {
 export function renderHistory() {
   if (state.historyRecords.length < 2) return;
   document.getElementById("history-section")!.style.display = "block";
-  if (state.activeDays === -1) renderHourly(); else renderDaily();
+  const el = document.getElementById("echart-main")!;
+  if (state.activeDays === -2) {
+    el.style.height = "260px";
+    renderHeatmap();
+  } else {
+    el.style.height = "220px";
+    if (state.activeDays === -1) renderHourly(); else renderDaily();
+  }
+  state.chart?.resize();
 }
 
 export function linearRegression(data: number[]): number[] {
@@ -159,7 +167,8 @@ export function renderDaily() {
         yAxisIndex: 1,
         data: p50Data,
         smooth: true,
-        symbol: "none",
+        symbol: "circle",
+        symbolSize: 4,
         lineStyle: { color: CHART_COLORS.p50, width: 1.5 },
         itemStyle: { color: CHART_COLORS.p50 },
         connectNulls: false,
@@ -170,7 +179,8 @@ export function renderDaily() {
         yAxisIndex: 1,
         data: p75Data,
         smooth: true,
-        symbol: "none",
+        symbol: "circle",
+        symbolSize: 4,
         lineStyle: { color: CHART_COLORS.p75, width: 1.5 },
         itemStyle: { color: CHART_COLORS.p75 },
         connectNulls: false,
@@ -181,7 +191,8 @@ export function renderDaily() {
         yAxisIndex: 1,
         data: p90Data,
         smooth: true,
-        symbol: "none",
+        symbol: "circle",
+        symbolSize: 4,
         lineStyle: { color: CHART_COLORS.p90, width: 1.5 },
         itemStyle: { color: CHART_COLORS.p90 },
         connectNulls: false,
@@ -281,7 +292,8 @@ export function renderHourly() {
         yAxisIndex: 1,
         data: p50Data,
         smooth: true,
-        symbol: "none",
+        symbol: "circle",
+        symbolSize: 4,
         lineStyle: { color: CHART_COLORS.p50, width: 1.5 },
         itemStyle: { color: CHART_COLORS.p50 },
         connectNulls: false,
@@ -292,7 +304,8 @@ export function renderHourly() {
         yAxisIndex: 1,
         data: p75Data,
         smooth: true,
-        symbol: "none",
+        symbol: "circle",
+        symbolSize: 4,
         lineStyle: { color: CHART_COLORS.p75, width: 1.5 },
         itemStyle: { color: CHART_COLORS.p75 },
         connectNulls: false,
@@ -303,11 +316,93 @@ export function renderHourly() {
         yAxisIndex: 1,
         data: p90Data,
         smooth: true,
-        symbol: "none",
+        symbol: "circle",
+        symbolSize: 4,
         lineStyle: { color: CHART_COLORS.p90, width: 1.5 },
         itemStyle: { color: CHART_COLORS.p90 },
         connectNulls: false,
       },
     ],
+  }, true);
+}
+
+export function renderHeatmap() {
+  const matrix: { sum: number; count: number }[][] =
+    Array.from({ length: 7 }, () =>
+      Array.from({ length: 24 }, () => ({ sum: 0, count: 0 }))
+    );
+
+  for (const r of state.historyRecords) {
+    if (!r.ts || !r.date || r.total === 0) continue;
+    const hour = parseInt(r.ts.slice(11, 13), 10);
+    if (isNaN(hour) || hour < 0 || hour > 23) continue;
+    const dow = (new Date(r.date).getDay() + 6) % 7; // 0=Lun … 6=Dom
+    const pct = r.delayed / r.total * 100;
+    matrix[dow][hour].sum += pct;
+    matrix[dow][hour].count++;
+  }
+
+  const days = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+  const hours = Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, "0")}h`);
+
+  const data: [number, number, number][] = [];
+  for (let dow = 0; dow < 7; dow++) {
+    for (let h = 0; h < 24; h++) {
+      const cell = matrix[dow][h];
+      if (cell.count > 0)
+        data.push([h, dow, +(cell.sum / cell.count).toFixed(1)]);
+    }
+  }
+
+  const maxVal = Math.max(...data.map(d => d[2]), 10);
+
+  getOrCreateChart().setOption({
+    backgroundColor: "transparent",
+    tooltip: {
+      trigger: "item",
+      backgroundColor: CHART_COLORS.tooltip,
+      borderColor: CHART_COLORS.tooltip,
+      textStyle: { color: "#fff", fontSize: 12, fontFamily: "JetBrains Mono, monospace" },
+      formatter: (params: any) => {
+        const [h, dow, v] = params.data;
+        const cell = matrix[dow][h];
+        return `<b>${days[dow]} ${hours[h]}</b><br/>${v}% con retraso<br/>${cell.count} muestra${cell.count !== 1 ? "s" : ""}`;
+      },
+    },
+    grid: { left: 36, right: 80, top: 8, bottom: 24 },
+    xAxis: {
+      type: "category",
+      data: hours,
+      axisLabel: { color: CHART_COLORS.subtext, fontSize: 9, interval: 1 },
+      axisLine: { lineStyle: { color: CHART_COLORS.grid } },
+      axisTick: { show: false },
+      splitArea: { show: false },
+    },
+    yAxis: {
+      type: "category",
+      data: days,
+      axisLabel: { color: CHART_COLORS.subtext, fontSize: 10 },
+      axisLine: { show: false },
+      axisTick: { show: false },
+      splitArea: { show: false },
+    },
+    visualMap: {
+      min: 0,
+      max: maxVal,
+      calculable: false,
+      orient: "vertical",
+      right: 4,
+      top: "center",
+      itemHeight: 140,
+      textStyle: { color: CHART_COLORS.subtext, fontSize: 9 },
+      text: [`${maxVal}%`, "0%"],
+      inRange: { color: ["#059669", "#f59e0b", "#dc2626"] },
+    },
+    series: [{
+      type: "heatmap",
+      data,
+      itemStyle: { borderRadius: 2, borderColor: "var(--bg)", borderWidth: 2 },
+      emphasis: { itemStyle: { shadowBlur: 6, shadowColor: "rgba(0,0,0,0.25)" } },
+    }],
   }, true);
 }
