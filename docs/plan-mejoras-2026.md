@@ -38,15 +38,7 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 - El pipeline corre cada 5 min y mantiene los JSON frescos en el VPS
 - Vercel solo se despliega 24 veces/día (dentro del límite gratuito de 100/día)
 - Los usuarios ven datos con hasta 60 min de antigüedad (igual que ahora con el cron horario)
-- Para datos más frescos en el futuro: migrar JSON a Vercel Blob / Cloudflare R2 (no requiere git)
-
-**Archivos a crear:**
-
-- `run_pipeline.sh` — solo ejecuta el pipeline Python, sin git
-- `push_to_git.sh` — `git add public/data/ && git commit && git push`
-- `cron.example` — actualizar con los dos crons
-
-> Sprint 1 puede arrancar. Todas las decisiones están tomadas.
+- Para datos más frescos en el futuro: migrar JSON a Azure blob storage
 
 ---
 
