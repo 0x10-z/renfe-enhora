@@ -378,9 +378,40 @@ import Layout from "../layouts/Layout.astro";
       </div>
     </section>
 
+    <!-- Equipo -->
+    <section class="section">
+      <div class="section-label">07 · Equipo</div>
+      <h2>Quiénes somos</h2>
+      <div class="team">
+        <div class="team-card">
+          <div class="team-role">El Desarrollador</div>
+          <div class="team-name">Iker Ocio</div>
+          <div class="team-desc">
+            Desarrollo técnico del pipeline y el sitio web, infraestructura del VPS,
+            despliegue y mantenimiento tecnológico del proyecto.
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-role">El Estratega de Datos</div>
+          <div class="team-name">Jorge Buñuel</div>
+          <div class="team-desc">
+            Estrategia de datos, definición y gestión de la información,
+            enfoque estratégico del producto en relación con los datos.
+          </div>
+        </div>
+      </div>
+      <div class="prose" style="margin-top:1.25rem">
+        <p>
+          enhora.info es un proyecto independiente, sin ánimo de lucro,
+          copropiedad al 50% de ambos autores. Las decisiones relevantes sobre
+          el proyecto se toman de mutuo acuerdo.
+        </p>
+      </div>
+    </section>
+
     <!-- Código -->
     <section class="section">
-      <div class="section-label">07 · Transparencia</div>
+      <div class="section-label">08 · Transparencia</div>
       <h2>Código abierto</h2>
       <div class="prose">
         <p>
@@ -740,4 +771,41 @@ import Layout from "../layouts/Layout.astro";
   .faq-a p + p { margin-top: 0.6rem; }
   .faq-a strong { color: var(--text); }
   .faq-a em { font-style: italic; }
+
+  /* Team */
+  .team {
+    display: grid;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  @media (min-width: 640px) {
+    .team { grid-template-columns: 1fr 1fr; }
+  }
+  .team-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .team-role {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    margin-bottom: 0.4rem;
+  }
+  .team-name {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.6rem;
+  }
+  .team-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
 </style>
