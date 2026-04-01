@@ -119,15 +119,15 @@ import Layout from "../layouts/Layout.astro";
       <div class="thresholds">
         <div class="threshold">
           <span class="badge badge-en_hora">En hora</span>
-          <span class="threshold-desc">Retraso igual o inferior a <strong>1 minuto</strong></span>
+          <span class="threshold-desc">Retraso igual o inferior a <strong>5 minutos</strong></span>
         </div>
         <div class="threshold">
           <span class="badge badge-retraso_leve">Retraso leve</span>
-          <span class="threshold-desc">Entre <strong>1 y 5 minutos</strong> de retraso</span>
+          <span class="threshold-desc">Entre <strong>5 y 10 minutos</strong> de retraso</span>
         </div>
         <div class="threshold">
           <span class="badge badge-retraso_alto">Retraso alto</span>
-          <span class="threshold-desc">Más de <strong>5 minutos</strong> de retraso</span>
+          <span class="threshold-desc">Más de <strong>10 minutos</strong> de retraso</span>
         </div>
         <div class="threshold">
           <span class="badge badge-cancelado">Cancelado</span>
@@ -156,8 +156,8 @@ import Layout from "../layouts/Layout.astro";
       <div class="prose">
         <p>
           Todo el proceso es completamente automático. Un servidor privado (VPS) ejecuta
-          el pipeline cada hora mediante una tarea programada (<em>cron job</em>). Los datos
-          generados se publican en este sitio web sin intervención manual.
+          el pipeline cada 5 minutos para mantener los datos frescos, y publica el sitio
+          una vez por hora. No hay intervención manual.
         </p>
       </div>
 
@@ -167,8 +167,8 @@ import Layout from "../layouts/Layout.astro";
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
           <div class="pipeline-body">
-            <div class="pipeline-title">Cada hora</div>
-            <div class="pipeline-desc">El cron job lanza el script en el VPS</div>
+            <div class="pipeline-title">Cada 5 min</div>
+            <div class="pipeline-desc">El VPS descarga y procesa los datos RT de Renfe</div>
           </div>
         </div>
         <div class="pipeline-arrow">→</div>
@@ -198,7 +198,7 @@ import Layout from "../layouts/Layout.astro";
           </div>
           <div class="pipeline-body">
             <div class="pipeline-title">Publica en GitHub</div>
-            <div class="pipeline-desc">JSON generado → commit automático → push</div>
+            <div class="pipeline-desc">Cada hora: commit automático → push → Vercel</div>
           </div>
         </div>
         <div class="pipeline-arrow">→</div>
@@ -238,9 +238,10 @@ import Layout from "../layouts/Layout.astro";
         <div class="limitation">
           <span class="lim-icon">·</span>
           <div>
-            <strong>Retrasos inferiores a 1 minuto</strong><br>
-            Los trenes que llegan con menos de 60 segundos de retraso se contabilizan
-            como puntuales, siguiendo el criterio oficial de Renfe.
+            <strong>Retrasos inferiores a 5 minutos</strong><br>
+            Los trenes que llegan con menos de 5 minutos de retraso se contabilizan
+            como puntuales. Es un criterio más permisivo que el oficial de Renfe (1 min),
+            pero refleja mejor el impacto real para el viajero.
           </div>
         </div>
         <div class="limitation">
