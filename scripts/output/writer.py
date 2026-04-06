@@ -156,6 +156,46 @@ def write_station_history(station_data: StationData, service: ServiceConfig) -> 
     log.info(f"[{service.label}] Station history updated — {len(active_stations)} active stations at {time_str}")
 
 
+def write_raw_events(station_data: StationData, service: ServiceConfig) -> None:
+    """
+    Append delayed/cancelled arrivals to public/data/{service}/raw/YYYY-MM.json (NDJSON).
+    Only stores arrivals with delay_min > 0 or status = cancelado.
+    Files are kept on VPS only — excluded from git via .gitignore.
+    """
+    raw_dir = service.data_dir / "raw"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+
+    now_madrid = datetime.now(_TZ_MADRID)
+    ts = now_madrid.strftime("%Y-%m-%dT%H:%M")
+    raw_path = raw_dir / f"{now_madrid.strftime('%Y-%m')}.json"
+
+    events = []
+    for stop_id, data in station_data.items():
+        for arr in data.get("arrivals", []):
+            status = arr.get("status")
+            delay_min = arr.get("delay_min") or 0
+            if delay_min <= 0 and status != "cancelado":
+                continue
+            events.append({
+                "ts":        ts,
+                "trip_id":   arr.get("trip_id", ""),
+                "route_id":  arr.get("route_id", ""),
+                "stop_id":   stop_id,
+                "stop_name": data["name"],
+                "delay_min": delay_min,
+                "status":    status,
+            })
+
+    if not events:
+        return
+
+    lines = "\n".join(json.dumps(e, ensure_ascii=False) for e in events) + "\n"
+    with open(raw_path, "a", encoding="utf-8") as f:
+        f.write(lines)
+
+    log.info(f"[{service.label}] Raw events appended — {len(events)} events → {raw_path.name}")
+
+
 def write_insights(insights: list, service: ServiceConfig) -> None:
     """Write computed insights to public/data/{service}/insights.json."""
     path = service.data_dir / "insights.json"

@@ -19,6 +19,9 @@ GTFS_CACHE_HOURS = 24
 # Station history retention
 STATION_HISTORY_RETENTION_DAYS = 30
 
+# Raw events retention (months kept on VPS — no auto-rotation yet)
+RAW_RETENTION_DAYS = 90
+
 
 @dataclass(frozen=True)
 class ServiceConfig:

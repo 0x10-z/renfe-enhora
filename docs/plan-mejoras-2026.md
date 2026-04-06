@@ -51,7 +51,7 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 | 3 | Zonas geográficas (dos niveles: Núcleos Cercanías + CCAA) | Media | Pendiente | Pipeline + Frontend |
 | 4 | Peores conexiones: rutas completas con todas las paradas | Difícil | Pendiente | Pipeline + Frontend |
 | 5 | Comparativa zonas: abandonadas vs bien servidas (narrativa automática) | Difícil | Pendiente | Pipeline + Frontend |
-| 6 | Almacenamiento de datos en crudo para análisis futuros | Media | Pendiente | Pipeline |
+| 6 | Almacenamiento de datos en crudo para análisis futuros | Media | ✓ Completado | Pipeline |
 | 7 | Cron cada 5 minutos | Fácil | ✓ Completado | Infra |
 | 8 | Desacoplar pipeline de Vercel (run_pipeline.sh / push_to_git.sh) | Fácil | ✓ Completado | Infra |
 | 9 | Sección equipo en sobre.astro | Fácil | ✓ Completado | Frontend |
@@ -437,7 +437,7 @@ Añadida sección `07 · Equipo` en `sobre.astro` con tarjetas para Iker Ocio (E
 [3] Zonas             → necesario para [4] y [5]         (pendiente)
 [4] Rutas             → necesario para [5]               (pendiente)
 [5] Comparativa       → depende de [2] + [3] + [4]       (pendiente)
-[6] Datos en crudo    → independiente                    (pendiente)
+[6] Datos en crudo    → independiente                    (completado ✓)
 [7] Cron 5min         → completado ✓
 [8] Desacoplar Vercel → completado ✓
 [9] Equipo sobre.astro → completado ✓
