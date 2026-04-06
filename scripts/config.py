@@ -22,6 +22,21 @@ STATION_HISTORY_RETENTION_DAYS = 30
 # Raw events retention (months kept on VPS — no auto-rotation yet)
 RAW_RETENTION_DAYS = 90
 
+# Train type classification: ordered list of (prefix, label).
+# Checked against trip_short_name (uppercased), first match wins.
+# Cercanías (C1–C10+) is handled separately by the classifier.
+TRAIN_TYPE_PREFIXES: list[tuple[str, str]] = [
+    ("AVLO",  "AVLO"),
+    ("AV2",   "AVLO"),
+    ("AVE",   "AVE"),
+    ("ALVIA", "Alvia"),
+    ("AVANT", "Avant"),
+    ("MD",    "Media Distancia"),
+    ("LD",    "Larga Distancia"),
+    ("REG",   "Regional"),
+    ("RG",    "Regional"),
+]
+
 
 @dataclass(frozen=True)
 class ServiceConfig:

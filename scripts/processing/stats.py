@@ -19,6 +19,7 @@ def compute_stats(station_data: StationData) -> dict:
     station_counts: Dict[str, dict] = {}
     station_delays: Dict[str, list] = {}
     max_delay_entry: Optional[dict] = None  # {stop_id, name, delay_min, train_name}
+    by_train_type: Dict[str, dict] = {}  # {label: {total, delayed, cancelled, delays[]}}
 
     for stop_id, data in station_data.items():
         arrivals = data["arrivals"]
@@ -30,16 +31,23 @@ def compute_stats(station_data: StationData) -> dict:
             if arr.get("trip_id"):
                 unique_trip_ids.add(arr["trip_id"])
             status = arr["status"]
+            tt = arr.get("train_type", "Otros")
+            if tt not in by_train_type:
+                by_train_type[tt] = {"total": 0, "delayed": 0, "cancelled": 0, "delays": []}
+            by_train_type[tt]["total"] += 1
 
             if status == "cancelado":
                 cancelled += 1
+                by_train_type[tt]["cancelled"] += 1
             elif status == "en_hora":
                 on_time += 1
             else:
                 delayed += 1
+                by_train_type[tt]["delayed"] += 1
                 if arr["delay_min"] is not None:
                     delays.append(arr["delay_min"])
                     station_delays[stop_id].append(arr["delay_min"])
+                    by_train_type[tt]["delays"].append(arr["delay_min"])
                     if max_delay_entry is None or arr["delay_min"] > max_delay_entry["delay_min"]:
                         max_delay_entry = {
                             "stop_id": stop_id,
@@ -67,6 +75,26 @@ def compute_stats(station_data: StationData) -> dict:
         key=lambda v: v["avg_delay"],
     )
 
+    # Build by_train_type summary and assign rank_worst (1 = worst avg delay)
+    by_type_final = {}
+    for tt, acc in by_train_type.items():
+        tt_delays = acc["delays"]
+        avg = round(sum(tt_delays) / len(tt_delays), 1) if tt_delays else 0.0
+        mx  = round(max(tt_delays), 1) if tt_delays else 0.0
+        denom = acc["total"] - acc["cancelled"]
+        by_type_final[tt] = {
+            "total":          acc["total"],
+            "delayed":        acc["delayed"],
+            "cancelled":      acc["cancelled"],
+            "avg_delay_min":  avg,
+            "max_delay_min":  mx,
+            "delayed_pct":    round(acc["delayed"] / denom, 3) if denom > 0 else 0.0,
+        }
+    # rank_worst: 1 = highest avg_delay_min
+    ranked = sorted(by_type_final.keys(), key=lambda t: by_type_final[t]["avg_delay_min"], reverse=True)
+    for rank, tt in enumerate(ranked, start=1):
+        by_type_final[tt]["rank_worst"] = rank
+
     stats = {
         "total_trains": total,
         "unique_trips": len(unique_trip_ids),
@@ -80,6 +108,7 @@ def compute_stats(station_data: StationData) -> dict:
         "stations_count": len(station_data),
         "busiest_station": _with_id(busiest) if busiest else None,
         "worst_delay_station": _with_id(worst) if worst else None,
+        "by_train_type": by_type_final,
     }
 
     log.info(

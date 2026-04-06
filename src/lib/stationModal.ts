@@ -93,11 +93,12 @@ export function modalRowHTML(a: any): string {
     en_hora: "time-on-time", retraso_leve: "time-leve", retraso_alto: "time-alto", cancelado: "time-cancel",
   };
   const routeTag = (a.train_name || a.route_id) ? `<span class="route-tag">${esc(a.train_name || a.route_id)}</span>` : "";
+  const typeTag  = a.train_type ? `<span class="type-tag">${esc(a.train_type)}</span>` : "";
   const destText = a.headsign || a.origin || "—";
   const fromLine = a.origin && a.origin !== state.modalStationName && a.origin !== destText
     ? `<div class="origin-from"><span class="route-sep">desde</span> ${esc(a.origin)}</div>`
     : "";
-  const origin = `<div class="origin-main">${routeTag}${esc(destText)}</div>${fromLine}`;
+  const origin = `<div class="origin-main">${routeTag}${typeTag}${esc(destText)}</div>${fromLine}`;
   const dest   = "";
   const estTime = a.estimated_time
     ? `<span class="time-cell ${timeClass[a.status] ?? ""}">${esc(a.estimated_time)}</span>`

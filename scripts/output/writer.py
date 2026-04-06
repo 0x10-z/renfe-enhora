@@ -79,6 +79,11 @@ def write_history(stats: dict, service: ServiceConfig) -> None:
 
     # Append new snapshot
     percs = stats.get("delay_percentiles", {})
+    # Compact by_train_type for history: {label: [total, delayed, avg_min]}
+    by_type_compact = {
+        tt: [v["total"], v["delayed"], v["avg_delay_min"]]
+        for tt, v in stats.get("by_train_type", {}).items()
+    }
     records.append({
         "ts":      datetime.now(_TZ_MADRID).strftime("%Y-%m-%dT%H:%M"),
         "date":    datetime.now(_TZ_MADRID).strftime("%Y-%m-%d"),
@@ -90,6 +95,7 @@ def write_history(stats: dict, service: ServiceConfig) -> None:
         "p50":     percs.get("p50", 0),
         "p75":     percs.get("p75", 0),
         "p90":     percs.get("p90", 0),
+        "by_type": by_type_compact,
     })
 
     history_path.write_text(
@@ -177,13 +183,14 @@ def write_raw_events(station_data: StationData, service: ServiceConfig) -> None:
             if delay_min <= 0 and status != "cancelado":
                 continue
             events.append({
-                "ts":        ts,
-                "trip_id":   arr.get("trip_id", ""),
-                "route_id":  arr.get("route_id", ""),
-                "stop_id":   stop_id,
-                "stop_name": data["name"],
-                "delay_min": delay_min,
-                "status":    status,
+                "ts":         ts,
+                "trip_id":    arr.get("trip_id", ""),
+                "route_id":   arr.get("route_id", ""),
+                "train_type": arr.get("train_type", "Otros"),
+                "stop_id":    stop_id,
+                "stop_name":  data["name"],
+                "delay_min":  delay_min,
+                "status":     status,
             })
 
     if not events:

@@ -119,6 +119,16 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
       </div>
       <div class="insights-grid" id="insights-grid"></div>
     </section>
+
+    <section class="train-type-section" id="train-type-section" style="display:none">
+      <div class="section-header">
+        <h2>Por tipo de tren</h2>
+      </div>
+      <div class="chart-card">
+        <p id="train-type-narrative" class="train-type-narrative"></p>
+        <div id="echart-train-type" style="width:100%"></div>
+      </div>
+    </section>
   </div>
 
   <!-- Stations section -->
@@ -481,6 +491,17 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     to { transform: rotate(360deg); }
   }
 
+  /* Train type section */
+  .train-type-section {
+    margin-bottom: 2.5rem;
+  }
+  .train-type-narrative {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding: 0.65rem 0.75rem 0.25rem;
+    line-height: 1.5;
+  }
+
   /* History chart */
   .history-section {
     margin-bottom: 2.5rem;
@@ -578,6 +599,11 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     display: inline-block; font-size: 0.63rem; font-family: var(--font-mono); font-weight: 700;
     background: var(--accent-bg); color: var(--accent);
     padding: 0.1rem 0.35rem; border-radius: 3px; margin-right: 0.35rem; vertical-align: middle;
+  }
+  :global(.type-tag) {
+    display: inline-block; font-size: 0.6rem; font-family: var(--font-mono); font-weight: 600;
+    background: var(--bg); color: var(--text-sub); border: 1px solid var(--border);
+    padding: 0.1rem 0.3rem; border-radius: 3px; margin-right: 0.3rem; vertical-align: middle;
   }
   :global(.cancelled-row td) { opacity: 0.55; }
   :global(#modal-arrivals-body tr) { cursor: pointer; }
@@ -960,7 +986,7 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
 <script>
   import { state } from "../lib/store";
   import { setText, setValueWithUnit, timeAgo } from "../lib/utils";
-  import { renderHistory } from "../lib/chart";
+  import { renderHistory, renderTrainTypes } from "../lib/chart";
   import { openModal, closeModal, closeTrainViewer, openTrainViewer } from "../lib/stationModal";
   import { renderInsights, openInsightDrilldown, closeInsightModal } from "../lib/insightModal";
   import { filterAndRender, showNoData } from "../lib/stations";
@@ -1014,6 +1040,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     document.getElementById("station-count")!.textContent = "—";
     document.getElementById("history-section")!.style.display = "none";
     document.getElementById("insights-section")!.style.display = "none";
+    document.getElementById("train-type-section")!.style.display = "none";
+    state.trainTypeChart?.dispose();
+    state.trainTypeChart = null;
     state.historyRecords = [];
     state.chart?.dispose();
     state.chart = null;
@@ -1096,6 +1125,7 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     setText("sub-trips", s.stations_count ? `de ${s.stations_count} estaciones` : "—");
 
     setText("last-updated", `Actualizado ${timeAgo(generatedAt)}`);
+    renderTrainTypes(s.by_train_type ?? {});
   }
 
   function startCountdown() {

@@ -366,6 +366,96 @@ export function renderHourly() {
   }, true);
 }
 
+export function renderTrainTypes(byType: Record<string, any>) {
+  const el = document.getElementById("echart-train-type") as HTMLElement | null;
+  const section = document.getElementById("train-type-section") as HTMLElement | null;
+  if (!el || !section) return;
+
+  if (!byType || Object.keys(byType).length === 0) {
+    section.style.display = "none";
+    return;
+  }
+
+  // Sort by avg_delay_min descending (worst last = displayed at top in ECharts horizontal bar)
+  const entries = Object.entries(byType)
+    .filter(([, v]) => v.total > 0)
+    .sort((a, b) => (a[1].avg_delay_min as number) - (b[1].avg_delay_min as number));
+
+  if (entries.length === 0) { section.style.display = "none"; return; }
+
+  section.style.display = "block";
+
+  // Narrative: worst type
+  const worst = entries[entries.length - 1];
+  const narrativeEl = document.getElementById("train-type-narrative");
+  if (narrativeEl && worst) {
+    const [name, v] = worst;
+    narrativeEl.textContent =
+      `El tipo de tren con más retrasos acumulados este periodo es ${name}, ` +
+      `con una media de ${v.avg_delay_min} min y un ${Math.round(v.delayed_pct * 100)}% de servicios afectados.`;
+  }
+
+  const names      = entries.map(([k]) => k);
+  const avgDelays  = entries.map(([, v]) => v.avg_delay_min as number);
+  const barColors  = avgDelays.map(v =>
+    v <= 5 ? CHART_COLORS.onTime : v <= 10 ? CHART_COLORS.p75 : CHART_COLORS.delayed
+  );
+
+  el.style.height = `${Math.max(160, entries.length * 36)}px`;
+
+  if (!state.trainTypeChart) {
+    state.trainTypeChart = echarts.init(el, undefined, { renderer: "canvas" });
+    new ResizeObserver(() => state.trainTypeChart?.resize()).observe(el);
+  }
+
+  state.trainTypeChart.setOption({
+    backgroundColor: "transparent",
+    tooltip: {
+      trigger: "axis",
+      axisPointer: { type: "none" },
+      backgroundColor: CHART_COLORS.tooltip,
+      borderColor: CHART_COLORS.tooltip,
+      textStyle: { color: "#fff", fontSize: 12, fontFamily: "JetBrains Mono, monospace" },
+      formatter: (params: any) => {
+        const i = params[0].dataIndex;
+        const [name, v] = entries[i];
+        return `<b>${name}</b><br/>${v.avg_delay_min}m media · ${Math.round(v.delayed_pct * 100)}% retrasados<br/>máx ${v.max_delay_min}m · ${v.total} trenes`;
+      },
+    },
+    grid: { left: 110, right: 48, top: 8, bottom: 8 },
+    xAxis: {
+      type: "value",
+      axisLabel: { formatter: "{value}m", color: CHART_COLORS.subtext, fontSize: 10 },
+      splitLine: { lineStyle: { color: CHART_COLORS.grid } },
+      axisLine: { show: false },
+      axisTick: { show: false },
+    },
+    yAxis: {
+      type: "category",
+      data: names,
+      axisLabel: { color: CHART_COLORS.text, fontSize: 11 },
+      axisLine: { show: false },
+      axisTick: { show: false },
+    },
+    series: [{
+      type: "bar",
+      barMaxWidth: 24,
+      data: avgDelays.map((v, i) => ({
+        value: v,
+        itemStyle: { color: barColors[i], borderRadius: [0, 3, 3, 0] },
+      })),
+      label: {
+        show: true,
+        position: "right",
+        formatter: (p: any) => `${p.value}m`,
+        color: CHART_COLORS.subtext,
+        fontSize: 10,
+        fontFamily: "JetBrains Mono, monospace",
+      },
+    }],
+  }, true);
+}
+
 export function renderHeatmap() {
   const matrix: { sum: number; count: number }[][] =
     Array.from({ length: 7 }, () =>

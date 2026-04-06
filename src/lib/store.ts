@@ -21,4 +21,5 @@ export const state = {
   mapMode: "heat" as "scatter" | "heat",
   mapInstance: null as any,
   mapLayer: null as any,
+  trainTypeChart: null as echarts.ECharts | null,
 };

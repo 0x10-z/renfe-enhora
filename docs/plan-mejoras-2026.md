@@ -47,7 +47,7 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 | # | Feature | Dificultad | Estado | Área |
 | --- | --- | --- | --- | --- |
 | 1 | Recategorizar umbrales de retraso (5 min = en hora) | Fácil | ✓ Completado | Pipeline + Frontend |
-| 2 | Tipo de tren: ranking de retrasos acumulados (cada tipo separado) | Media | Pendiente | Pipeline + Frontend |
+| 2 | Tipo de tren: ranking de retrasos acumulados (cada tipo separado) | Media | ✓ Completado | Pipeline + Frontend |
 | 3 | Zonas geográficas (dos niveles: Núcleos Cercanías + CCAA) | Media | Pendiente | Pipeline + Frontend |
 | 4 | Peores conexiones: rutas completas con todas las paradas | Difícil | Pendiente | Pipeline + Frontend |
 | 5 | Comparativa zonas: abandonadas vs bien servidas (narrativa automática) | Difícil | Pendiente | Pipeline + Frontend |
@@ -433,7 +433,7 @@ Añadida sección `07 · Equipo` en `sobre.astro` con tarjetas para Iker Ocio (E
 
 ```text
 [1] Umbrales          → base para todos los demás        (completado ✓)
-[2] Tipo de tren      → necesario para [4] y [5]         (pendiente)
+[2] Tipo de tren      → necesario para [4] y [5]         (completado ✓)
 [3] Zonas             → necesario para [4] y [5]         (pendiente)
 [4] Rutas             → necesario para [5]               (pendiente)
 [5] Comparativa       → depende de [2] + [3] + [4]       (pendiente)

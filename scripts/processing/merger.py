@@ -17,6 +17,7 @@ from scripts.config import (
     DELAY_LEVE_MAX_SEC,
     LOOKAHEAD_MINUTES,
     ON_TIME_THRESHOLD_SEC,
+    TRAIN_TYPE_PREFIXES,
 )
 from scripts.ingestion.gtfs_realtime import TripUpdates
 
@@ -142,6 +143,7 @@ def build_station_arrivals(
                     "trip_id": a["trip_id"],
                     "route_id": trip["route_id"],
                     "train_name": train_name,
+                    "train_type": _classify_train_type(trip_short, route_short),
                     "headsign": trip["headsign"] or trip_destinations.get(a["trip_id"], ""),
                     "origin": trip_origins.get(a["trip_id"], ""),
                     "scheduled_time": a["scheduled"].strftime("%H:%M"),
@@ -252,6 +254,18 @@ def _load_routes(gtfs_dir: Path) -> Dict[str, str]:
             if short:
                 routes[row["route_id"].strip()] = short
     return routes
+
+
+def _classify_train_type(trip_short_name: str, route_short_name: str) -> str:
+    """Return a human-readable train type label for a given trip."""
+    name = (trip_short_name or route_short_name or "").strip().upper()
+    for prefix, label in TRAIN_TYPE_PREFIXES:
+        if name.startswith(prefix):
+            return label
+    # Cercanías lines: C1, C2, … C10, etc.
+    if len(name) >= 2 and name[0] == "C" and name[1].isdigit():
+        return "Cercanías"
+    return "Otros"
 
 
 def _parse_gtfs_time(time_str: str, service_date: date) -> datetime:
