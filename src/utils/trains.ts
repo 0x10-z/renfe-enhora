@@ -21,7 +21,7 @@ export const TRAIN_PHOTOS_MAP: Record<string, string[]> = {
   MD:        ["/trenes/md/s449.webp", "/trenes/md/s450.webp", "/trenes/md/s592.webp", "/trenes/md/s594.webp", "/trenes/md/s598.webp"],
   REGIONAL:  ["/trenes/regional/s592.webp", "/trenes/regional/s596.webp", "/trenes/regional/s598.webp"],
   LD:        ["/trenes/ld/s252.webp", "/trenes/ld/s730.webp", "/trenes/ld/s269.webp"],
-  CERCANIAS: ["/trenes/cercanias/s440.webp", "/trenes/cercanias/s446.webp", "/trenes/cercanias/s447.webp", "/trenes/cercanias/s448.webp", "/trenes/cercanias/s470.webp"],
+  CERCANIAS: ["/trenes/cercanias/civia.webp", "/trenes/cercanias/s447.webp", "/trenes/cercanias/s440.webp", "/trenes/cercanias/s446.webp", "/trenes/cercanias/s448.webp", "/trenes/cercanias/s470.webp"],
 };
 
 export const TRAIN_TYPE_LABELS: Record<string, string> = {
