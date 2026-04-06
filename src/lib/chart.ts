@@ -376,16 +376,16 @@ export function renderTrainTypes(byType: Record<string, any>) {
     return;
   }
 
-  // Sort by avg_delay_min descending (worst last = displayed at top in ECharts horizontal bar)
+  // Sort by delayed_pct ascending (worst last = displayed at top in ECharts horizontal bar)
   const entries = Object.entries(byType)
     .filter(([, v]) => v.total > 0)
-    .sort((a, b) => (a[1].avg_delay_min as number) - (b[1].avg_delay_min as number));
+    .sort((a, b) => (a[1].delayed_pct as number) - (b[1].delayed_pct as number));
 
   if (entries.length === 0) { section.style.display = "none"; return; }
 
   section.style.display = "block";
 
-  // Narrative: worst type
+  // Narrative: worst type by delayed_pct
   const worst = entries[entries.length - 1];
   const narrativeEl = document.getElementById("train-type-narrative");
   if (narrativeEl && worst) {
@@ -395,13 +395,12 @@ export function renderTrainTypes(byType: Record<string, any>) {
       `con una media de ${v.avg_delay_min} min y un ${Math.round(v.delayed_pct * 100)}% de servicios afectados.`;
   }
 
-  const names      = entries.map(([k]) => k);
-  const avgDelays  = entries.map(([, v]) => v.avg_delay_min as number);
-  const barColors  = avgDelays.map(v =>
-    v <= 5 ? CHART_COLORS.onTime : v <= 10 ? CHART_COLORS.p75 : CHART_COLORS.delayed
-  );
+  const names = entries.map(([k]) => k);
+  const onTimeData   = entries.map(([, v]) => v.total - v.delayed - v.cancelled);
+  const delayedData  = entries.map(([, v]) => v.delayed);
+  const cancelledData = entries.map(([, v]) => v.cancelled);
 
-  el.style.height = `${Math.max(160, entries.length * 36)}px`;
+  el.style.height = `${Math.max(180, entries.length * 44)}px`;
 
   if (!state.trainTypeChart) {
     state.trainTypeChart = echarts.init(el, undefined, { renderer: "canvas" });
@@ -419,13 +418,22 @@ export function renderTrainTypes(byType: Record<string, any>) {
       formatter: (params: any) => {
         const i = params[0].dataIndex;
         const [name, v] = entries[i];
-        return `<b>${name}</b><br/>${v.avg_delay_min}m media · ${Math.round(v.delayed_pct * 100)}% retrasados<br/>máx ${v.max_delay_min}m · ${v.total} trenes`;
+        const pct = Math.round(v.delayed_pct * 100);
+        return `<b>${name}</b><br/>${v.total} trenes · ${pct}% retrasados<br/>media ${v.avg_delay_min}m · máx ${v.max_delay_min}m`;
       },
     },
-    grid: { left: 110, right: 48, top: 8, bottom: 8 },
+    legend: {
+      data: ["En hora", "Retrasados", "Cancelados"],
+      bottom: 0,
+      textStyle: { color: CHART_COLORS.text, fontSize: 11 },
+      icon: "roundRect",
+      itemWidth: 10,
+      itemHeight: 10,
+    },
+    grid: { left: 110, right: 80, top: 8, bottom: 32 },
     xAxis: {
       type: "value",
-      axisLabel: { formatter: "{value}m", color: CHART_COLORS.subtext, fontSize: 10 },
+      axisLabel: { color: CHART_COLORS.subtext, fontSize: 10 },
       splitLine: { lineStyle: { color: CHART_COLORS.grid } },
       axisLine: { show: false },
       axisTick: { show: false },
@@ -437,22 +445,48 @@ export function renderTrainTypes(byType: Record<string, any>) {
       axisLine: { show: false },
       axisTick: { show: false },
     },
-    series: [{
-      type: "bar",
-      barMaxWidth: 24,
-      data: avgDelays.map((v, i) => ({
-        value: v,
-        itemStyle: { color: barColors[i], borderRadius: [0, 3, 3, 0] },
-      })),
-      label: {
-        show: true,
-        position: "right",
-        formatter: (p: any) => `${p.value}m`,
-        color: CHART_COLORS.subtext,
-        fontSize: 10,
-        fontFamily: "JetBrains Mono, monospace",
+    series: [
+      {
+        name: "En hora",
+        type: "bar",
+        stack: "total",
+        barMaxWidth: 28,
+        data: onTimeData,
+        itemStyle: { color: CHART_COLORS.onTime, opacity: 0.75 },
+        label: { show: false },
       },
-    }],
+      {
+        name: "Retrasados",
+        type: "bar",
+        stack: "total",
+        barMaxWidth: 28,
+        data: delayedData,
+        itemStyle: { color: CHART_COLORS.p75, opacity: 0.9 },
+        label: {
+          show: true,
+          position: "right",
+          formatter: (p: any) => {
+            const i = p.dataIndex;
+            const [, v] = entries[i];
+            const pct = Math.round(v.delayed_pct * 100);
+            return `{pct|${pct}%}  {avg|avg ${v.avg_delay_min}m}`;
+          },
+          rich: {
+            pct: { color: CHART_COLORS.p75, fontSize: 10, fontWeight: 700, fontFamily: "JetBrains Mono, monospace" },
+            avg: { color: CHART_COLORS.subtext, fontSize: 10, fontFamily: "JetBrains Mono, monospace" },
+          },
+        },
+      },
+      {
+        name: "Cancelados",
+        type: "bar",
+        stack: "total",
+        barMaxWidth: 28,
+        data: cancelledData,
+        itemStyle: { color: "#6b7280", opacity: 0.6, borderRadius: [0, 3, 3, 0] },
+        label: { show: false },
+      },
+    ],
   }, true);
 }
 
