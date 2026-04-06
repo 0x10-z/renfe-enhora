@@ -123,12 +123,169 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     <section class="train-type-section" id="train-type-section" style="display:none">
       <div class="section-header">
         <h2>Por tipo de tren</h2>
+        <button class="info-btn" id="train-type-info-btn" aria-label="Información sobre tipos de tren">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </button>
       </div>
       <div class="chart-card">
         <p id="train-type-narrative" class="train-type-narrative"></p>
         <div id="echart-train-type" style="width:100%"></div>
       </div>
     </section>
+  </div>
+
+  <!-- Train type info modal -->
+  <div id="train-type-modal" class="modal-backdrop" style="display:none" role="dialog" aria-modal="true" aria-labelledby="train-type-modal-title">
+    <div class="modal-panel train-type-modal-panel">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h2 id="train-type-modal-title">Tipos de tren en Renfe</h2>
+        </div>
+        <div class="modal-header-right">
+          <button class="modal-close" id="train-type-modal-close" aria-label="Cerrar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body train-type-modal-body">
+        <div class="tt-grid">
+
+          <div class="tt-card">
+            <div class="tt-header">
+              <span class="tt-badge tt-ave">AVE</span>
+              <span class="tt-name">Alta Velocidad Española</span>
+            </div>
+            <p class="tt-desc">Trenes de alta velocidad que circulan por vías exclusivas a más de 250 km/h. Son los más rápidos de la red y conectan las principales ciudades.</p>
+            <div class="tt-meta">
+              <span class="tt-label">Series habituales</span>
+              <span class="tt-value">100, 102, 103, 112, 114, 130</span>
+            </div>
+            <div class="tt-meta">
+              <span class="tt-label">Rutas típicas</span>
+              <span class="tt-value">Madrid–Barcelona, Madrid–Sevilla, Madrid–Valencia</span>
+            </div>
+          </div>
+
+          <div class="tt-card">
+            <div class="tt-header">
+              <span class="tt-badge tt-avlo">AVLO</span>
+              <span class="tt-name">AVE Low Cost</span>
+            </div>
+            <p class="tt-desc">Versión de bajo coste del AVE. Utiliza la misma infraestructura de alta velocidad pero con tarifas más reducidas y servicios más básicos a bordo.</p>
+            <div class="tt-meta">
+              <span class="tt-label">Series habituales</span>
+              <span class="tt-value">106 (Talgo Avril)</span>
+            </div>
+            <div class="tt-meta">
+              <span class="tt-label">Rutas típicas</span>
+              <span class="tt-value">Madrid–Barcelona, Madrid–Valencia</span>
+            </div>
+          </div>
+
+          <div class="tt-card">
+            <div class="tt-header">
+              <span class="tt-badge tt-alvia">Alvia</span>
+              <span class="tt-name">Alta Velocidad + Larga Distancia</span>
+            </div>
+            <p class="tt-desc">Trenes de velocidad media-alta (hasta 250 km/h) que pueden circular tanto por vías de alta velocidad como por vías convencionales, gracias a su sistema de cambio de ancho. Esto les permite llegar a ciudades no conectadas directamente por la red AVE.</p>
+            <div class="tt-meta">
+              <span class="tt-label">Series habituales</span>
+              <span class="tt-value">120, 121, 130</span>
+            </div>
+            <div class="tt-meta">
+              <span class="tt-label">Rutas típicas</span>
+              <span class="tt-value">Madrid–Vigo, Madrid–A Coruña, Madrid–Bilbao</span>
+            </div>
+          </div>
+
+          <div class="tt-card">
+            <div class="tt-header">
+              <span class="tt-badge tt-avant">Avant</span>
+              <span class="tt-name">AVE Regional de Corta Distancia</span>
+            </div>
+            <p class="tt-desc">Servicio de alta velocidad para trayectos cortos sobre la red de alta velocidad. Son más económicos que el AVE y sirven recorridos de menos de 200 km entre ciudades próximas.</p>
+            <div class="tt-meta">
+              <span class="tt-label">Series habituales</span>
+              <span class="tt-value">104, 114, 121</span>
+            </div>
+            <div class="tt-meta">
+              <span class="tt-label">Rutas típicas</span>
+              <span class="tt-value">Madrid–Toledo, Valladolid–Segovia, Sevilla–Córdoba</span>
+            </div>
+          </div>
+
+          <div class="tt-card tt-card--highlight">
+            <div class="tt-header">
+              <span class="tt-badge tt-md">MD</span>
+              <span class="tt-name">Media Distancia</span>
+            </div>
+            <p class="tt-desc">Trenes convencionales que conectan capitales de provincia y ciudades medianas. Circulan por vías convencionales a velocidades menores que el AVE. Su flota es más moderna que la Regional y cubre recorridos de entre 100 y 400 km.</p>
+            <div class="tt-meta">
+              <span class="tt-label">Series habituales</span>
+              <span class="tt-value">449, 450, 592, 594, 598</span>
+            </div>
+            <div class="tt-meta">
+              <span class="tt-label">Rutas típicas</span>
+              <span class="tt-value">Sevilla–Málaga, Valencia–Alicante, Barcelona–Lleida</span>
+            </div>
+          </div>
+
+          <div class="tt-card tt-card--highlight">
+            <div class="tt-header">
+              <span class="tt-badge tt-reg">Regional</span>
+              <span class="tt-name">Tren Regional</span>
+            </div>
+            <p class="tt-desc">Servicio regional de corta y media distancia que conecta poblaciones más pequeñas con capitales de provincia. Más paradas que Media Distancia, recorridos más cortos y velocidades más bajas. Suele usar material rodante más antiguo.</p>
+            <div class="tt-meta">
+              <span class="tt-label">Series habituales</span>
+              <span class="tt-value">592, 596, 598</span>
+            </div>
+            <div class="tt-meta">
+              <span class="tt-label">Rutas típicas</span>
+              <span class="tt-value">Burgos–Miranda, Huesca–Zaragoza, Cáceres–Badajoz</span>
+            </div>
+          </div>
+
+          <div class="tt-card">
+            <div class="tt-header">
+              <span class="tt-badge tt-ld">LD</span>
+              <span class="tt-name">Larga Distancia</span>
+            </div>
+            <p class="tt-desc">Trenes de largo recorrido en vías convencionales, con servicios nocturnos y diurnos. Incluye los Intercity y Talgo. Más lentos que el AVE pero con paradas en ciudades intermedias y tarifas más variadas.</p>
+            <div class="tt-meta">
+              <span class="tt-label">Series habituales</span>
+              <span class="tt-value">Talgo 200, 252, Intercity (449, 269)</span>
+            </div>
+            <div class="tt-meta">
+              <span class="tt-label">Rutas típicas</span>
+              <span class="tt-value">Madrid–Cádiz, Barcelona–Vigo, trenes nocturnos</span>
+            </div>
+          </div>
+
+          <div class="tt-card">
+            <div class="tt-header">
+              <span class="tt-badge tt-c">Cercanías</span>
+              <span class="tt-name">Trenes de Cercanías</span>
+            </div>
+            <p class="tt-desc">Red de trenes de cercanías que conecta el núcleo urbano con los municipios del área metropolitana. Alta frecuencia, muchas paradas y recorridos cortos. Tarifas integradas con el transporte urbano en muchas ciudades.</p>
+            <div class="tt-meta">
+              <span class="tt-label">Series habituales</span>
+              <span class="tt-value">440, 446, 447, 448, 450, 451, 463, 465, 470, 599</span>
+            </div>
+            <div class="tt-meta">
+              <span class="tt-label">Núcleos</span>
+              <span class="tt-value">Madrid, Barcelona, Valencia, Sevilla, Bilbao, Asturias, Murcia…</span>
+            </div>
+          </div>
+
+          <div class="tt-callout">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <p><strong>¿MD o Regional?</strong> La frontera no siempre es clara: la serie 592 aparece en ambos servicios según la comunidad autónoma. La diferencia práctica es que Media Distancia conecta capitales provinciales con recorridos de 100–400 km, mientras que Regional cubre distancias más cortas con más paradas intermedias y material más antiguo.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Stations section -->
@@ -501,6 +658,120 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     padding: 0.65rem 0.75rem 0.25rem;
     line-height: 1.5;
   }
+  .info-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    background: var(--bg-card);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    flex-shrink: 0;
+  }
+  .info-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent-border);
+    background: var(--accent-bg);
+  }
+
+  /* Train type info modal */
+  :global(.train-type-modal-panel) {
+    max-width: 720px;
+  }
+  :global(.train-type-modal-body) {
+    overflow-y: auto;
+    padding: 1.25rem 1.5rem;
+  }
+  :global(.tt-grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.875rem;
+  }
+  :global(.tt-card) {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.875rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  :global(.tt-card--highlight) {
+    border-color: var(--accent-border);
+    background: var(--accent-bg);
+  }
+  :global(.tt-header) {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.15rem;
+  }
+  :global(.tt-badge) {
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  :global(.tt-ave)   { background: #dbeafe; color: #1d4ed8; }
+  :global(.tt-avlo)  { background: #ede9fe; color: #6d28d9; }
+  :global(.tt-alvia) { background: #fce7f3; color: #be185d; }
+  :global(.tt-avant) { background: #ffedd5; color: #c2410c; }
+  :global(.tt-md)    { background: #dcfce7; color: #15803d; }
+  :global(.tt-reg)   { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+  :global(.tt-ld)    { background: #fef9c3; color: #854d0e; }
+  :global(.tt-c)     { background: var(--accent-bg); color: var(--accent); }
+  :global(.tt-name) {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  :global(.tt-desc) {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+  :global(.tt-meta) {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin-top: 0.1rem;
+  }
+  :global(.tt-label) {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-sub);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  :global(.tt-value) {
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+  }
+  :global(.tt-callout) {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: var(--radius);
+    padding: 0.875rem 1rem;
+    color: var(--accent);
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+  :global(.tt-callout p) { margin: 0; color: var(--text-muted); }
+  :global(.tt-callout strong) { color: var(--text); }
+  :global(.tt-callout svg) { flex-shrink: 0; margin-top: 0.1rem; }
 
   /* History chart */
   .history-section {
@@ -1225,9 +1496,11 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     const tvModal = document.getElementById("train-viewer-modal") as HTMLElement;
     const stModal = document.getElementById("station-modal") as HTMLElement;
     const inModal = document.getElementById("insight-modal") as HTMLElement;
+    const ttInfoModal = document.getElementById("train-type-modal") as HTMLElement;
     if (tvModal.style.display !== "none") closeTrainViewer();
     else if (stModal.style.display !== "none") closeModal();
     else if (inModal.style.display !== "none") closeInsightModal();
+    else if (ttInfoModal.style.display !== "none") { ttInfoModal.style.display = "none"; document.body.style.overflow = ""; }
   });
 
   // Section switcher buttons
@@ -1244,6 +1517,19 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
       renderMapMarkers();
     });
   });
+
+  // Train type info modal
+  const ttModal = document.getElementById("train-type-modal") as HTMLElement;
+  document.getElementById("train-type-info-btn")?.addEventListener("click", () => {
+    ttModal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  });
+  const closeTtModal = () => {
+    ttModal.style.display = "none";
+    document.body.style.overflow = "";
+  };
+  document.getElementById("train-type-modal-close")?.addEventListener("click", closeTtModal);
+  ttModal.addEventListener("click", (e) => { if (e.target === ttModal) closeTtModal(); });
 
   // Max-delay stat card click
   document.getElementById("sc-max")?.addEventListener("click", () => {
