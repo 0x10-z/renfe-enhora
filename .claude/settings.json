@@ -26,7 +26,24 @@
       "Bash(node -e \"process.stdout.write\\(''test\\\\n''\\);\")",
       "Bash(node -e \"const fs=require\\(''fs''\\); try { const raw=fs.readFileSync\\(''d:/Workroot/renfe-enhora/renfe-enhora/public/data/ave-larga-distancia/history.json'',''utf8''\\); process.stdout.write\\(''len=''+raw.length+''\\\\n''\\); } catch\\(e\\) { process.stdout.write\\(''ERR: ''+e.message+''\\\\n''\\); }\")",
       "Bash(node -e \"try{const fs=require\\(''fs''\\);const raw=fs.readFileSync\\(''d:/Workroot/renfe-enhora/renfe-enhora/public/data/ave-larga-distancia/history.json'',''utf8''\\);const data=JSON.parse\\(raw\\);process.stdout.write\\(''parsed ok, records=''+data.records.length+''\\\\n''\\);const ratio=272/717;data.records.forEach\\(r=>{if\\(r.trips===undefined&&r.total>0\\)r.trips=Math.round\\(r.total*ratio\\);}\\);fs.writeFileSync\\(''d:/Workroot/renfe-enhora/renfe-enhora/public/data/ave-larga-distancia/history.json'',JSON.stringify\\({records:data.records}\\)\\);process.stdout.write\\(''written\\\\n''\\);}catch\\(e\\){process.stdout.write\\(''ERROR: ''+String\\(e\\)+''\\\\n''\\);}\")",
-      "Bash(node -e \"const fs=require\\(''fs''\\);const d=JSON.parse\\(fs.readFileSync\\(''d:/Workroot/renfe-enhora/renfe-enhora/public/data/ave-larga-distancia/history.json'',''utf8''\\)\\);process.stdout.write\\(d.records.slice\\(-5\\).map\\(r=>r.ts+'' trips=''+r.trips\\).join\\(''\\\\n''\\)+''\\\\n''\\);\")"
+      "Bash(node -e \"const fs=require\\(''fs''\\);const d=JSON.parse\\(fs.readFileSync\\(''d:/Workroot/renfe-enhora/renfe-enhora/public/data/ave-larga-distancia/history.json'',''utf8''\\)\\);process.stdout.write\\(d.records.slice\\(-5\\).map\\(r=>r.ts+'' trips=''+r.trips\\).join\\(''\\\\n''\\)+''\\\\n''\\);\")",
+      "Bash(source venv/Scripts/activate)",
+      "Bash(python -m scripts.main)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.keys\\(\\)\\)\\); print\\(json.dumps\\(list\\(d.get\\(''''by_train_type'''',{}\\).items\\(\\)\\)[:3], indent=2, ensure_ascii=False\\)\\)\")",
+      "Bash(touch ave/s100.fake ave/s102.fake ave/s103.fake ave/s112.fake)",
+      "Bash(touch avlo/s106.fake)",
+      "Bash(touch alvia/s120.fake alvia/s121.fake alvia/s130.fake)",
+      "Bash(touch avant/s104.fake avant/s114.fake)",
+      "Bash(touch md/s449.fake md/s450.fake md/s592.fake md/s594.fake md/s598.fake)",
+      "Bash(ls d:/Workroot/renfe-enhora/renfe-enhora/public/trenes/*.webp)",
+      "Bash(rm public/trenes/ave/s112.fake)",
+      "Bash(rm public/trenes/avlo/s106.fake)",
+      "Bash(rm public/trenes/alvia/s120.fake)",
+      "Bash(rm public/trenes/avant/s114.fake)",
+      "Bash(rm public/trenes/md/s449.fake)",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Renfe+596+diesel&srnamespace=6&format=json&srlimit=3\")",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(r[''''title'''']\\) for r in data[''''query''''][''''search'''']]\")",
+      "WebFetch(domain:commons.wikimedia.org)"
     ]
   }
 }
