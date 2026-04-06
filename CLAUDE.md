@@ -71,9 +71,9 @@ Vercel build → enhora.info
 
 **Delay classification thresholds (config.py):**
 
-- `≤60s` → `en_hora`
-- `61–300s` → `retraso_leve`
-- `>300s` → `retraso_alto`
+- `≤300s` → `en_hora`
+- `301–600s` → `retraso_leve`
+- `>600s` → `retraso_alto`
 - `-1` → `cancelado`
 
 ### Generated JSON (`public/data/{service}/`)

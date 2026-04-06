@@ -46,7 +46,7 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 
 | # | Feature | Dificultad | Estado | Área |
 | --- | --- | --- | --- | --- |
-| 1 | Recategorizar umbrales de retraso (5 min = en hora) | Fácil | UI ✓ — Pipeline pendiente | Pipeline + Frontend |
+| 1 | Recategorizar umbrales de retraso (5 min = en hora) | Fácil | ✓ Completado | Pipeline + Frontend |
 | 2 | Tipo de tren: ranking de retrasos acumulados (cada tipo separado) | Media | Pendiente | Pipeline + Frontend |
 | 3 | Zonas geográficas (dos niveles: Núcleos Cercanías + CCAA) | Media | Pendiente | Pipeline + Frontend |
 | 4 | Peores conexiones: rutas completas con todas las paradas | Difícil | Pendiente | Pipeline + Frontend |
@@ -64,7 +64,7 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 
 ## Feature 1 — Recategorizar umbrales de retraso
 
-> Dificultad: Fácil — UI completada ✓ — Pipeline pendiente
+> Dificultad: Fácil — ✓ COMPLETADO
 
 ### Cambio de umbrales
 
@@ -77,11 +77,11 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 
 ### Archivos a modificar
 
-- `scripts/config.py` — constantes `DELAY_THRESHOLDS` (único punto de verdad) ⬜
-- `scripts/processing/merger.py` — verificar que lee de config y no tiene valores hardcodeados ⬜
-- `scripts/processing/insights.py` — revisar umbrales de insights B (≥15 min) y C (30% delay ratio) ⬜
+- `scripts/config.py` — constantes `DELAY_THRESHOLDS` (único punto de verdad) ✅
+- `scripts/processing/merger.py` — ya lee de config, sin valores hardcodeados ✅
+- `scripts/processing/insights.py` — umbrales B (≥15 min) y C (30%) son independientes, sin cambios ✅
 - `src/components/StationBoard.astro` — badges actualizados a "5-10 min" y "+10 min" ✅
-- `src/pages/index.astro` — leyenda de estados si existe ⬜
+- `src/pages/index.astro` — sin leyenda de umbrales, no aplica ✅
 - `src/pages/sobre.astro` — umbrales y descripción de limitaciones actualizados ✅
 
 ### Decisión sobre histórico
@@ -432,7 +432,7 @@ Añadida sección `07 · Equipo` en `sobre.astro` con tarjetas para Iker Ocio (E
 ## Dependencias entre features
 
 ```text
-[1] Umbrales          → base para todos los demás        (UI ✓, pipeline ⬜)
+[1] Umbrales          → base para todos los demás        (completado ✓)
 [2] Tipo de tren      → necesario para [4] y [5]         (pendiente)
 [3] Zonas             → necesario para [4] y [5]         (pendiente)
 [4] Rutas             → necesario para [5]               (pendiente)

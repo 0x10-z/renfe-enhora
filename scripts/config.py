@@ -8,9 +8,9 @@ CACHE_DIR = BASE_DIR / ".cache" / "gtfs"
 
 # Processing thresholds (shared across all services)
 LOOKAHEAD_MINUTES = 60
-ON_TIME_THRESHOLD_SEC = 60       # <= 1 min  → en_hora
-DELAY_LEVE_MAX_SEC = 5 * 60      # <= 5 min  → retraso_leve
-                                  # >  5 min  → retraso_alto
+ON_TIME_THRESHOLD_SEC = 5 * 60   # <= 5 min  → en_hora
+DELAY_LEVE_MAX_SEC = 10 * 60     # <= 10 min → retraso_leve
+                                  # >  10 min → retraso_alto
 
 # HTTP
 REQUEST_TIMEOUT = 30
