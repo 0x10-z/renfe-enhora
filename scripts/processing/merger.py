@@ -257,14 +257,22 @@ def _load_routes(gtfs_dir: Path) -> Dict[str, str]:
 
 
 def _classify_train_type(trip_short_name: str, route_short_name: str) -> str:
-    """Return a human-readable train type label for a given trip."""
-    name = (trip_short_name or route_short_name or "").strip().upper()
-    for prefix, label in TRAIN_TYPE_PREFIXES:
-        if name.startswith(prefix):
-            return label
-    # Cercanías lines: C1, C2, … C10, etc.
-    if len(name) >= 2 and name[0] == "C" and name[1].isdigit():
-        return "Cercanías"
+    """Return a human-readable train type label for a given trip.
+
+    Tries trip_short_name first, then route_short_name.
+    In Renfe GTFS, trip_short_name is often just a numeric code (e.g. "13905")
+    while route_short_name carries the type prefix (e.g. "MD", "AVE").
+    """
+    for candidate in [trip_short_name, route_short_name]:
+        name = (candidate or "").strip().upper()
+        if not name:
+            continue
+        for prefix, label in TRAIN_TYPE_PREFIXES:
+            if name.startswith(prefix):
+                return label
+        # Cercanías lines: C1, C2, … C10, etc.
+        if len(name) >= 2 and name[0] == "C" and name[1].isdigit():
+            return "Cercanías"
     return "Otros"
 
 
