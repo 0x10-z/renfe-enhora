@@ -4,6 +4,7 @@ import StatCard from "../components/StatCard.astro";
 import InsightModal from "../components/modals/InsightModal.astro";
 import StationModal from "../components/modals/StationModal.astro";
 import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
+import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astro";
 ---
 
 <Layout title="Tablero de Llegadas">
@@ -155,6 +156,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
               <span class="tt-badge tt-ave">AVE</span>
               <span class="tt-name">Alta Velocidad Española</span>
             </div>
+            <div class="tt-photo">
+              <img src="/trenes/ave/s112.webp" alt="AVE serie 112 – Siemens Velaro E" class="tt-train-img" loading="lazy" onerror="this.closest('.tt-photo').style.display='none'" />
+            </div>
             <p class="tt-desc">Trenes de alta velocidad que circulan por vías exclusivas a más de 250 km/h. Son los más rápidos de la red y conectan las principales ciudades.</p>
             <div class="tt-meta">
               <span class="tt-label">Series habituales</span>
@@ -170,6 +174,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
             <div class="tt-header">
               <span class="tt-badge tt-avlo">AVLO</span>
               <span class="tt-name">AVE Low Cost</span>
+            </div>
+            <div class="tt-photo">
+              <img src="/trenes/avlo/s106.webp" alt="AVLO serie 106 – Talgo Avril" class="tt-train-img" loading="lazy" onerror="this.closest('.tt-photo').style.display='none'" />
             </div>
             <p class="tt-desc">Versión de bajo coste del AVE. Utiliza la misma infraestructura de alta velocidad pero con tarifas más reducidas y servicios más básicos a bordo.</p>
             <div class="tt-meta">
@@ -187,6 +194,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
               <span class="tt-badge tt-alvia">Alvia</span>
               <span class="tt-name">Alta Velocidad + Larga Distancia</span>
             </div>
+            <div class="tt-photo">
+              <img src="/trenes/alvia/s120.webp" alt="Alvia serie 120" class="tt-train-img" loading="lazy" onerror="this.closest('.tt-photo').style.display='none'" />
+            </div>
             <p class="tt-desc">Trenes de velocidad media-alta (hasta 250 km/h) que pueden circular tanto por vías de alta velocidad como por vías convencionales, gracias a su sistema de cambio de ancho. Esto les permite llegar a ciudades no conectadas directamente por la red AVE.</p>
             <div class="tt-meta">
               <span class="tt-label">Series habituales</span>
@@ -202,6 +212,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
             <div class="tt-header">
               <span class="tt-badge tt-avant">Avant</span>
               <span class="tt-name">AVE Regional de Corta Distancia</span>
+            </div>
+            <div class="tt-photo">
+              <img src="/trenes/avant/s114.webp" alt="Avant serie 114" class="tt-train-img" loading="lazy" onerror="this.closest('.tt-photo').style.display='none'" />
             </div>
             <p class="tt-desc">Servicio de alta velocidad para trayectos cortos sobre la red de alta velocidad. Son más económicos que el AVE y sirven recorridos de menos de 200 km entre ciudades próximas.</p>
             <div class="tt-meta">
@@ -219,6 +232,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
               <span class="tt-badge tt-md">MD</span>
               <span class="tt-name">Media Distancia</span>
             </div>
+            <div class="tt-photo">
+              <img src="/trenes/md/s449.webp" alt="Media Distancia serie 449" class="tt-train-img" loading="lazy" onerror="this.closest('.tt-photo').style.display='none'" />
+            </div>
             <p class="tt-desc">Trenes convencionales que conectan capitales de provincia y ciudades medianas. Circulan por vías convencionales a velocidades menores que el AVE. Su flota es más moderna que la Regional y cubre recorridos de entre 100 y 400 km.</p>
             <div class="tt-meta">
               <span class="tt-label">Series habituales</span>
@@ -234,6 +250,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
             <div class="tt-header">
               <span class="tt-badge tt-reg">Regional</span>
               <span class="tt-name">Tren Regional</span>
+            </div>
+            <div class="tt-photo">
+              <img src="/trenes/regional/s596.webp" alt="Regional serie 596" class="tt-train-img" loading="lazy" onerror="this.closest('.tt-photo').style.display='none'" />
             </div>
             <p class="tt-desc">Servicio regional de corta y media distancia que conecta poblaciones más pequeñas con capitales de provincia. Más paradas que Media Distancia, recorridos más cortos y velocidades más bajas. Suele usar material rodante más antiguo.</p>
             <div class="tt-meta">
@@ -251,6 +270,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
               <span class="tt-badge tt-ld">LD</span>
               <span class="tt-name">Larga Distancia</span>
             </div>
+            <div class="tt-photo">
+              <img src="/trenes/ld/s252.webp" alt="Larga Distancia – Talgo 252" class="tt-train-img" loading="lazy" onerror="this.closest('.tt-photo').style.display='none'" />
+            </div>
             <p class="tt-desc">Trenes de largo recorrido en vías convencionales, con servicios nocturnos y diurnos. Incluye los Intercity y Talgo. Más lentos que el AVE pero con paradas en ciudades intermedias y tarifas más variadas.</p>
             <div class="tt-meta">
               <span class="tt-label">Series habituales</span>
@@ -266,6 +288,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
             <div class="tt-header">
               <span class="tt-badge tt-c">Cercanías</span>
               <span class="tt-name">Trenes de Cercanías</span>
+            </div>
+            <div class="tt-photo">
+              <img src="/trenes/cercanias/s447.webp" alt="Cercanías serie 447" class="tt-train-img" loading="lazy" onerror="this.closest('.tt-photo').style.display='none'" />
             </div>
             <p class="tt-desc">Red de trenes de cercanías que conecta el núcleo urbano con los municipios del área metropolitana. Alta frecuencia, muchas paradas y recorridos cortos. Tarifas integradas con el transporte urbano en muchas ciudades.</p>
             <div class="tt-meta">
@@ -345,6 +370,7 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
   <InsightModal />
   <StationModal />
   <TrainViewerModal />
+  <TrainTypeDetailModal />
 
 </Layout>
 
@@ -724,6 +750,22 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
   :global(.tt-reg)   { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
   :global(.tt-ld)    { background: #fef9c3; color: #854d0e; }
   :global(.tt-c)     { background: var(--accent-bg); color: var(--accent); }
+  :global(.tt-photo) {
+    width: 100%;
+    margin: 0.4rem 0 0.5rem;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-sub);
+    aspect-ratio: 16 / 7;
+  }
+  :global(.tt-train-img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
   :global(.tt-name) {
     font-size: 0.8rem;
     font-weight: 600;
@@ -878,6 +920,9 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
   }
   :global(.cancelled-row td) { opacity: 0.55; }
   :global(#modal-arrivals-body tr) { cursor: pointer; }
+  :global(.station-name-cell) {
+    font-size: 0.78rem; color: var(--text-muted); white-space: nowrap;
+  }
 
   /* Chips (modal header) */
   :global(.chip) {
@@ -1260,6 +1305,7 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
   import { renderHistory, renderTrainTypes } from "../lib/chart";
   import { openModal, closeModal, closeTrainViewer, openTrainViewer } from "../lib/stationModal";
   import { renderInsights, openInsightDrilldown, closeInsightModal } from "../lib/insightModal";
+  import { closeTrainTypeDetail, invalidateTypeDetailCache } from "../lib/trainTypeDetailModal";
   import { filterAndRender, showNoData } from "../lib/stations";
   import { initMap, loadGeoIfNeeded, renderMapMarkers } from "../lib/map";
 
@@ -1285,6 +1331,7 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
         btn.classList.add("active");
         state.allStations = [];
         resetStats();
+        invalidateTypeDetailCache();
         const searchInput = document.getElementById("station-search") as HTMLInputElement | null;
         if (searchInput) searchInput.value = "";
         loadDashboard();
@@ -1490,6 +1537,12 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     if (e.target === document.getElementById("train-viewer-modal")) closeTrainViewer();
   });
 
+  // Train type drilldown modal
+  document.getElementById("tt-detail-close")!.addEventListener("click", closeTrainTypeDetail);
+  document.getElementById("tt-detail-modal")!.addEventListener("click", (e) => {
+    if (e.target === document.getElementById("tt-detail-modal")) closeTrainTypeDetail();
+  });
+
   // Escape key (topmost modal first)
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
@@ -1497,9 +1550,11 @@ import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
     const stModal = document.getElementById("station-modal") as HTMLElement;
     const inModal = document.getElementById("insight-modal") as HTMLElement;
     const ttInfoModal = document.getElementById("train-type-modal") as HTMLElement;
+    const ttDetailModal = document.getElementById("tt-detail-modal") as HTMLElement;
     if (tvModal.style.display !== "none") closeTrainViewer();
     else if (stModal.style.display !== "none") closeModal();
     else if (inModal.style.display !== "none") closeInsightModal();
+    else if (ttDetailModal.style.display !== "none") closeTrainTypeDetail();
     else if (ttInfoModal.style.display !== "none") { ttInfoModal.style.display = "none"; document.body.style.overflow = ""; }
   });
 

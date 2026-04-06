@@ -203,6 +203,54 @@ def write_raw_events(station_data: StationData, service: ServiceConfig) -> None:
     log.info(f"[{service.label}] Raw events appended — {len(events)} events → {raw_path.name}")
 
 
+def write_by_type_arrivals(station_data: StationData, service: ServiceConfig) -> None:
+    """
+    Write per-train-type arrival lists to public/data/{service}/by_type_arrivals.json.
+    Includes only arrivals with delay > 0 or status=cancelado, enriched with stop info,
+    sorted by delay descending. Capped at 200 entries per type to keep the file small.
+    """
+    from collections import defaultdict
+    MAX_PER_TYPE = 200
+
+    by_type: Dict[str, list] = defaultdict(list)
+
+    for stop_id, data in station_data.items():
+        stop_name = data["name"]
+        for arr in data.get("arrivals", []):
+            status = arr.get("status")
+            delay_min = arr.get("delay_min") or 0
+            if delay_min <= 0 and status != "cancelado":
+                continue
+            train_type = arr.get("train_type") or "Otros"
+            by_type[train_type].append({
+                "train_name":     arr.get("train_name", ""),
+                "headsign":       arr.get("headsign", ""),
+                "origin":         arr.get("origin", ""),
+                "stop_id":        stop_id,
+                "stop_name":      stop_name,
+                "scheduled_time": arr.get("scheduled_time", ""),
+                "estimated_time": arr.get("estimated_time"),
+                "delay_min":      delay_min,
+                "status":         status,
+            })
+
+    # Sort each type by delay desc, cap at MAX_PER_TYPE
+    result = {
+        t: sorted(arrivals, key=lambda x: -(x["delay_min"] or 0))[:MAX_PER_TYPE]
+        for t, arrivals in by_type.items()
+    }
+
+    path = service.data_dir / "by_type_arrivals.json"
+    path.write_text(
+        json.dumps({
+            "generated_at": datetime.now(_TZ_MADRID).isoformat(timespec="seconds"),
+            "by_type": result,
+        }, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    log.info(f"[{service.label}] Wrote by_type_arrivals — {sum(len(v) for v in result.values())} entries across {len(result)} types")
+
+
 def write_insights(insights: list, service: ServiceConfig) -> None:
     """Write computed insights to public/data/{service}/insights.json."""
     path = service.data_dir / "insights.json"

@@ -1,5 +1,6 @@
 import * as echarts from "echarts";
 import { state } from "./store";
+import { openTrainTypeDetail } from "./trainTypeDetailModal";
 
 export const CHART_COLORS = {
   delayed:  "#dc2626",
@@ -488,6 +489,16 @@ export function renderTrainTypes(byType: Record<string, any>) {
       },
     ],
   }, true);
+
+  // Click on any bar → open drilldown modal for that train type
+  state.trainTypeChart.off("click");
+  state.trainTypeChart.on("click", (params: any) => {
+    const typeName = names[params.dataIndex];
+    if (typeName) openTrainTypeDetail(typeName);
+  });
+  // Cursor hint
+  const el2 = document.getElementById("echart-train-type")!;
+  el2.style.cursor = "pointer";
 }
 
 export function renderHeatmap() {
