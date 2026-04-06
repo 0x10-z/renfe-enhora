@@ -392,7 +392,7 @@ export function renderTrainTypes(byType: Record<string, any>) {
     const [name, v] = worst;
     narrativeEl.textContent =
       `El tipo de tren con más retrasos acumulados este periodo es ${name}, ` +
-      `con una media de ${v.avg_delay_min} min y un ${Math.round(v.delayed_pct * 100)}% de servicios afectados.`;
+      `con una media de ${v.avg_delay_min} min y un ${Math.round(v.delayed_pct * 100)}% de servicios con retraso.`;
   }
 
   const names = entries.map(([k]) => k);
@@ -419,11 +419,11 @@ export function renderTrainTypes(byType: Record<string, any>) {
         const i = params[0].dataIndex;
         const [name, v] = entries[i];
         const pct = Math.round(v.delayed_pct * 100);
-        return `<b>${name}</b><br/>${v.total} trenes · ${pct}% retrasados<br/>media ${v.avg_delay_min}m · máx ${v.max_delay_min}m`;
+        return `<b>${name}</b><br/>${v.total} trenes · ${pct}% con retraso<br/>media ${v.avg_delay_min}m · máx ${v.max_delay_min}m`;
       },
     },
     legend: {
-      data: ["En hora", "Retrasados", "Cancelados"],
+      data: ["En hora", "Con retraso", "Cancelados"],
       bottom: 0,
       textStyle: { color: CHART_COLORS.text, fontSize: 11 },
       icon: "roundRect",
@@ -456,7 +456,7 @@ export function renderTrainTypes(byType: Record<string, any>) {
         label: { show: false },
       },
       {
-        name: "Retrasados",
+        name: "Con retraso",
         type: "bar",
         stack: "total",
         barMaxWidth: 28,
