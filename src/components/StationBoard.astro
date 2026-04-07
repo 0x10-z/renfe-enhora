@@ -110,6 +110,14 @@ const locationLabel = meta
     </div>
   </div>
 
+    <div id="station-history-section" class="station-history-section" style="display:none">
+      <div class="section-header-sm">
+        <h3>Últimos 7 días</h3>
+        <span class="section-sub">% de llegadas con retraso por día</span>
+      </div>
+      <div id="echart-station-history" style="height:120px;width:100%"></div>
+    </div>
+
     <div class="train-preview" id="train-preview" style="display:none">
       <div class="train-preview-img-wrap">
         <img id="train-preview-image" class="train-preview-image" src="" alt="Serie aproximada del tren" loading="lazy" />
@@ -300,6 +308,23 @@ const locationLabel = meta
     height: 100%; background: var(--accent); width: 100%;
     transform-origin: left; transition: transform linear;
   }
+
+  /* Station history chart */
+  .station-history-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-header-sm {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+  .section-header-sm h3 { font-size: 0.85rem; font-weight: 600; margin: 0; }
+  .section-sub { font-size: 0.72rem; color: var(--text-muted); }
 
   /* Board */
   .board-wrap {
@@ -775,9 +800,95 @@ const locationLabel = meta
     }
   });
 
+  // ── Station history chart ───────────────────────────────────────────────────
+  async function loadStationHistory() {
+    const section = document.getElementById("station-history-section") as HTMLElement;
+    const chartEl = document.getElementById("echart-station-history") as HTMLElement;
+    if (!section || !chartEl) return;
+
+    // Fetch last 7 days of station-history files
+    const dates: string[] = [];
+    const now = new Date();
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      dates.push(d.toISOString().slice(0, 10));
+    }
+
+    const dayData: { date: string; pct: number | null }[] = [];
+    await Promise.all(dates.map(async (date) => {
+      try {
+        const res = await fetch(`/data/${dataService}/station-history/${date}.json`);
+        if (!res.ok) { dayData.push({ date, pct: null }); return; }
+        const json = await res.json();
+        // Sum across all snapshots for this station
+        let totalSum = 0, delayedSum = 0;
+        for (const snap of json.snapshots ?? []) {
+          const st = (snap.st ?? []).find((s: any) => s.id === id);
+          if (st) { totalSum += st.t ?? 0; delayedSum += st.d ?? 0; }
+        }
+        dayData.push({ date, pct: totalSum > 0 ? Math.round(delayedSum / totalSum * 100) : 0 });
+      } catch {
+        dayData.push({ date, pct: null });
+      }
+    }));
+
+    // Sort by date
+    dayData.sort((a, b) => a.date.localeCompare(b.date));
+    const hasData = dayData.some(d => d.pct !== null);
+    if (!hasData) return;
+
+    section.style.display = "";
+
+    const { init } = await import("echarts");
+    const chart = init(chartEl, undefined, { renderer: "canvas" });
+    new ResizeObserver(() => chart.resize()).observe(chartEl);
+
+    chart.setOption({
+      backgroundColor: "transparent",
+      grid: { left: 32, right: 8, top: 8, bottom: 20 },
+      tooltip: {
+        trigger: "axis",
+        backgroundColor: "#111827",
+        borderColor: "#111827",
+        textStyle: { color: "#fff", fontSize: 11, fontFamily: "JetBrains Mono, monospace" },
+        formatter: (p: any) => `${dayData[p[0].dataIndex].date.slice(5)}: ${p[0].value ?? "—"}% con retraso`,
+      },
+      xAxis: {
+        type: "category",
+        data: dayData.map(d => d.date.slice(5)),
+        axisLabel: { color: "#9ca3af", fontSize: 10 },
+        axisLine: { lineStyle: { color: "#e2e7f2" } },
+        axisTick: { show: false },
+      },
+      yAxis: {
+        type: "value",
+        min: 0,
+        max: 100,
+        axisLabel: { formatter: "{value}%", color: "#9ca3af", fontSize: 10 },
+        splitLine: { lineStyle: { color: "#e2e7f2" } },
+        axisLine: { show: false },
+        axisTick: { show: false },
+      },
+      series: [{
+        type: "bar",
+        data: dayData.map(d => d.pct),
+        barMaxWidth: 32,
+        itemStyle: {
+          color: (p: any) => {
+            const v = p.value ?? 0;
+            return v >= 30 ? "#dc2626" : v >= 10 ? "#d97706" : "#059669";
+          },
+          borderRadius: [3, 3, 0, 0],
+        },
+      }],
+    });
+  }
+
   load();
   startCountdown();
   setInterval(() => { load(); startCountdown(); }, REFRESH_INTERVAL);
+  loadStationHistory();
 
   // ── Mini map ────────────────────────────────────────────────────────────────
   const miniMapEl = document.getElementById("station-mini-map") as HTMLElement | null;

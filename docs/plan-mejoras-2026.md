@@ -52,15 +52,15 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 | 3 | Zonas geográficas: CCAA + núcleos, mapa coropleta, modal de detalle | Media | ✓ Completado | Pipeline + Frontend |
 | 4 | Peores conexiones: rutas completas con todas las paradas | Difícil | Pendiente | Pipeline + Frontend |
 | 5 | Comparativa zonas: abandonadas vs bien servidas (narrativa automática) | Difícil | Pendiente | Pipeline + Frontend |
-| 6 | Almacenamiento de datos en crudo para análisis futuros | Media | ✓ Completado | Pipeline |
+| 6 | Almacenamiento histórico en Parquet (snapshots, arrivals, stations, by_type, by_ccaa) | Media | ✓ Completado | Pipeline |
 | 7 | Cron cada 5 minutos | Fácil | ✓ Completado | Infra |
 | 8 | Desacoplar pipeline de Vercel (run_pipeline.sh / push_to_git.sh) | Fácil | ✓ Completado | Infra |
 | 9 | Sección equipo en sobre.astro | Fácil | ✓ Completado | Frontend |
 | 10 | Imágenes reales de trenes por tipo (WebP desde Wikimedia Commons) | Fácil | ✓ Completado | Frontend |
-| 11 | Histórico por estación: gráfico de tendencia en página de detalle | Media | Pendiente | Frontend |
+| 11 | Histórico por estación: gráfico de tendencia en página de detalle | Media | ✓ Completado | Frontend |
 | 12 | Ranking de rutas/líneas con más retrasos | Media | Pendiente | Pipeline + Frontend |
-| 13 | SEO / OpenGraph: meta tags dinámicos por servicio | Fácil | Pendiente | Frontend |
-| 14 | Página de tendencias históricas (semana vs fin de semana, por tipo de tren) | Media | Pendiente | Frontend |
+| 13 | SEO / OpenGraph: meta tags dinámicos por servicio | Fácil | ✓ Completado | Frontend |
+| 14 | Tendencias históricas: weekday vs weekend + evolución por tipo de tren | Media | ✓ Completado | Frontend |
 | 15 | Alertas por umbral: insight cuando una zona/línea supera su media histórica | Media | Pendiente | Pipeline |
 
 **Alcance:** Cercanías + AVE/Larga Distancia en todos los features.
@@ -257,14 +257,19 @@ El campo `trend` usa regresión lineal sobre los últimos N registros histórico
 
 ---
 
-## Feature 6 — Almacenamiento de datos en crudo
+## Feature 6 — Almacenamiento histórico en Parquet
 
 > Dificultad: Media — ✓ COMPLETADO
 
-- `public/data/{service}/raw/YYYY-MM.json` — NDJSON mensual, append-only
-- Solo arrivals con `delay_min > 0` o `status = cancelado`
-- Excluido de git (`.gitignore`), solo en VPS
-- Habilita: análisis de patrones por hora/día, detección de incidentes, exportación CSV
+- `data/snapshots/snapshots.parquet` — 1 fila por ejecución, métricas globales
+- `data/arrivals/YYYY-MM.parquet` — todos los arrivals (completo, no solo retrasados)
+- `data/stations/YYYY-MM.parquet` — resumen por estación por snapshot
+- `data/by_type/history.parquet` — histórico por tipo de tren
+- `data/by_ccaa/history.parquet` — histórico por CCAA
+- Compresión zstd, ~15-25 MB/mes para arrivals
+- Incluido en git. README de esquema en cada carpeta.
+- `scripts/output/parquet_writer.py` — writer con schemas tipados
+- `push_to_git.sh` actualizado para incluir `data/` en commit y diff
 
 ---
 
@@ -304,17 +309,13 @@ Sección `08 · Equipo` en `sobre.astro` con tarjetas para Iker Ocio y Jorge Bu�
 
 ## Feature 11 — Histórico por estación
 
-> Dificultad: Media — **PENDIENTE**
+> Dificultad: Media — ✓ COMPLETADO
 
-### Objetivo
-
-La página de detalle de estación (`/cercanias/[id]`, `/ave-larga-distancia/[id]`) actualmente muestra solo el tiempo real del momento actual. Los datos históricos diarios ya se generan en `station-history/YYYY-MM-DD.json` — solo falta exponerlos en el frontend.
-
-### Propuesta
-
-- Gráfico de línea (ECharts) en la página de detalle mostrando `% retrasos` y `max_delay` de los últimos 7 días
-- Datos disponibles: `station-history/YYYY-MM-DD.json` → `snapshots[].st[{id, t, d, mx}]`
-- Sin cambios en pipeline — los datos ya están
+- Gráfico de barras ECharts en `StationBoard.astro` mostrando `% retrasos` últimos 7 días
+- Lee `station-history/YYYY-MM-DD.json` (7 ficheros en paralelo con `Promise.all`)
+- Color por umbral: verde <10%, naranja 10-30%, rojo ≥30%
+- Se muestra solo si hay datos disponibles
+- Sin cambios en pipeline
 
 ---
 
@@ -336,27 +337,24 @@ F4 extrae el recorrido completo parada a parada. Esta versión simplificada solo
 
 ## Feature 13 — SEO / OpenGraph
 
-> Dificultad: Fácil — **PENDIENTE**
+> Dificultad: Fácil — ✓ COMPLETADO
 
-- Meta tags `og:title`, `og:description`, `og:image` en `Layout.astro`
-- Imagen de preview estática por servicio (screenshot del dashboard)
-- `<meta name="description">` descriptivo en `index.astro` y `sobre.astro`
-- URL canónica
+- `Layout.astro` acepta props `ogImage`, `ogUrl`, `ogType`
+- Meta tags `og:title`, `og:description`, `og:image`, `og:url`, `og:locale`, `og:site_name`
+- Twitter Card: `summary_large_image`
+- `<link rel="canonical">` con URL configurable
+- Description por defecto descriptiva con keywords
 
 ---
 
-## Feature 14 — Página de tendencias históricas
+## Feature 14 — Tendencias históricas
 
-> Dificultad: Media — **PENDIENTE**
+> Dificultad: Media — ✓ COMPLETADO
 
-### Propuesta
-
-Página `src/pages/tendencias.astro` o sección desplegable en el dashboard con:
-
-- Comparativa laborable vs fin de semana (ya calculable desde `history.json` con el campo `date`)
-- Evolución por tipo de tren a lo largo del tiempo (`by_type` está en `history.json`)
-- Heatmap hora × día de la semana (ya implementado en la vista de heatmap del gráfico principal, ampliar)
-- Sin cambios en pipeline — todos los datos necesarios ya están en `history.json`
+- Sección `#tendencias-section` en `index.astro`, visible cuando hay ≥7 registros históricos
+- `renderWeekdayStats(records)` — tarjetas laborables vs fin de semana (% retraso + media)
+- `renderTrainTypeHistory(records)` — gráfico multi-línea ECharts con evolución por tipo de tren (últimos 60 días)
+- Sin cambios en pipeline — datos tomados de `history.json`
 
 ---
 
@@ -398,10 +396,10 @@ Se mostraría con `severity: "high"` en el panel de insights, destacado visualme
 ## Orden de implementación sugerido
 
 ```text
-Sprint 3 — Quick wins (1–2 días)
-  ├── [13] SEO / OpenGraph — impacto de visibilidad inmediato
-  ├── [11] Histórico estación — datos listos, solo frontend
-  └── [14] Tendencias históricas — datos listos, solo frontend
+Sprint 3 — Quick wins ✓ COMPLETADO
+  ├── [13] SEO / OpenGraph ✓
+  ├── [11] Histórico estación ✓
+  └── [14] Tendencias históricas ✓
 
 Sprint 4 — Análisis de rutas (3–5 días)
   ├── [12] Ranking rutas simplificado — reutiliza infraestructura existente

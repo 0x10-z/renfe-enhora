@@ -2,12 +2,20 @@
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  ogUrl?: string;
+  ogType?: string;
 }
 
 const {
   title,
-  description = "Tablero en tiempo real de llegadas y retrasos Renfe",
+  description = "Tablero en tiempo real de llegadas y retrasos de Renfe. Cercanías y AVE/Larga Distancia. Datos actualizados cada hora.",
+  ogImage = "/og-preview.png",
+  ogUrl = "https://enhora.info",
+  ogType = "website",
 } = Astro.props;
+
+const fullTitle = `${title} · enhora.info`;
 ---
 
 <!doctype html>
@@ -16,7 +24,22 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <title>{title} · enhora.info</title>
+    <title>{fullTitle}</title>
+    <!-- OpenGraph -->
+    <meta property="og:type"        content={ogType} />
+    <meta property="og:title"       content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image"       content={ogImage} />
+    <meta property="og:url"         content={ogUrl} />
+    <meta property="og:locale"      content="es_ES" />
+    <meta property="og:site_name"   content="enhora.info" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={ogImage} />
+    <!-- Canonical -->
+    <link rel="canonical" href={ogUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

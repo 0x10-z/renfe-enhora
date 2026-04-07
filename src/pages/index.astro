@@ -136,6 +136,14 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
     </section>
 
     <!-- Zones section -->
+    <section class="tendencias-section" id="tendencias-section" style="display:none">
+      <div class="section-header">
+        <h2>Tendencias históricas</h2>
+      </div>
+      <div id="weekday-stats" class="weekday-stats" style="display:none"></div>
+      <div id="echart-type-history" style="width:100%;display:none"></div>
+    </section>
+
     <section class="zones-section" id="zones-section" style="display:none">
       <div class="section-header">
         <h2>Por comunidad autónoma</h2>
@@ -700,6 +708,24 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
   }
 
   /* Zones section */
+  .tendencias-section { margin-bottom: 2.5rem; }
+  .weekday-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 480px) { .weekday-stats { grid-template-columns: 1fr; } }
+  .weekday-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .weekday-card-title { font-size: 0.78rem; color: var(--text-sub); margin-bottom: 0.4rem; }
+  .weekday-stat { font-size: 1.6rem; font-weight: 700; font-family: "JetBrains Mono", monospace; color: var(--text); }
+  .weekday-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
+
   .zones-section { margin-bottom: 2.5rem; }
   .zones-row {
     display: grid;
@@ -1370,7 +1396,7 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
 <script>
   import { state } from "../lib/store";
   import { setText, setValueWithUnit, timeAgo } from "../lib/utils";
-  import { renderHistory, renderTrainTypes } from "../lib/chart";
+  import { renderHistory, renderTrainTypes, renderWeekdayStats, renderTrainTypeHistory } from "../lib/chart";
   import { openModal, closeModal, closeTrainViewer, openTrainViewer } from "../lib/stationModal";
   import { renderInsights, openInsightDrilldown, closeInsightModal } from "../lib/insightModal";
   import { closeTrainTypeDetail, invalidateTypeDetailCache } from "../lib/trainTypeDetailModal";
@@ -1431,7 +1457,10 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
     document.getElementById("history-section")!.style.display = "none";
     document.getElementById("insights-section")!.style.display = "none";
     document.getElementById("train-type-section")!.style.display = "none";
+    document.getElementById("tendencias-section")!.style.display = "none";
     document.getElementById("zones-section")!.style.display = "none";
+    state.typeHistoryChart?.dispose();
+    state.typeHistoryChart = null;
     destroyCcaaMap();
     state.ccaaBarChart?.dispose();
     state.ccaaBarChart = null;
@@ -1489,6 +1518,11 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
       const { records = [] } = await res.json();
       state.historyRecords = records;
       renderHistory();
+      if (records.length >= 7) {
+        document.getElementById("tendencias-section")!.style.display = "";
+        renderWeekdayStats(records);
+        renderTrainTypeHistory(records);
+      }
     } catch {
       // history not yet available — hide quietly
     }
