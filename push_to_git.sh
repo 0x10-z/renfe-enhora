@@ -13,14 +13,14 @@ cd "$REPO_DIR"
 mkdir -p logs
 
 # ── Comprobar si hay cambios en los datos ─────────────────────────────────────
-if git diff --quiet -- public/data/; then
-    echo "[push] $(date '+%H:%M:%S') Sin cambios en public/data/ — omitiendo commit" | tee -a "$LOG_FILE"
+if git diff --quiet -- public/data/ data/; then
+    echo "[push] $(date '+%H:%M:%S') Sin cambios en public/data/ ni data/ — omitiendo commit" | tee -a "$LOG_FILE"
     exit 0
 fi
 
 # ── Commit y push ─────────────────────────────────────────────────────────────
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M")
-git add public/data/
+git add public/data/ data/
 git commit -m "data: actualizar tablero ${TIMESTAMP}"
 
 echo "[push] $(date '+%H:%M:%S') Pushing a GitHub..." | tee -a "$LOG_FILE"
