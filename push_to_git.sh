@@ -25,6 +25,13 @@ fi
 echo "[push] $(date '+%H:%M:%S') git pull --rebase..." | tee -a "$LOG_FILE"
 git pull --rebase origin master 2>&1 | tee -a "$LOG_FILE"
 
+# ── Instalar dependencias nuevas si requirements.txt cambió ──────────────────
+if [ -f "$REPO_DIR/venv/bin/activate" ]; then
+    source "$REPO_DIR/venv/bin/activate"
+fi
+echo "[push] $(date '+%H:%M:%S') pip install -r requirements.txt..." | tee -a "$LOG_FILE"
+pip install -q -r "$REPO_DIR/requirements.txt" 2>&1 | tee -a "$LOG_FILE"
+
 # ── Push ─────────────────────────────────────────────────────────────────────
 echo "[push] $(date '+%H:%M:%S') Pushing a GitHub..." | tee -a "$LOG_FILE"
 git push origin master 2>&1 | tee -a "$LOG_FILE"
