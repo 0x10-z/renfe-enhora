@@ -12,6 +12,10 @@ LOG_FILE="$REPO_DIR/logs/push.log"
 cd "$REPO_DIR"
 mkdir -p logs
 
+# ── Sincronizar con remoto antes de commitear ────────────────────────────────
+echo "[push] $(date '+%H:%M:%S') git pull --rebase..." | tee -a "$LOG_FILE"
+git pull --rebase origin master 2>&1 | tee -a "$LOG_FILE"
+
 # ── Comprobar si hay cambios en los datos ─────────────────────────────────────
 if git diff --quiet -- public/data/ data/; then
     echo "[push] $(date '+%H:%M:%S') Sin cambios en public/data/ ni data/ — omitiendo commit" | tee -a "$LOG_FILE"
