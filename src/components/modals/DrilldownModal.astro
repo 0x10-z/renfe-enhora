@@ -1,0 +1,91 @@
+---
+/**
+ * Reusable drilldown modal shell.
+ *
+ * Props:
+ *   id          — base ID prefix; generates #{id}-modal, #{id}-title, #{id}-meta,
+ *                 #{id}-chips, #{id}-close, #{id}-body, #{id}-empty, #{id}-updated
+ *   defaultTitle — text shown in <h2> before JS sets the real value
+ *   columns      — array of <th> labels
+ *   showBadge    — when true, renders a <span id="{id}-badge" class="tt-badge"> before the title
+ *   emptyText    — custom "no data" message (optional)
+ */
+interface Props {
+  id:           string;
+  defaultTitle: string;
+  columns:      string[];
+  showBadge?:   boolean;
+  emptyText?:   string;
+}
+
+const {
+  id,
+  defaultTitle,
+  columns,
+  showBadge  = false,
+  emptyText  = "Sin retrasos registrados en la última captura.",
+} = Astro.props;
+
+const colspan = columns.length;
+---
+
+<div
+  id={`${id}-modal`}
+  class="modal-backdrop"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby={`${id}-title`}
+  style="display:none"
+>
+  <div class="modal-panel">
+
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        {showBadge && <span id={`${id}-badge`} class="tt-badge"></span>}
+        <div>
+          <h2 id={`${id}-title`}>{defaultTitle}</h2>
+          <p class="station-meta" id={`${id}-meta`}></p>
+        </div>
+      </div>
+      <div class="modal-header-right">
+        <div id={`${id}-chips`} class="summary-chips"></div>
+        <button
+          type="button"
+          class="modal-close"
+          id={`${id}-close`}
+          aria-label="Cerrar"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="board-wrap">
+        <table class="board">
+          <thead>
+            <tr>
+              {columns.map(col => <th>{col}</th>)}
+            </tr>
+          </thead>
+          <tbody id={`${id}-body`}></tbody>
+        </table>
+        <div id={`${id}-empty`} class="empty-state" style="display:none">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.25">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 12h8"/>
+          </svg>
+          <p>{emptyText}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <span id={`${id}-updated`} class="muted"></span>
+    </div>
+
+  </div>
+</div>
