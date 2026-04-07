@@ -6,6 +6,7 @@ import StationModal from "../components/modals/StationModal.astro";
 import TrainViewerModal from "../components/modals/TrainViewerModal.astro";
 import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astro";
 import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
+import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
 ---
 
 <Layout title="Tablero de Llegadas">
@@ -133,6 +134,14 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
         <p id="train-type-narrative" class="train-type-narrative"></p>
         <div id="echart-train-type" style="width:100%"></div>
       </div>
+    </section>
+
+    <!-- Route ranking section -->
+    <section class="route-section" id="route-section" style="display:none">
+      <div class="section-header">
+        <h2>Por línea / servicio</h2>
+      </div>
+      <div id="route-ranking" class="route-ranking"></div>
     </section>
 
     <!-- Zones section -->
@@ -404,6 +413,7 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
   <TrainViewerModal />
   <TrainTypeDetailModal />
   <CcaaDetailModal />
+  <RouteDetailModal />
 
 </Layout>
 
@@ -1391,15 +1401,32 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
     .modal-train-preview { margin-top: 0.65rem; gap: 0.55rem; padding-top: 0.7rem; }
     .modal-train-preview-img-wrap { width: 95px; height: 62px; }
   }
+
+  /* ── Route ranking ───────────────────────────────────────────────────────── */
+  .route-section { margin-top: 1.5rem; }
+  .route-ranking { overflow-x: auto; }
+  .route-ranking-table { width: 100%; }
+  .route-ranking-table thead th { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border); font-weight: 500; }
+  .route-ranking-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; }
+  .route-ranking-table tbody tr:last-child { border-bottom: none; }
+  .route-ranking-table tbody tr:hover { background: var(--bg-sub); }
+  .route-ranking-table td { padding: 0.45rem 0.6rem; vertical-align: middle; }
+  .route-bar-cell { width: 55%; min-width: 120px; }
+  .route-bar-wrap { display: flex; align-items: center; gap: 0.5rem; }
+  .route-bar-fill { height: 8px; border-radius: 4px; background: var(--accent); opacity: 0.75; min-width: 2px; flex-shrink: 0; }
+  .route-bar-label { font-size: 0.75rem; font-family: var(--font-mono); color: var(--text); white-space: nowrap; }
+  .route-stat-cell { font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted); white-space: nowrap; }
+  .route-total-cell { color: var(--text-sub); }
 </style>
 
 <script>
   import { state } from "../lib/store";
   import { setText, setValueWithUnit, timeAgo } from "../lib/utils";
-  import { renderHistory, renderTrainTypes, renderWeekdayStats, renderTrainTypeHistory } from "../lib/chart";
+  import { renderHistory, renderTrainTypes, renderWeekdayStats, renderTrainTypeHistory, renderRouteRanking } from "../lib/chart";
   import { openModal, closeModal, closeTrainViewer, openTrainViewer } from "../lib/stationModal";
   import { renderInsights, openInsightDrilldown, closeInsightModal } from "../lib/insightModal";
   import { closeTrainTypeDetail, invalidateTypeDetailCache } from "../lib/trainTypeDetailModal";
+  import { closeRouteDetail, invalidateRouteDetailCache } from "../lib/routeDetailModal";
   import { filterAndRender, showNoData } from "../lib/stations";
   import { initMap, loadGeoIfNeeded, renderMapMarkers } from "../lib/map";
   import { renderCcaaChoropleth, destroyCcaaMap, setCcaaClickHandler } from "../lib/ccaaMap";
@@ -1430,6 +1457,7 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
         resetStats();
         invalidateTypeDetailCache();
         invalidateCcaaDetailCache();
+        invalidateRouteDetailCache();
         const searchInput = document.getElementById("station-search") as HTMLInputElement | null;
         if (searchInput) searchInput.value = "";
         loadDashboard();
@@ -1457,6 +1485,7 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
     document.getElementById("history-section")!.style.display = "none";
     document.getElementById("insights-section")!.style.display = "none";
     document.getElementById("train-type-section")!.style.display = "none";
+    document.getElementById("route-section")!.style.display = "none";
     document.getElementById("tendencias-section")!.style.display = "none";
     document.getElementById("zones-section")!.style.display = "none";
     state.typeHistoryChart?.dispose();
@@ -1488,6 +1517,19 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
     }
   }
 
+  // ── Routes ─────────────────────────────────────────────────────────────────
+
+  async function loadRoutes() {
+    try {
+      const res = await fetch(`/data/${state.activeSvc}/by_route_arrivals.json?t=${Date.now()}`);
+      if (!res.ok) return;
+      const { routes = [] } = await res.json();
+      renderRouteRanking(routes);
+    } catch {
+      // routes not yet available
+    }
+  }
+
   // ── Data ───────────────────────────────────────────────────────────────────
 
   async function loadDashboard() {
@@ -1509,6 +1551,7 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
     loadHistory();
     loadInsights();
     loadZones();
+    loadRoutes();
   }
 
   async function loadHistory() {
@@ -1677,6 +1720,12 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
     if (e.target === document.getElementById("ccaa-detail-modal")) closeCcaaDetail();
   });
 
+  // Route drilldown modal
+  document.getElementById("route-detail-close")!.addEventListener("click", closeRouteDetail);
+  document.getElementById("route-detail-modal")!.addEventListener("click", (e) => {
+    if (e.target === document.getElementById("route-detail-modal")) closeRouteDetail();
+  });
+
   // Register CCAA map click handler
   setCcaaClickHandler(openCcaaDetail);
 
@@ -1689,11 +1738,13 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
     const ttInfoModal = document.getElementById("train-type-modal") as HTMLElement;
     const ttDetailModal = document.getElementById("tt-detail-modal") as HTMLElement;
     const ccaaDetailModal = document.getElementById("ccaa-detail-modal") as HTMLElement;
+    const routeDetailModal = document.getElementById("route-detail-modal") as HTMLElement;
     if (tvModal.style.display !== "none") closeTrainViewer();
     else if (stModal.style.display !== "none") closeModal();
     else if (inModal.style.display !== "none") closeInsightModal();
     else if (ttDetailModal.style.display !== "none") closeTrainTypeDetail();
     else if (ccaaDetailModal.style.display !== "none") closeCcaaDetail();
+    else if (routeDetailModal.style.display !== "none") closeRouteDetail();
     else if (ttInfoModal.style.display !== "none") { ttInfoModal.style.display = "none"; document.body.style.overflow = ""; }
   });
 

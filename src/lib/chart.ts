@@ -1,6 +1,7 @@
 import * as echarts from "echarts";
 import { state } from "./store";
 import { openTrainTypeDetail } from "./trainTypeDetailModal";
+import { openRouteDetail } from "./routeDetailModal";
 import { fmtDelay } from "./utils";
 
 export const CHART_COLORS = {
@@ -793,4 +794,75 @@ export function renderHeatmap() {
       emphasis: { itemStyle: { shadowBlur: 6, shadowColor: "rgba(0,0,0,0.25)" } },
     }],
   }, true);
+}
+
+// Maps pipeline train_type strings → CSS badge class suffix (mirrors trainTypeDetailModal)
+const TYPE_BADGE_CLASS: Record<string, string> = {
+  "AVE":             "ave",
+  "AVLO":            "avlo",
+  "Alvia":           "alvia",
+  "Avant":           "avant",
+  "Media Distancia": "md",
+  "Regional":        "reg",
+  "Larga Distancia": "ld",
+  "Cercanías":       "c",
+};
+
+export function renderRouteRanking(routes: any[]) {
+  const el      = document.getElementById("route-ranking") as HTMLElement | null;
+  const section = document.getElementById("route-section")  as HTMLElement | null;
+  if (!el || !section) return;
+
+  const top = routes
+    .filter(r => r.total > 0)
+    .sort((a, b) => b.delayed_pct - a.delayed_pct)
+    .slice(0, 15);
+
+  if (!top.length) {
+    section.style.display = "none";
+    return;
+  }
+
+  section.style.display = "block";
+
+  const maxPct = Math.max(...top.map(r => r.delayed_pct), 0.01);
+
+  const rows = top.map(r => {
+    const pct     = Math.round(r.delayed_pct * 100);
+    const barW    = Math.round((r.delayed_pct / maxPct) * 100);
+    const badgeCls = TYPE_BADGE_CLASS[r.train_type] ?? "reg";
+    const avgStr  = r.avg_delay_min > 0 ? fmtDelay(r.avg_delay_min, false) : "—";
+    return `<tr class="route-ranking-row" data-route="${r.train_name.replace(/"/g, "&quot;")}">
+      <td><span class="tt-badge tt-${badgeCls}">${r.train_name}</span></td>
+      <td class="route-bar-cell">
+        <div class="route-bar-wrap">
+          <div class="route-bar-fill" style="width:${barW}%"></div>
+          <span class="route-bar-label">${pct}%</span>
+        </div>
+      </td>
+      <td class="route-stat-cell">${avgStr}</td>
+      <td class="route-stat-cell route-total-cell">${r.total}</td>
+    </tr>`;
+  }).join("");
+
+  el.innerHTML = `
+    <table class="board route-ranking-table">
+      <thead>
+        <tr>
+          <th>Línea</th>
+          <th>% retrasos</th>
+          <th>Media</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+
+  el.querySelectorAll<HTMLTableRowElement>(".route-ranking-row").forEach(row => {
+    row.style.cursor = "pointer";
+    row.addEventListener("click", () => {
+      const name = row.dataset.route ?? "";
+      if (name) openRouteDetail(name);
+    });
+  });
 }

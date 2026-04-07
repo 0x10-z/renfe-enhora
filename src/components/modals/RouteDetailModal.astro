@@ -1,0 +1,9 @@
+---
+import DrilldownModal from "./DrilldownModal.astro";
+---
+<DrilldownModal
+  id="route-detail"
+  defaultTitle="Retrasos por línea"
+  columns={["Tren / Trayecto", "Estación", "Programada", "Estimada", "Retraso", "Estado"]}
+  emptyText="Sin retrasos registrados para esta línea en la última captura."
+/>

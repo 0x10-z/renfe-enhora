@@ -69,7 +69,11 @@
       "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); names=sorted\\(set\\(f[''''properties''''][''''NAME_1''''] for f in data[''''features'''']\\)\\); print\\(''''\\\\n''''.join\\(names\\)\\)\")",
       "Bash(node -e \"let d=''''''''; process.stdin.on\\(''''data'''',c=>d+=c\\); process.stdin.on\\(''''end'''',\\(\\)=>{ const data=JSON.parse\\(d\\); const names=[...new Set\\(data.features.map\\(f=>f.properties.NAME_1\\)\\)].sort\\(\\); console.log\\(names.join\\(''''\\\\n''''\\)\\); }\\);\")",
       "Bash(curl -sA \"Mozilla/5.0 \\(compatible; renfe-enhora/1.0\\)\" \"https://raw.githubusercontent.com/softline-informatica/softlinegeodb/main/geojson/polys-spain-ccaa.geojson\" -o public/data/spain-ccaa.geojson)",
-      "Bash(python3 -m json.tool)"
+      "Bash(python3 -m json.tool)",
+      "Bash(python -c \"import pyarrow; print\\(''pyarrow ok'', pyarrow.__version__\\)\")",
+      "Bash(python -c \"import pandas; print\\(''pandas ok'', pandas.__version__\\)\")",
+      "Bash(venv/Scripts/python -c \"import pyarrow; import pandas; print\\(''pyarrow'', pyarrow.__version__, ''| pandas'', pandas.__version__\\)\")",
+      "Bash(venv/Scripts/python -c \":*)"
     ]
   }
 }

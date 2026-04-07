@@ -316,6 +316,92 @@ def write_zones(stats: dict, service: ServiceConfig) -> None:
     )
 
 
+def write_by_route_arrivals(station_data: StationData, service: ServiceConfig) -> None:
+    """
+    Write per-route (train_name) arrival stats to public/data/{service}/by_route_arrivals.json.
+    Groups all arrivals by train_name, computes stats (total, delayed, cancelled, delayed_pct,
+    avg_delay_min, max_delay_min), and keeps up to 50 delayed/cancelled arrivals per route.
+    Routes are sorted by delayed_pct descending.
+    """
+    from collections import defaultdict
+    MAX_PER_ROUTE = 50
+
+    # Accumulators: route_key → dict with list fields
+    route_all: Dict[str, list] = defaultdict(list)      # all arrivals for stats
+    route_delayed: Dict[str, list] = defaultdict(list)  # only delayed/cancelled for display
+    route_type: Dict[str, str] = {}                     # train_name → train_type
+
+    for stop_id, data in station_data.items():
+        stop_name = data["name"]
+        for arr in data.get("arrivals", []):
+            train_name = arr.get("train_name", "").strip()
+            if not train_name:
+                continue
+            train_type = arr.get("train_type") or "Otros"
+            route_all[train_name].append(arr)
+            if train_name not in route_type:
+                route_type[train_name] = train_type
+
+            status = arr.get("status")
+            delay_min = arr.get("delay_min") or 0
+            if delay_min > 0 or status == "cancelado":
+                route_delayed[train_name].append({
+                    "train_name":     train_name,
+                    "headsign":       arr.get("headsign", ""),
+                    "origin":         arr.get("origin", ""),
+                    "stop_id":        stop_id,
+                    "stop_name":      stop_name,
+                    "scheduled_time": arr.get("scheduled_time", ""),
+                    "estimated_time": arr.get("estimated_time"),
+                    "delay_min":      delay_min,
+                    "status":         status,
+                })
+
+    routes = []
+    for train_name, arrivals in route_all.items():
+        total = len(arrivals)
+        delayed = sum(
+            1 for a in arrivals
+            if a.get("status") in ("retraso_leve", "retraso_alto")
+        )
+        cancelled = sum(1 for a in arrivals if a.get("status") == "cancelado")
+        delayed_pct = round((delayed + cancelled) / total, 4) if total else 0.0
+        delay_values = [a.get("delay_min") or 0 for a in arrivals if (a.get("delay_min") or 0) > 0]
+        avg_delay_min = round(sum(delay_values) / len(delay_values), 1) if delay_values else 0.0
+        max_delay_min = round(float(max(delay_values)), 1) if delay_values else 0.0
+
+        sorted_arrivals = sorted(
+            route_delayed.get(train_name, []),
+            key=lambda x: -(x["delay_min"] or 0)
+        )[:MAX_PER_ROUTE]
+
+        routes.append({
+            "train_name":    train_name,
+            "train_type":    route_type.get(train_name, "Otros"),
+            "total":         total,
+            "delayed":       delayed,
+            "cancelled":     cancelled,
+            "delayed_pct":   delayed_pct,
+            "avg_delay_min": avg_delay_min,
+            "max_delay_min": max_delay_min,
+            "arrivals":      sorted_arrivals,
+        })
+
+    routes.sort(key=lambda r: -r["delayed_pct"])
+
+    path = service.data_dir / "by_route_arrivals.json"
+    path.write_text(
+        json.dumps({
+            "generated_at": datetime.now(_TZ_MADRID).isoformat(timespec="seconds"),
+            "routes": routes,
+        }, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    log.info(
+        f"[{service.label}] Wrote by_route_arrivals — {len(routes)} routes"
+    )
+
+
 def write_insights(insights: list, service: ServiceConfig) -> None:
     """Write computed insights to public/data/{service}/insights.json."""
     path = service.data_dir / "insights.json"
