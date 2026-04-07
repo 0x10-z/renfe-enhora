@@ -565,6 +565,14 @@ export function renderCcaaBar(ccaaData: any[]) {
       barMaxWidth: 20,
     }],
   }, true);
+
+  // Click on a bar → open CCAA detail modal
+  state.ccaaBarChart.off("click");
+  state.ccaaBarChart.on("click", (params: any) => {
+    const z = sorted[params.dataIndex];
+    if (z) import("./ccaaDetailModal").then(m => m.openCcaaDetail(z.name));
+  });
+  el.style.cursor = "pointer";
 }
 
 export function renderHeatmap() {

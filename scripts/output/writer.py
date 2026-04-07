@@ -251,6 +251,54 @@ def write_by_type_arrivals(station_data: StationData, service: ServiceConfig) ->
     log.info(f"[{service.label}] Wrote by_type_arrivals — {sum(len(v) for v in result.values())} entries across {len(result)} types")
 
 
+def write_by_ccaa_arrivals(station_data: StationData, service: ServiceConfig) -> None:
+    """
+    Write per-CCAA arrival lists to public/data/{service}/by_ccaa_arrivals.json.
+    Includes only arrivals with delay > 0 or status=cancelado, capped at 200 per CCAA.
+    """
+    from collections import defaultdict
+    from scripts.config_zones import get_ccaa
+    MAX_PER_CCAA = 200
+
+    by_ccaa: Dict[str, list] = defaultdict(list)
+
+    for stop_id, data in station_data.items():
+        stop_name = data["name"]
+        ccaa = get_ccaa(stop_id)
+        for arr in data.get("arrivals", []):
+            status = arr.get("status")
+            delay_min = arr.get("delay_min") or 0
+            if delay_min <= 0 and status != "cancelado":
+                continue
+            by_ccaa[ccaa].append({
+                "train_name":     arr.get("train_name", ""),
+                "train_type":     arr.get("train_type") or "Otros",
+                "headsign":       arr.get("headsign", ""),
+                "origin":         arr.get("origin", ""),
+                "stop_id":        stop_id,
+                "stop_name":      stop_name,
+                "scheduled_time": arr.get("scheduled_time", ""),
+                "estimated_time": arr.get("estimated_time"),
+                "delay_min":      delay_min,
+                "status":         status,
+            })
+
+    result = {
+        ccaa: sorted(arrivals, key=lambda x: -(x["delay_min"] or 0))[:MAX_PER_CCAA]
+        for ccaa, arrivals in by_ccaa.items()
+    }
+
+    path = service.data_dir / "by_ccaa_arrivals.json"
+    path.write_text(
+        json.dumps({
+            "generated_at": datetime.now(_TZ_MADRID).isoformat(timespec="seconds"),
+            "by_ccaa": result,
+        }, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    log.info(f"[{service.label}] Wrote by_ccaa_arrivals — {sum(len(v) for v in result.values())} entries across {len(result)} ccaa")
+
+
 def write_zones(stats: dict, service: ServiceConfig) -> None:
     """Write public/data/{service}/zones.json with per-CCAA and per-nucleo stats."""
     path = service.data_dir / "zones.json"

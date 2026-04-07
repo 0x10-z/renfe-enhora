@@ -3,6 +3,13 @@
  * Embedded inside the zones section — separate from the main stations map.
  */
 import type * as L from "leaflet";
+import type { openCcaaDetail as OpenCcaaDetailFn } from "./ccaaDetailModal";
+
+let _openCcaaDetail: typeof OpenCcaaDetailFn | null = null;
+
+export function setCcaaClickHandler(fn: typeof OpenCcaaDetailFn) {
+  _openCcaaDetail = fn;
+}
 
 type LeafletType = typeof L;
 
@@ -114,11 +121,22 @@ export async function renderCcaaChoropleth(ccaaData: any[]): Promise<void> {
       layer.on("mouseout", () => {
         (_geoLayer as any)?.resetStyle(layer);
       });
+      if (z) {
+        layer.on("click", () => _openCcaaDetail?.(z.name));
+        layer.getElement?.()?.style.setProperty("cursor", "pointer");
+      }
     },
   }).addTo(_mapInstance);
 
   // Fit to Spain mainland bounds
   _mapInstance.fitBounds([[35.9, -9.3], [43.8, 4.3]], { padding: [8, 8] });
+
+  // Pointer cursor on interactive regions
+  container.style.cursor = "default";
+  (_geoLayer as any)?.eachLayer((l: any) => {
+    const el = l.getElement?.();
+    if (el) el.style.cursor = "pointer";
+  });
 }
 
 export function destroyCcaaMap(): void {
