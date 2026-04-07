@@ -1,7 +1,7 @@
 # Plan de Mejoras — Andén / renfe-enhora
 
 **Fecha inicio:** 2026-04-01
-**Última actualización:** 2026-04-07
+**Última actualización:** 2026-04-07 (post-F12, arquitectura Parquet)
 **Estado:** En progreso
 
 ---
@@ -58,7 +58,7 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 | 9 | Sección equipo en sobre.astro | Fácil | ✓ Completado | Frontend |
 | 10 | Imágenes reales de trenes por tipo (WebP desde Wikimedia Commons) | Fácil | ✓ Completado | Frontend |
 | 11 | Histórico por estación: gráfico de tendencia en página de detalle | Media | ✓ Completado | Frontend |
-| 12 | Ranking de rutas/líneas con más retrasos | Media | Pendiente | Pipeline + Frontend |
+| 12 | Ranking de rutas/líneas con más retrasos | Media | ✓ Completado | Pipeline + Frontend |
 | 13 | SEO / OpenGraph: meta tags dinámicos por servicio | Fácil | ✓ Completado | Frontend |
 | 14 | Tendencias históricas: weekday vs weekend + evolución por tipo de tren | Media | ✓ Completado | Frontend |
 | 15 | Alertas por umbral: insight cuando una zona/línea supera su media histórica | Media | Pendiente | Pipeline |
@@ -147,21 +147,39 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 ### Pendiente de F3
 
 - [ ] Filtrar estaciones del dashboard principal al hacer click en una zona (ver F5)
-- [ ] Añadir `by_ccaa` y `by_nucleo` al histórico (`history.json`) para poder trazar tendencias por zona
+- [x] Histórico por CCAA — disponible en `data/by_ccaa/history.parquet` (F6 ✓)
 
 ---
 
 ## Feature 4 — Peores conexiones: rutas completas
 
-> Dificultad: Difícil — **PENDIENTE** (depende de: F3 ✓)
+> Dificultad: Difícil — **PENDIENTE** (depende de: F3 ✓, F6 ✓)
 
 ### Objetivo
 
-Identificar las líneas con peor rendimiento crónico, extraer su recorrido completo con todas las paradas en orden, y mostrar el impacto parada a parada.
+Identificar las líneas con peor rendimiento **crónico** (no solo en la captura actual), extraer su recorrido completo con todas las paradas en orden, y mostrar el impacto parada a parada.
 
 ### Definición de "ruta"
 
 En GTFS: `route_id` agrupa todos los `trip_id` de una misma línea (ej: C-1 Madrid, AVE Madrid–Sevilla). La secuencia canónica de paradas = el trip más largo de esa ruta.
+
+### Fuente de datos históricos (Parquet)
+
+El análisis crónico usa `data/arrivals/YYYY-MM.parquet` (una fila por arrival con `trip_id`, `train_name`, `route_id`, `delay_seconds`, `stop_id`, `ts`). Ejemplo:
+
+```python
+import pandas as pd, glob
+dfs = [pd.read_parquet(f) for f in glob.glob("data/arrivals/*.parquet")]
+arrivals = pd.concat(dfs)
+route_stats = (
+    arrivals.groupby(["service", "route_id", "train_name"])
+    .agg(avg_delay_min=("delay_seconds", lambda x: x[x>0].mean()/60),
+         delayed_pct=("delay_seconds", lambda x: (x > 300).mean()),
+         n_trips=("trip_id", "nunique"))
+    .reset_index()
+    .sort_values("delayed_pct", ascending=False)
+)
+```
 
 ### Datos GTFS necesarios (ya cacheados)
 
@@ -171,8 +189,8 @@ En GTFS: `route_id` agrupa todos los `trip_id` de una misma línea (ej: C-1 Madr
 
 1. `scripts/processing/routes.py` (nuevo módulo):
    - Carga `routes.txt`, `trips.txt`, `stop_times.txt` del GTFS cacheado
-   - Cruza con delays RT del pipeline actual
-   - Calcula: `avg_delay_min`, `delayed_pct`, `cancellation_rate`, `worst_stop_id`
+   - Lee `data/arrivals/*.parquet` para calcular métricas crónicas (no solo snapshot actual)
+   - Calcula: `avg_delay_min`, `delayed_pct`, `cancellation_rate`, `worst_stop_id` sobre N meses
    - Asigna zona (nucleo + ccaa) desde `config_zones`
    - Genera `rank_worst` global y por zona
 2. `scripts/output/writer.py` — nuevo archivo `public/data/{service}/routes.json`
@@ -244,11 +262,27 @@ El campo `trend` usa regresión lineal sobre los últimos N registros histórico
 - *"La Región de Murcia acumula un retraso medio de 11.4 min, 3.2× la media nacional, y la tendencia es creciente."*
 - *"El Núcleo de Madrid es el mejor servido: retraso medio de 2.1 min, 88% en hora."*
 
+### Fuente de datos históricos (Parquet)
+
+El campo `trend` usa regresión lineal sobre `data/by_ccaa/history.parquet` (una fila por CCAA por snapshot, campos: `snapshot_id`, `ts`, `service`, `ccaa`, `total`, `delayed`, `avg_delay_min`, `delayed_pct`). Ya existe — no requiere cambios en el pipeline de escritura.
+
+```python
+import pandas as pd
+from scipy import stats as scipy_stats
+
+df = pd.read_parquet("data/by_ccaa/history.parquet")
+ccaa_trend = {}
+for ccaa, grp in df[df.service == "cercanias"].groupby("ccaa"):
+    grp = grp.sort_values("ts").tail(30)
+    slope, *_ = scipy_stats.linregress(range(len(grp)), grp["delayed_pct"])
+    ccaa_trend[ccaa] = "worsening" if slope > 0.001 else "improving" if slope < -0.001 else "stable"
+```
+
 ### Cambios en pipeline
 
-- `scripts/processing/insights.py` — nuevos tipos de insight (J–N) para zonas
+- `scripts/processing/insights.py` — nuevos tipos de insight (J–N) para zonas; lee `data/by_ccaa/history.parquet`
 - `zones.json` — añadir campos `label` y `narrative` por zona
-- `history.json` — añadir `by_nucleo` y `by_ccaa` a cada registro histórico
+- `history.json` — **no requiere cambios**: los datos históricos por CCAA ya están en `data/by_ccaa/history.parquet`
 
 ### Cambios en frontend
 
@@ -321,17 +355,17 @@ Sección `08 · Equipo` en `sobre.astro` con tarjetas para Iker Ocio y Jorge Bu�
 
 ## Feature 12 — Ranking de rutas/líneas con más retrasos
 
-> Dificultad: Media — **PENDIENTE** (versión simplificada de F4)
+> Dificultad: Media — ✓ COMPLETADO (versión simplificada de F4)
 
-### Diferencia con F4
+### Lo implementado
 
-F4 extrae el recorrido completo parada a parada. Esta versión simplificada solo necesita agrupar por `route_id` los arrivals actuales y calcular `avg_delay_min` y `delayed_pct` por ruta — sin recorrido completo ni histórico.
-
-### Propuesta
-
-- Pipeline: `by_route_arrivals.json` — top 50 rutas con más delay en la captura actual
-- Frontend: tabla en la sección analytics con top 10, click → `DrilldownModal` con retrasos de esa ruta
-- Coste: bajo, reutiliza infraestructura existente de `by_type_arrivals` y `DrilldownModal`
+- Pipeline: `by_route_arrivals.json` — todas las rutas agrupadas por `train_name`, ordenadas por `delayed_pct` desc
+- `scripts/output/writer.py` — `write_by_route_arrivals()` llamada desde `main.py`
+- Frontend: sección `#route-section` en `index.astro` con tabla top-10 y botón "Ver todas"
+- `RouteDetailModal.astro` — wrapper de `DrilldownModal.astro` con 6 columnas (tren, origen, destino, estado, retraso, vía)
+- `src/lib/routeDetailModal.ts` — lazy fetch de `by_route_arrivals.json`, openRouteDetail, closeRouteDetail
+- `src/lib/chart.ts` — `renderRouteRanking()` con ECharts barras horizontales
+- Reutiliza toda la infraestructura de `by_type_arrivals` y `DrilldownModal`
 
 ---
 
@@ -366,10 +400,34 @@ F4 extrae el recorrido completo parada a parada. Esta versión simplificada solo
 
 En `scripts/processing/insights.py`, añadir un nuevo tipo de insight (tipo "alerta") cuando:
 
-- Una CCAA o núcleo supera 1.5× su propia media histórica (últimos 30 días)
-- Una línea (`route_id`) supera 2× su media histórica
+- Una CCAA supera 1.5× su propia media histórica (últimos 30 días)
+- Un tipo de tren supera 2× su media histórica
+- Una línea (`train_name`) supera 2× su media histórica
 
 Se mostraría con `severity: "high"` en el panel de insights, destacado visualmente.
+
+### Fuente de datos históricos (Parquet)
+
+Los 30 días de baseline se calculan directamente desde Parquet — no requiere cambios en `history.json`:
+
+```python
+import pandas as pd
+from datetime import datetime, timedelta
+
+cutoff = datetime.now() - timedelta(days=30)
+
+# Baseline por CCAA
+ccaa_df = pd.read_parquet("data/by_ccaa/history.parquet")
+baseline_ccaa = (ccaa_df[ccaa_df.ts >= cutoff]
+    .groupby(["service", "ccaa"])["delayed_pct"].mean())
+
+# Baseline por tipo de tren
+type_df = pd.read_parquet("data/by_type/history.parquet")
+baseline_type = (type_df[type_df.ts >= cutoff]
+    .groupby(["service", "train_type"])["delayed_pct"].mean())
+```
+
+Comparar con el snapshot actual (`stats["by_ccaa"]`, `stats["by_train_type"]`) para detectar anomalías.
 
 ---
 
@@ -380,17 +438,17 @@ Se mostraría con `severity: "high"` en el panel de insights, destacado visualme
 [2]  Tipo de tren      → necesario para [4] y [5]         ✓ completado
 [3]  Zonas             → necesario para [4] y [5]         ✓ completado
 [4]  Rutas completas   → necesario para [5]               pendiente
-[5]  Comparativa       → depende de [2] + [3] + [4]       pendiente
-[6]  Datos en crudo    → independiente                    ✓ completado
+[5]  Comparativa       → depende de [2] + [3] + [4] + [6] pendiente
+[6]  Parquet histórico → necesario para [4], [5] y [15]   ✓ completado
 [7]  Cron 5min         → independiente                    ✓ completado
 [8]  Desacoplar Vercel → independiente                    ✓ completado
 [9]  Equipo sobre.astro → independiente                   ✓ completado
 [10] Imágenes trenes   → independiente                    ✓ completado
-[11] Histórico estación → independiente (datos ya existen) pendiente
-[12] Ranking rutas     → versión light de [4]             pendiente
-[13] SEO / OpenGraph   → independiente                    pendiente
-[14] Tendencias        → independiente (datos ya existen) pendiente
-[15] Alertas umbral    → depende de [3] (zonas)           pendiente
+[11] Histórico estación → independiente (datos ya existen) ✓ completado
+[12] Ranking rutas     → versión light de [4]             ✓ completado
+[13] SEO / OpenGraph   → independiente                    ✓ completado
+[14] Tendencias        → independiente (datos ya existen) ✓ completado
+[15] Alertas umbral    → depende de [3] + [6]             pendiente
 ```
 
 ## Orden de implementación sugerido
@@ -399,13 +457,15 @@ Se mostraría con `severity: "high"` en el panel de insights, destacado visualme
 Sprint 3 — Quick wins ✓ COMPLETADO
   ├── [13] SEO / OpenGraph ✓
   ├── [11] Histórico estación ✓
-  └── [14] Tendencias históricas ✓
+  ├── [14] Tendencias históricas ✓
+  └── [12] Ranking rutas simplificado ✓
 
-Sprint 4 — Análisis de rutas (3–5 días)
-  ├── [12] Ranking rutas simplificado — reutiliza infraestructura existente
+Sprint 4 — Rutas completas (3–5 días)
   └── [4]  Rutas completas — routes.py + routes.json + página /rutas
+           (usa data/arrivals/*.parquet para métricas crónicas)
 
 Sprint 5 — Narrativa avanzada (3–5 días)
-  ├── [15] Alertas por umbral
+  ├── [15] Alertas por umbral — usa data/by_ccaa/history.parquet + data/by_type/history.parquet
   └── [5]  Comparativa zonas — insights.py + zonas.astro
+           (usa data/by_ccaa/history.parquet para regresión de tendencias)
 ```
