@@ -501,6 +501,72 @@ export function renderTrainTypes(byType: Record<string, any>) {
   el2.style.cursor = "pointer";
 }
 
+export function renderCcaaBar(ccaaData: any[]) {
+  const el = document.getElementById("echart-ccaa") as HTMLElement | null;
+  if (!el || !ccaaData.length) return;
+
+  // Sort ascending so highest delay appears at top in horizontal bar
+  const sorted = [...ccaaData].sort((a, b) => a.delayed_pct - b.delayed_pct);
+  const names = sorted.map(z => z.name);
+  const values = sorted.map(z => +(z.delayed_pct * 100).toFixed(1));
+
+  function barColor(pct: number): string {
+    if (pct >= 30) return "#dc2626";
+    if (pct >= 20) return "#ea580c";
+    if (pct >= 10) return "#d97706";
+    if (pct >= 3)  return "#65a30d";
+    return "#16a34a";
+  }
+
+  el.style.height = `${Math.max(220, sorted.length * 28)}px`;
+
+  if (!state.ccaaBarChart) {
+    state.ccaaBarChart = echarts.init(el, undefined, { renderer: "canvas" });
+    new ResizeObserver(() => state.ccaaBarChart?.resize()).observe(el);
+  }
+
+  state.ccaaBarChart.setOption({
+    backgroundColor: "transparent",
+    grid: { left: 12, right: 52, top: 6, bottom: 4, containLabel: true },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: { type: "none" },
+      backgroundColor: CHART_COLORS.tooltip,
+      borderColor: "#374151",
+      borderWidth: 1,
+      textStyle: { color: "#f9fafb", fontSize: 12 },
+      formatter: (params: any) => {
+        const i = params[0].dataIndex;
+        const z = sorted[i];
+        const avg = z.avg_delay_min > 0 ? `<br/>Retraso medio: <b>${z.avg_delay_min.toFixed(1)} min</b>` : "";
+        return `<b>${z.name}</b><br/>${params[0].value}% con retrasos${avg}<br/><span style="color:#9ca3af">${z.total} trenes · ${z.stations_count} est.</span>`;
+      },
+    },
+    xAxis: {
+      type: "value",
+      axisLabel: { formatter: "{value}%", color: CHART_COLORS.text, fontSize: 11 },
+      splitLine: { lineStyle: { color: CHART_COLORS.grid } },
+      max: (v: any) => Math.max(v.max * 1.15, 5),
+    },
+    yAxis: {
+      type: "category",
+      data: names,
+      axisLabel: { color: CHART_COLORS.text, fontSize: 11 },
+      axisTick: { show: false },
+      axisLine: { show: false },
+    },
+    series: [{
+      type: "bar",
+      data: values.map((v, i) => ({
+        value: v,
+        itemStyle: { color: barColor(v), borderRadius: [0, 3, 3, 0] },
+        label: { show: true, position: "right", formatter: `${v}%`, color: CHART_COLORS.text, fontSize: 11 },
+      })),
+      barMaxWidth: 20,
+    }],
+  }, true);
+}
+
 export function renderHeatmap() {
   const matrix: { sum: number; count: number }[][] =
     Array.from({ length: 7 }, () =>

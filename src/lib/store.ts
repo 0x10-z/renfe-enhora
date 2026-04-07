@@ -22,4 +22,5 @@ export const state = {
   mapInstance: null as any,
   mapLayer: null as any,
   trainTypeChart: null as echarts.ECharts | null,
+  ccaaBarChart: null as echarts.ECharts | null,
 };
