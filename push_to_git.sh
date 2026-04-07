@@ -14,7 +14,9 @@ mkdir -p logs
 
 # ── Sincronizar con remoto antes de commitear ────────────────────────────────
 echo "[push] $(date '+%H:%M:%S') git pull --rebase..." | tee -a "$LOG_FILE"
+git stash 2>&1 | tee -a "$LOG_FILE"
 git pull --rebase origin master 2>&1 | tee -a "$LOG_FILE"
+git stash pop 2>&1 | tee -a "$LOG_FILE" || true
 
 # ── Comprobar si hay cambios en los datos ─────────────────────────────────────
 if git diff --quiet -- public/data/ data/; then
