@@ -139,6 +139,15 @@ import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astr
       <div class="section-header">
         <h2>Por comunidad autónoma</h2>
       </div>
+      <div id="ccaa-map-container" class="ccaa-map-container"></div>
+      <div class="ccaa-map-legend" id="ccaa-map-legend" aria-hidden="true">
+        <span class="legend-item"><span class="legend-dot" style="background:#16a34a"></span>&lt;3%</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#65a30d"></span>3–10%</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#d97706"></span>10–20%</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#ea580c"></span>20–30%</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#dc2626"></span>&gt;30%</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#94a3b8;opacity:0.4"></span>Sin datos</span>
+      </div>
       <div class="zones-grid" id="zones-ccaa-grid"></div>
 
       <div class="section-header" id="zones-nucleo-header" style="display:none; margin-top:1.2rem">
@@ -735,6 +744,30 @@ import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astr
   .zone-stat-delay { color: var(--text); font-weight: 600; }
   .zone-stat-pct.high { color: var(--red); }
   .zone-stat-pct.mid  { color: var(--orange, #f59e0b); }
+  .ccaa-map-container {
+    width: 100%;
+    height: 380px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-top: 0.75rem;
+    background: var(--bg-card);
+  }
+  .ccaa-map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+    margin: 0.55rem 0 0.6rem;
+    font-size: 0.73rem;
+    color: var(--text-sub);
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.35rem; }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
 
   /* Train type section */
   .train-type-section {
@@ -1370,6 +1403,7 @@ import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astr
   import { closeTrainTypeDetail, invalidateTypeDetailCache } from "../lib/trainTypeDetailModal";
   import { filterAndRender, showNoData } from "../lib/stations";
   import { initMap, loadGeoIfNeeded, renderMapMarkers } from "../lib/map";
+  import { renderCcaaChoropleth, destroyCcaaMap } from "../lib/ccaaMap";
 
   const SERVICES = [
     { name: "ave-larga-distancia", label: "AVE · Larga y Media Distancia", slug: "ave-larga-distancia" },
@@ -1425,6 +1459,7 @@ import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astr
     document.getElementById("zones-nucleo-header")!.style.display = "none";
     (document.getElementById("zones-ccaa-grid") as HTMLElement).innerHTML = "";
     (document.getElementById("zones-nucleo-grid") as HTMLElement).innerHTML = "";
+    destroyCcaaMap();
     state.trainTypeChart?.dispose();
     state.trainTypeChart = null;
     state.historyRecords = [];
@@ -1479,6 +1514,9 @@ import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astr
     }
 
     document.getElementById("zones-section")!.style.display = "";
+
+    // Render choropleth after section is visible (Leaflet needs layout)
+    requestAnimationFrame(() => renderCcaaChoropleth(ccaa));
   }
 
   // ── Data ───────────────────────────────────────────────────────────────────
