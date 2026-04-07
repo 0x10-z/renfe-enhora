@@ -4,6 +4,7 @@
  */
 import type * as L from "leaflet";
 import type { openCcaaDetail as OpenCcaaDetailFn } from "./ccaaDetailModal";
+import { fmtDelay } from "./utils";
 
 let _openCcaaDetail: typeof OpenCcaaDetailFn | null = null;
 
@@ -105,7 +106,7 @@ export async function renderCcaaChoropleth(ccaaData: any[]): Promise<void> {
       const z = lookup[name];
       if (z) {
         const pct = Math.round(z.delayed_pct * 100);
-        const avg = z.avg_delay_min > 0 ? `<br/>Retraso medio: <b>${z.avg_delay_min.toFixed(1)} min</b>` : "";
+        const avg = z.avg_delay_min > 0 ? `<br/>Retraso medio: <b>${fmtDelay(z.avg_delay_min, false)}</b>` : "";
         layer.bindTooltip(
           `<b>${z.name}</b><br/>${pct}% con retrasos${avg}<br/><span style="color:#94a3b8;font-size:0.8em">${z.total} trenes · ${z.stations_count} estaciones</span>`,
           { sticky: true, direction: "top" }

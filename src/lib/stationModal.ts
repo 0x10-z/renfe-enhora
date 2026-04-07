@@ -1,5 +1,5 @@
 import { state } from "./store";
-import { esc, timeAgo } from "./utils";
+import { esc, fmtDelay, timeAgo } from "./utils";
 import { getTrainType, getTrainImage, TRAIN_TYPE_LABELS } from "../utils/trains";
 
 export function openModal(stationId: string, name: string, fromInsight = false) {
@@ -70,7 +70,7 @@ export function renderModal(data: any) {
   const chips: string[] = [];
   if (onTime)           chips.push(`<span class="chip chip-green">${onTime} en hora</span>`);
   if (delayed.length)   chips.push(`<span class="chip chip-yellow">${delayed.length} retraso${delayed.length !== 1 ? "s" : ""}</span>`);
-  if (maxDelay > 0)     chips.push(`<span class="chip chip-red">+${maxDelay}m máx</span>`);
+  if (maxDelay > 0)     chips.push(`<span class="chip chip-red">${fmtDelay(maxDelay)} máx</span>`);
   if (cancelled.length) chips.push(`<span class="chip chip-gray">${cancelled.length} cancelado${cancelled.length !== 1 ? "s" : ""}</span>`);
   document.getElementById("modal-chips")!.innerHTML = chips.join("");
 
@@ -103,7 +103,7 @@ export function modalRowHTML(a: any): string {
   const estTime = a.estimated_time
     ? `<span class="time-cell ${timeClass[a.status] ?? ""}">${esc(a.estimated_time)}</span>`
     : `<span class="time-cell time-cancel">—</span>`;
-  const delayStr   = a.delay_min != null && a.delay_min > 0 ? `+${a.delay_min}m` : "—";
+  const delayStr   = a.delay_min != null && a.delay_min > 0 ? fmtDelay(a.delay_min) : "—";
   const delayClass = a.status === "retraso_alto" ? "delay-alto" : a.status === "retraso_leve" ? "delay-leve" : "";
   const rowClass   = a.status === "cancelado" ? "cancelled-row" : "";
   const trainAttr = a.train_name ? `data-train-name="${esc(a.train_name)}"` : "";
@@ -188,7 +188,7 @@ export function openTrainViewer() {
     estEl.textContent = a.estimated_time ?? "—";
     estEl.className = `train-viewer-time-val ${timeClass[a.status] ?? ""}`;
     const delayEl = document.getElementById("train-viewer-delay") as HTMLElement;
-    delayEl.textContent = a.delay_min != null && a.delay_min > 0 ? `+${a.delay_min}m` : "—";
+    delayEl.textContent = a.delay_min != null && a.delay_min > 0 ? fmtDelay(a.delay_min) : "—";
     delayEl.className = `train-viewer-time-val ${a.status === "retraso_alto" ? "delay-alto" : a.status === "retraso_leve" ? "delay-leve" : ""}`;
     timesEl.style.display = "flex";
   } else {

@@ -621,7 +621,7 @@ const locationLabel = meta
     const onTime = arrivals.filter(a => a.status === "en_hora").length;
     if (onTime)       chips.push(`<span class="chip chip-green">${onTime} en hora</span>`);
     if (delayed.length) chips.push(`<span class="chip chip-yellow">${delayed.length} retrasado${delayed.length!==1?"s":""}</span>`);
-    if (maxDelay > 0) chips.push(`<span class="chip chip-red">+${maxDelay}m máx</span>`);
+    if (maxDelay > 0) chips.push(`<span class="chip chip-red">${fmtDelay(maxDelay)} máx</span>`);
     if (cancelled.length) chips.push(`<span class="chip chip-gray">${cancelled.length} cancelado${cancelled.length!==1?"s":""}</span>`);
     document.getElementById("summary-chips")!.innerHTML = chips.join("");
 
@@ -710,7 +710,7 @@ const locationLabel = meta
       ? `<span class="time-cell ${timeClass[a.status] ?? ""}">${esc(a.estimated_time)}</span>`
       : `<span class="time-cell time-cancel">—</span>`;
 
-    const delayStr = a.delay_min != null && a.delay_min > 0 ? `+${a.delay_min}m` : "—";
+    const delayStr = a.delay_min != null && a.delay_min > 0 ? fmtDelay(a.delay_min) : "—";
     const delayClass = a.status === "retraso_alto" ? "delay-alto" : a.status === "retraso_leve" ? "delay-leve" : "";
     const rowClass = a.status === "cancelado" ? "cancelled-row" : "";
     const trainNameAttr = a.train_name ? `data-train-name="${esc(a.train_name)}"` : "";
@@ -736,6 +736,16 @@ const locationLabel = meta
     countdownTimer = setInterval(() => {
       bar.style.transform = `scaleX(${Math.max(0, nextRefreshAt - Date.now()) / REFRESH_INTERVAL})`;
     }, 500);
+  }
+
+  function fmtDelay(minutes: number, withPlus = true): string {
+    const prefix = withPlus ? "+" : "";
+    const totalSecs = Math.round(minutes * 60);
+    const m = Math.floor(totalSecs / 60);
+    const s = totalSecs % 60;
+    if (m === 0) return `${prefix}${s}s`;
+    if (s === 0) return `${prefix}${m}m`;
+    return `${prefix}${m}m ${s}s`;
   }
 
   function timeAgo(iso: string): string {

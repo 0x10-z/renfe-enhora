@@ -1,6 +1,7 @@
 import * as echarts from "echarts";
 import { state } from "./store";
 import { openTrainTypeDetail } from "./trainTypeDetailModal";
+import { fmtDelay } from "./utils";
 
 export const CHART_COLORS = {
   delayed:  "#dc2626",
@@ -94,7 +95,7 @@ export function renderDaily() {
         const p50 = p50Data[i]; const p75 = p75Data[i]; const p90 = p90Data[i];
         const percLine = p50 != null ? `p50 ${p50}m · p75 ${p75}m · p90 ${p90}m<br/>` : "";
         const tripsLine = tripsRaw[i] != null ? `~${tripsRaw[i]} trenes en ruta<br/>` : "";
-        return `<b>${dates[i]}</b><br/>${pct}% con retraso · max ${d.maxMin}min<br/>${percLine}${tripsLine}${d.delayedSum.toLocaleString("es")} / ${d.totalSum.toLocaleString("es")} paradas`;
+        return `<b>${dates[i]}</b><br/>${pct}% con retraso · max ${fmtDelay(d.maxMin, false)}<br/>${percLine}${tripsLine}${d.delayedSum.toLocaleString("es")} / ${d.totalSum.toLocaleString("es")} paradas`;
       },
     },
     legend: {
@@ -393,7 +394,7 @@ export function renderTrainTypes(byType: Record<string, any>) {
     const [name, v] = worst;
     narrativeEl.textContent =
       `El tipo de tren con más retrasos acumulados este periodo es ${name}, ` +
-      `con una media de ${v.avg_delay_min} min y un ${Math.round(v.delayed_pct * 100)}% de servicios con retraso.`;
+      `con una media de ${fmtDelay(v.avg_delay_min, false)} y un ${Math.round(v.delayed_pct * 100)}% de servicios con retraso.`;
   }
 
   const names = entries.map(([k]) => k);
@@ -420,7 +421,7 @@ export function renderTrainTypes(byType: Record<string, any>) {
         const i = params[0].dataIndex;
         const [name, v] = entries[i];
         const pct = Math.round(v.delayed_pct * 100);
-        return `<b>${name}</b><br/>${v.total} trenes · ${pct}% con retraso<br/>media ${v.avg_delay_min}m · máx ${v.max_delay_min}m`;
+        return `<b>${name}</b><br/>${v.total} trenes · ${pct}% con retraso<br/>media ${fmtDelay(v.avg_delay_min, false)} · máx ${fmtDelay(v.max_delay_min, false)}`;
       },
     },
     legend: {
@@ -470,7 +471,7 @@ export function renderTrainTypes(byType: Record<string, any>) {
             const i = p.dataIndex;
             const [, v] = entries[i];
             const pct = Math.round(v.delayed_pct * 100);
-            return `{pct|${pct}%}  {avg|avg ${v.avg_delay_min}m}`;
+            return `{pct|${pct}%}  {avg|avg ${fmtDelay(v.avg_delay_min, false)}}`;
           },
           rich: {
             pct: { color: CHART_COLORS.p75, fontSize: 10, fontWeight: 700, fontFamily: "JetBrains Mono, monospace" },
@@ -538,7 +539,7 @@ export function renderCcaaBar(ccaaData: any[]) {
       formatter: (params: any) => {
         const i = params[0].dataIndex;
         const z = sorted[i];
-        const avg = z.avg_delay_min > 0 ? `<br/>Retraso medio: <b>${z.avg_delay_min.toFixed(1)} min</b>` : "";
+        const avg = z.avg_delay_min > 0 ? `<br/>Retraso medio: <b>${fmtDelay(z.avg_delay_min, false)}</b>` : "";
         return `<b>${z.name}</b><br/>${params[0].value}% con retrasos${avg}<br/><span style="color:#9ca3af">${z.total} trenes · ${z.stations_count} est.</span>`;
       },
     },
@@ -573,6 +574,144 @@ export function renderCcaaBar(ccaaData: any[]) {
     if (z) import("./ccaaDetailModal").then(m => m.openCcaaDetail(z.name));
   });
   el.style.cursor = "pointer";
+}
+
+const TYPE_COLORS: Record<string, string> = {
+  "AVE":             "#6366f1",
+  "AVLO":            "#8b5cf6",
+  "Alvia":           "#f59e0b",
+  "Avant":           "#ec4899",
+  "Media Distancia": "#14b8a6",
+  "Regional":        "#a78bfa",
+  "Larga Distancia": "#dc2626",
+  "Cercanías":       "#0d9488",
+};
+
+export function renderTrainTypeHistory(records: any[]) {
+  const el = document.getElementById("echart-type-history") as HTMLElement | null;
+  if (!el) return;
+
+  // Last 60 days, one entry per date (average multiple runs)
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 60);
+  const cutoffStr = cutoff.toISOString().slice(0, 10);
+
+  const byDate = new Map<string, { byType: Record<string, number[]> }>();
+  for (const r of records) {
+    if (!r.date || r.date < cutoffStr || !r.by_type) continue;
+    if (!byDate.has(r.date)) byDate.set(r.date, { byType: {} });
+    const entry = byDate.get(r.date)!;
+    for (const [tt, v] of Object.entries(r.by_type as Record<string, any>)) {
+      if (!entry.byType[tt]) entry.byType[tt] = [];
+      entry.byType[tt].push(v[1] / (v[0] || 1)); // delayed / total
+    }
+  }
+
+  const dates = [...byDate.keys()].sort();
+  if (dates.length < 3) { el.style.display = "none"; return; }
+
+  // Collect types with enough data
+  const typeCount: Record<string, number> = {};
+  for (const [, entry] of byDate) {
+    for (const tt of Object.keys(entry.byType)) typeCount[tt] = (typeCount[tt] ?? 0) + 1;
+  }
+  const types = Object.entries(typeCount)
+    .filter(([, c]) => c >= 5)
+    .sort((a, b) => b[1] - a[1])
+    .map(([tt]) => tt);
+
+  if (types.length === 0) { el.style.display = "none"; return; }
+
+  el.style.display = "";
+  el.style.height = "260px";
+
+  if (!state.typeHistoryChart) {
+    state.typeHistoryChart = echarts.init(el, undefined, { renderer: "canvas" });
+    new ResizeObserver(() => state.typeHistoryChart?.resize()).observe(el);
+  }
+
+  const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+
+  state.typeHistoryChart.setOption({
+    backgroundColor: "transparent",
+    legend: { top: 0, textStyle: { color: CHART_COLORS.text, fontSize: 10 }, itemWidth: 12, itemHeight: 8 },
+    tooltip: {
+      trigger: "axis",
+      backgroundColor: CHART_COLORS.tooltip,
+      borderColor: "#374151",
+      borderWidth: 1,
+      textStyle: { color: "#f9fafb", fontSize: 11 },
+      formatter: (params: any) => {
+        const d = dates[params[0].dataIndex];
+        return `<b>${fmt(d)}</b><br/>` + params.map((p: any) =>
+          `<span style="color:${p.color}">●</span> ${p.seriesName}: ${p.value != null ? (p.value * 100).toFixed(1) + "%" : "—"}`
+        ).join("<br/>");
+      },
+    },
+    grid: { left: 8, right: 12, top: 32, bottom: 4, containLabel: true },
+    xAxis: {
+      type: "category",
+      data: dates.map(fmt),
+      axisLabel: { color: CHART_COLORS.text, fontSize: 10 },
+      axisTick: { show: false },
+      axisLine: { lineStyle: { color: CHART_COLORS.grid } },
+    },
+    yAxis: {
+      type: "value",
+      axisLabel: { formatter: (v: number) => (v * 100).toFixed(0) + "%", color: CHART_COLORS.text, fontSize: 10 },
+      splitLine: { lineStyle: { color: CHART_COLORS.grid } },
+      min: 0,
+    },
+    series: types.map(tt => ({
+      name: tt,
+      type: "line",
+      smooth: true,
+      symbol: "none",
+      lineStyle: { width: 2 },
+      itemStyle: { color: TYPE_COLORS[tt] ?? "#94a3b8" },
+      data: dates.map(date => {
+        const vals = byDate.get(date)?.byType[tt];
+        if (!vals?.length) return null;
+        return +(vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(4);
+      }),
+      connectNulls: false,
+    })),
+  }, true);
+}
+
+export function renderWeekdayStats(records: any[]) {
+  const el = document.getElementById("weekday-stats") as HTMLElement | null;
+  if (!el) return;
+
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 60);
+  const cutoffStr = cutoff.toISOString().slice(0, 10);
+
+  const weekday = records.filter(r => r.date >= cutoffStr && r.total > 0 && [1,2,3,4,5].includes((new Date(r.date + "T12:00:00").getDay())));
+  const weekend = records.filter(r => r.date >= cutoffStr && r.total > 0 && [0,6].includes((new Date(r.date + "T12:00:00").getDay())));
+
+  if (!weekday.length && !weekend.length) { el.style.display = "none"; return; }
+
+  const avg = (arr: any[], fn: (r: any) => number) =>
+    arr.length ? +(arr.reduce((s, r) => s + fn(r), 0) / arr.length).toFixed(1) : 0;
+
+  const wdPct  = avg(weekday, r => r.delayed / r.total * 100);
+  const wdAvg  = avg(weekday, r => r.avg_min ?? 0);
+  const wePct  = avg(weekend, r => r.delayed / r.total * 100);
+  const weAvg  = avg(weekend, r => r.avg_min ?? 0);
+
+  el.innerHTML = `
+    <div class="weekday-card">
+      <div class="weekday-card-title">Laborables (L–V)</div>
+      <div class="weekday-stat">${wdPct.toFixed(1)}%</div>
+      <div class="weekday-sub">con retraso · media ${fmtDelay(wdAvg, false)}</div>
+    </div>
+    <div class="weekday-card">
+      <div class="weekday-card-title">Fin de semana (S–D)</div>
+      <div class="weekday-stat">${wePct.toFixed(1)}%</div>
+      <div class="weekday-sub">con retraso · media ${fmtDelay(weAvg, false)}</div>
+    </div>`;
+  el.style.display = "grid";
 }
 
 export function renderHeatmap() {

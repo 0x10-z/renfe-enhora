@@ -1,5 +1,5 @@
 import { state } from "./store";
-import { esc, timeAgo } from "./utils";
+import { esc, timeAgo, fmtDelay } from "./utils";
 
 // Maps pipeline train_type → CSS badge class suffix
 const TYPE_CLASS: Record<string, string> = {
@@ -83,7 +83,7 @@ function renderDetail(ccaaName: string) {
   const cancelled = arrivals.filter(a => a.status === "cancelado").length;
   chips.innerHTML = [
     `<span class="chip chip-yellow">${arrivals.length} con retraso</span>`,
-    maxDelay > 0 ? `<span class="chip chip-red">+${maxDelay}m máx</span>` : "",
+    maxDelay > 0 ? `<span class="chip chip-red">${fmtDelay(maxDelay)} máx</span>` : "",
     cancelled > 0 ? `<span class="chip chip-gray">${cancelled} cancelado${cancelled !== 1 ? "s" : ""}</span>` : "",
   ].filter(Boolean).join("");
 
@@ -112,7 +112,7 @@ function rowHTML(a: any): string {
     ? `<span class="time-cell ${timeClass[a.status] ?? ""}">${esc(a.estimated_time)}</span>`
     : `<span class="time-cell time-cancel">—</span>`;
 
-  const delayStr   = a.delay_min != null && a.delay_min > 0 ? `+${a.delay_min}m` : "—";
+  const delayStr   = a.delay_min != null && a.delay_min > 0 ? fmtDelay(a.delay_min) : "—";
   const delayClass = a.status === "retraso_alto" ? "delay-alto" : a.status === "retraso_leve" ? "delay-leve" : "";
   const rowClass   = a.status === "cancelado" ? "cancelled-row" : "";
 

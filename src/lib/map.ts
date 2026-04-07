@@ -1,5 +1,6 @@
 import type * as L from "leaflet";
 import { state } from "./store";
+import { fmtDelay } from "./utils";
 
 type LeafletType = typeof L;
 
@@ -78,7 +79,7 @@ export async function renderMapMarkers(): Promise<void> {
     const ratio = st.arrivals_count > 0 ? st.delayed_count / st.arrivals_count : 0;
     const color = ratio > 0.5 ? "#dc2626" : ratio > 0.2 ? "#b45309" : "#059669";
     const pct = st.arrivals_count > 0 ? Math.round(ratio * 100) : 0;
-    const label = `<b>${st.name}</b><br/>${pct}% de retrasos · ${st.arrivals_count} paradas<br/>${st.delayed_count} retrasadas · Máx. ${st.max_delay_min} min`;
+    const label = `<b>${st.name}</b><br/>${pct}% de retrasos · ${st.arrivals_count} paradas<br/>${st.delayed_count} retrasadas · Máx. ${fmtDelay(st.max_delay_min, false)}`;
 
     if (mode === "scatter") {
       const radius = Math.max(5, Math.min(18, 5 + Math.sqrt(st.arrivals_count) * 1.2));
