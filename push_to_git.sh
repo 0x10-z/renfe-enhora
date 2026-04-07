@@ -23,7 +23,24 @@ fi
 
 # ── Sincronizar con remoto (rebase sobre commits de código) ──────────────────
 echo "[push] $(date '+%H:%M:%S') git pull --rebase..." | tee -a "$LOG_FILE"
-git pull --rebase origin master 2>&1 | tee -a "$LOG_FILE"
+if ! git pull --rebase origin master 2>&1 | tee -a "$LOG_FILE"; then
+    echo "[push] $(date '+%H:%M:%S') Conflictos detectados — resolviendo datos con --theirs..." | tee -a "$LOG_FILE"
+    # Durante rebase: --theirs = commits locales (datos del VPS, más recientes)
+    while git rebase --show-current-patch >/dev/null 2>&1; do
+        git checkout --theirs public/data/ data/ 2>/dev/null || true
+        git add public/data/ data/ 2>/dev/null || true
+        if ! git rebase --continue 2>&1 | tee -a "$LOG_FILE"; then
+            break
+        fi
+    done
+    # Verificar que el rebase terminó bien
+    if git rebase --show-current-patch >/dev/null 2>&1; then
+        echo "[push] $(date '+%H:%M:%S') ERROR — rebase no resuelto, abortando" | tee -a "$LOG_FILE"
+        git rebase --abort
+        exit 1
+    fi
+    echo "[push] $(date '+%H:%M:%S') Rebase completado tras resolver conflictos" | tee -a "$LOG_FILE"
+fi
 
 # ── Instalar dependencias nuevas si requirements.txt cambió ──────────────────
 if [ -f "$REPO_DIR/venv/bin/activate" ]; then
