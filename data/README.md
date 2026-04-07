@@ -16,6 +16,98 @@ Los JSONs en `public/data/` son artefactos generados a partir de estos datos par
 | `by_type/` | `history.parquet` | 1 fila por tipo de tren × ejecución | < 1 MB/año |
 | `by_ccaa/` | `history.parquet` | 1 fila por CCAA × ejecución | < 1 MB/año |
 
+## Relaciones entre tablas
+
+```mermaid
+erDiagram
+    SNAPSHOTS {
+        string snapshot_id PK
+        string service
+        string ts
+        string date
+        int8   hour
+        int32  total
+        int32  delayed
+        int32  cancelled
+        int32  on_time
+        float  avg_delay_min
+        float  max_delay_min
+        float  p50
+        float  p75
+        float  p90
+        float  p95
+        int32  unique_trips
+        int32  stations_count
+    }
+
+    ARRIVALS {
+        string snapshot_id FK
+        string service
+        string trip_id
+        string route_id
+        string train_name
+        string train_type
+        string stop_id FK
+        string stop_name
+        string ccaa
+        string nucleo
+        string headsign
+        string origin
+        string scheduled_time
+        string estimated_time
+        float  delay_min
+        string status
+    }
+
+    STATIONS {
+        string snapshot_id FK
+        string service
+        string stop_id FK
+        string stop_name
+        string ccaa
+        string nucleo
+        int32  total_arrivals
+        int32  delayed_count
+        int32  cancelled_count
+        float  avg_delay_min
+        float  max_delay_min
+    }
+
+    BY_TYPE {
+        string snapshot_id FK
+        string service
+        string train_type FK
+        int32  total
+        int32  delayed
+        int32  cancelled
+        float  delayed_pct
+        float  avg_delay_min
+        float  max_delay_min
+    }
+
+    BY_CCAA {
+        string snapshot_id FK
+        string service
+        string ccaa FK
+        int32  total
+        int32  delayed
+        float  delayed_pct
+        float  avg_delay_min
+        float  max_delay_min
+        int32  stations_count
+    }
+
+    SNAPSHOTS ||--o{ ARRIVALS  : "snapshot_id"
+    SNAPSHOTS ||--o{ STATIONS  : "snapshot_id"
+    SNAPSHOTS ||--o{ BY_TYPE   : "snapshot_id"
+    SNAPSHOTS ||--o{ BY_CCAA   : "snapshot_id"
+    STATIONS  ||--o{ ARRIVALS  : "stop_id"
+    ARRIVALS  }o--|| BY_TYPE   : "train_type"
+    ARRIVALS  }o--|| BY_CCAA   : "ccaa"
+```
+
+> `SNAPSHOTS` es la tabla raíz: cada ejecución del pipeline genera un `snapshot_id` del que cuelgan todas las demás. `ARRIVALS` es la tabla de mayor granularidad (tren × estación × snapshot); `STATIONS`, `BY_TYPE` y `BY_CCAA` son agregaciones precalculadas del mismo snapshot.
+
 ## Cómo leer
 
 ```python
