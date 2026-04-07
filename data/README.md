@@ -32,3 +32,27 @@ El módulo `scripts/output/parquet_writer.py` expone `append_snapshot()`, que es
 ## Compresión
 
 Los ficheros usan compresión **zstd** internamente (gestionada por pyarrow). No es necesario comprimir manualmente.
+
+## Consultas por fecha y hora exacta
+
+El pipeline corre cada 5 minutos. Cada ejecución escribe un `snapshot_id` con formato `{service}_{YYYY-MM-DDTHH:MM}` y un campo `ts` (timestamp UTC). Esto permite reconstruir el estado del sistema en cualquier ventana de 5 minutos.
+
+```python
+import pandas as pd
+
+# Estado global en un instante concreto
+snapshots = pd.read_parquet("data/snapshots/snapshots.parquet")
+estado = snapshots[snapshots.snapshot_id == "cercanias_2026-04-15T08:30"]
+
+# Trenes retrasados el 15 de abril entre 08:25 y 08:35
+arrivals = pd.read_parquet("data/arrivals/2026-04.parquet")
+ventana = arrivals[
+    (arrivals.ts >= "2026-04-15 08:25") &
+    (arrivals.ts <= "2026-04-15 08:35") &
+    (arrivals.service == "cercanias")
+]
+```
+
+**Nota sobre los arrivals:** cada snapshot contiene los trenes previstos en los próximos 60 minutos desde ese instante. Un tren que pasó a las 08:15 aparece en snapshots de 07:15–08:15, no en el de 08:30. Para reconstruir "qué trenes estaban activos exactamente a las 08:30" usa el snapshot inmediatamente anterior a esa hora.
+
+**Granularidad:** 5 minutos. Los datos están disponibles desde la primera ejecución del pipeline en producción.
