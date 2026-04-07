@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# push_to_git.sh — hace commit de public/data/ y push a GitHub → dispara Vercel
-# NO ejecuta el pipeline. Solo publica los datos ya generados por run_pipeline.sh.
+# push_to_git.sh — hace push de los commits locales acumulados por run_pipeline.sh.
+# NO ejecuta el pipeline ni hace commits.
 #
 # Cron: 0 * * * * /home/0x10/renfe-enhora/push_to_git.sh >> /home/0x10/renfe-enhora/logs/push.log 2>&1
 
@@ -12,24 +12,21 @@ LOG_FILE="$REPO_DIR/logs/push.log"
 cd "$REPO_DIR"
 mkdir -p logs
 
-# ── Sincronizar con remoto antes de commitear ────────────────────────────────
-echo "[push] $(date '+%H:%M:%S') git pull --rebase..." | tee -a "$LOG_FILE"
-git stash 2>&1 | tee -a "$LOG_FILE"
-git pull --rebase origin master 2>&1 | tee -a "$LOG_FILE"
-git stash pop 2>&1 | tee -a "$LOG_FILE" || true
+# ── Comprobar si hay commits locales por publicar ─────────────────────────────
+LOCAL=$(git rev-parse HEAD)
+REMOTE=$(git rev-parse origin/master 2>/dev/null || echo "")
 
-# ── Comprobar si hay cambios en los datos ─────────────────────────────────────
-if git diff --quiet -- public/data/ data/; then
-    echo "[push] $(date '+%H:%M:%S') Sin cambios en public/data/ ni data/ — omitiendo commit" | tee -a "$LOG_FILE"
+if [ "$LOCAL" = "$REMOTE" ]; then
+    echo "[push] $(date '+%H:%M:%S') Sin commits nuevos — omitiendo push" | tee -a "$LOG_FILE"
     exit 0
 fi
 
-# ── Commit y push ─────────────────────────────────────────────────────────────
-TIMESTAMP=$(date "+%Y-%m-%d %H:%M")
-git add public/data/ data/
-git commit -m "data: actualizar tablero ${TIMESTAMP}"
+# ── Sincronizar con remoto (rebase sobre commits de código) ──────────────────
+echo "[push] $(date '+%H:%M:%S') git pull --rebase..." | tee -a "$LOG_FILE"
+git pull --rebase origin master 2>&1 | tee -a "$LOG_FILE"
 
+# ── Push ─────────────────────────────────────────────────────────────────────
 echo "[push] $(date '+%H:%M:%S') Pushing a GitHub..." | tee -a "$LOG_FILE"
-git push origin master
+git push origin master 2>&1 | tee -a "$LOG_FILE"
 
 echo "[push] $(date '+%H:%M:%S') OK — Vercel build disparado" | tee -a "$LOG_FILE"

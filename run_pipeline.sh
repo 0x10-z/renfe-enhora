@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# run_pipeline.sh — ejecuta el pipeline Python y escribe JSON en disco
-# NO hace operaciones git. El commit y push lo gestiona push_to_git.sh.
+# run_pipeline.sh — ejecuta el pipeline Python, escribe JSON+Parquet en disco y hace commit local.
+# NO hace push. El push lo gestiona push_to_git.sh (cron horario).
 #
 # Cron: */5 * * * * /home/0x10/renfe-enhora/run_pipeline.sh >> /home/0x10/renfe-enhora/logs/pipeline.log 2>&1
 
@@ -35,4 +35,15 @@ if ! python3 -m scripts.main 2>&1 | tee -a "$LOG_FILE"; then
     exit 1
 fi
 
-echo "[pipeline] $(date '+%H:%M:%S') OK — JSON actualizado en public/data/" | tee -a "$LOG_FILE"
+echo "[pipeline] $(date '+%H:%M:%S') OK — datos actualizados en public/data/ y data/" | tee -a "$LOG_FILE"
+
+# ── Commit local (sin push) ───────────────────────────────────────────────────
+if git diff --quiet -- public/data/ data/; then
+    echo "[pipeline] $(date '+%H:%M:%S') Sin cambios en datos — omitiendo commit" | tee -a "$LOG_FILE"
+    exit 0
+fi
+
+TIMESTAMP=$(date "+%Y-%m-%d %H:%M")
+git add public/data/ data/
+git commit -m "data: actualizar tablero ${TIMESTAMP}"
+echo "[pipeline] $(date '+%H:%M:%S') Commit local creado — push pendiente para push_to_git.sh" | tee -a "$LOG_FILE"
