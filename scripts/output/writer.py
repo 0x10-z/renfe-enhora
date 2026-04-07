@@ -251,6 +251,23 @@ def write_by_type_arrivals(station_data: StationData, service: ServiceConfig) ->
     log.info(f"[{service.label}] Wrote by_type_arrivals — {sum(len(v) for v in result.values())} entries across {len(result)} types")
 
 
+def write_zones(stats: dict, service: ServiceConfig) -> None:
+    """Write public/data/{service}/zones.json with per-CCAA and per-nucleo stats."""
+    path = service.data_dir / "zones.json"
+    path.write_text(
+        json.dumps({
+            "generated_at": datetime.now(_TZ_MADRID).isoformat(timespec="seconds"),
+            "ccaa":   stats.get("by_ccaa", []),
+            "nucleos": stats.get("by_nucleo", []),
+        }, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    log.info(
+        f"[{service.label}] Wrote zones.json — "
+        f"{len(stats.get('by_ccaa', []))} CCAA, {len(stats.get('by_nucleo', []))} nucleos"
+    )
+
+
 def write_insights(insights: list, service: ServiceConfig) -> None:
     """Write computed insights to public/data/{service}/insights.json."""
     path = service.data_dir / "insights.json"

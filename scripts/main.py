@@ -40,7 +40,7 @@ def run_service(service) -> None:
     from scripts.processing.merger import build_station_arrivals
     from scripts.processing.stats import compute_stats
     from scripts.processing.insights import compute_insights
-    from scripts.output.writer import write_all, write_by_type_arrivals, write_history, write_insights, write_raw_events, write_station_history
+    from scripts.output.writer import write_all, write_by_type_arrivals, write_history, write_insights, write_raw_events, write_station_history, write_zones
 
     start = datetime.now()
     log.info(f"--- {service.label} start ---")
@@ -54,6 +54,7 @@ def run_service(service) -> None:
     write_station_history(station_data, service)
     write_raw_events(station_data, service)
     write_by_type_arrivals(station_data, service)
+    write_zones(stats, service)
     insights = compute_insights(station_data, stats, service.data_dir / "history.json")
     write_insights(insights, service)
 

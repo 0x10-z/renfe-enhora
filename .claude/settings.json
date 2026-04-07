@@ -43,7 +43,20 @@
       "Bash(rm public/trenes/md/s449.fake)",
       "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Renfe+596+diesel&srnamespace=6&format=json&srlimit=3\")",
       "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(r[''''title'''']\\) for r in data[''''query''''][''''search'''']]\")",
-      "WebFetch(domain:commons.wikimedia.org)"
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "Bash(where cwebp:*)",
+      "Bash(where ffmpeg:*)",
+      "Bash(where magick:*)",
+      "Read(//d/Workroot/renfe-enhora/renfe-enhora/**)",
+      "Bash(rm -f public/trenes/ave/s100.fake public/trenes/ave/s102.fake public/trenes/ave/s103.fake)",
+      "Bash(rm -f public/trenes/alvia/s121.fake public/trenes/alvia/s130.fake)",
+      "Bash(rm -f public/trenes/avant/s104.fake)",
+      "Bash(rm -f public/trenes/md/s592.fake public/trenes/md/s594.fake)",
+      "Bash(rm -f public/trenes/regional/s592.fake public/trenes/regional/s596.fake)",
+      "Bash(python3 -m scripts.data.generate_zones_map)",
+      "Bash(venv/Scripts/python -m scripts.data.generate_zones_map)",
+      "Bash(venv/Scripts/python -m scripts.main ave-larga-distancia)"
     ]
   }
 }

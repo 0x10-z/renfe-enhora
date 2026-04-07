@@ -133,6 +133,19 @@ import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astr
         <div id="echart-train-type" style="width:100%"></div>
       </div>
     </section>
+
+    <!-- Zones section -->
+    <section class="zones-section" id="zones-section" style="display:none">
+      <div class="section-header">
+        <h2>Por comunidad autónoma</h2>
+      </div>
+      <div class="zones-grid" id="zones-ccaa-grid"></div>
+
+      <div class="section-header" id="zones-nucleo-header" style="display:none; margin-top:1.2rem">
+        <h2>Por núcleo de Cercanías</h2>
+      </div>
+      <div class="zones-grid" id="zones-nucleo-grid"></div>
+    </section>
   </div>
 
   <!-- Train type info modal -->
@@ -673,6 +686,55 @@ import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astr
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+
+  /* Zones section */
+  .zones-section { margin-bottom: 2.5rem; }
+  .zones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.65rem;
+    margin-top: 0.75rem;
+  }
+  .zone-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 0.9rem;
+    cursor: default;
+    transition: box-shadow 0.15s;
+  }
+  .zone-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .zone-card-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .zone-bar-wrap {
+    height: 5px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-bottom: 0.4rem;
+    overflow: hidden;
+  }
+  .zone-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .zone-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    color: var(--text-sub);
+  }
+  .zone-stat-delay { color: var(--text); font-weight: 600; }
+  .zone-stat-pct.high { color: var(--red); }
+  .zone-stat-pct.mid  { color: var(--orange, #f59e0b); }
 
   /* Train type section */
   .train-type-section {
@@ -1359,11 +1421,64 @@ import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astr
     document.getElementById("history-section")!.style.display = "none";
     document.getElementById("insights-section")!.style.display = "none";
     document.getElementById("train-type-section")!.style.display = "none";
+    document.getElementById("zones-section")!.style.display = "none";
+    document.getElementById("zones-nucleo-header")!.style.display = "none";
+    (document.getElementById("zones-ccaa-grid") as HTMLElement).innerHTML = "";
+    (document.getElementById("zones-nucleo-grid") as HTMLElement).innerHTML = "";
     state.trainTypeChart?.dispose();
     state.trainTypeChart = null;
     state.historyRecords = [];
     state.chart?.dispose();
     state.chart = null;
+  }
+
+  // ── Zones ──────────────────────────────────────────────────────────────────
+
+  async function loadZones() {
+    try {
+      const res = await fetch(`/data/${state.activeSvc}/zones.json?t=${Date.now()}`);
+      if (!res.ok) return;
+      const { ccaa = [], nucleos = [] } = await res.json();
+      renderZones(ccaa, nucleos);
+    } catch {
+      // zones not yet available
+    }
+  }
+
+  function renderZones(ccaa: any[], nucleos: any[]) {
+    if (!ccaa.length && !nucleos.length) return;
+
+    const zoneCard = (z: any) => {
+      const delayedPct = z.total > 0 ? z.delayed / z.total : 0;
+      const barPct = Math.min(delayedPct * 100, 100).toFixed(1);
+      const pctClass = delayedPct >= 0.3 ? "high" : delayedPct >= 0.15 ? "mid" : "";
+      const avgDelay = z.avg_delay_min > 0
+        ? `<span class="zone-stat-delay">${z.avg_delay_min.toFixed(1)}m</span>`
+        : "";
+      return `<div class="zone-card">
+        <div class="zone-card-name" title="${z.name}">${z.name}</div>
+        <div class="zone-bar-wrap"><div class="zone-bar" style="width:${barPct}%"></div></div>
+        <div class="zone-stats">
+          <span class="zone-stat-pct ${pctClass}">${(delayedPct * 100).toFixed(0)}% retrasos</span>
+          ${avgDelay}
+        </div>
+        <div class="zone-stats" style="font-size:0.72rem;color:var(--muted);margin-top:0.15rem">
+          ${z.total} trenes · ${z.stations_count} est.
+        </div>
+      </div>`;
+    };
+
+    const ccaaGrid = document.getElementById("zones-ccaa-grid")!;
+    ccaaGrid.innerHTML = ccaa.map(zoneCard).join("");
+
+    const nucleoGrid = document.getElementById("zones-nucleo-grid")!;
+    const nucleoHeader = document.getElementById("zones-nucleo-header")!;
+    if (nucleos.length) {
+      nucleoGrid.innerHTML = nucleos.map(zoneCard).join("");
+      nucleoHeader.style.display = "";
+    }
+
+    document.getElementById("zones-section")!.style.display = "";
   }
 
   // ── Data ───────────────────────────────────────────────────────────────────
@@ -1386,6 +1501,7 @@ import TrainTypeDetailModal from "../components/modals/TrainTypeDetailModal.astr
     }
     loadHistory();
     loadInsights();
+    loadZones();
   }
 
   async function loadHistory() {
