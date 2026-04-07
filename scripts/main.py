@@ -41,6 +41,7 @@ def run_service(service) -> None:
     from scripts.processing.stats import compute_stats
     from scripts.processing.insights import compute_insights
     from scripts.output.writer import write_all, write_by_ccaa_arrivals, write_by_type_arrivals, write_history, write_insights, write_raw_events, write_station_history, write_zones
+    from scripts.output.parquet_writer import append_snapshot
 
     start = datetime.now()
     log.info(f"--- {service.label} start ---")
@@ -58,6 +59,7 @@ def run_service(service) -> None:
     write_zones(stats, service)
     insights = compute_insights(station_data, stats, service.data_dir / "history.json")
     write_insights(insights, service)
+    append_snapshot(station_data, stats, service.name)
 
     elapsed = (datetime.now() - start).total_seconds()
     log.info(
