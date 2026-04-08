@@ -402,6 +402,70 @@ def write_by_route_arrivals(station_data: StationData, service: ServiceConfig) -
     )
 
 
+def write_routes_geo(gtfs_dir, station_data: StationData, service: ServiceConfig) -> None:
+    """
+    Write public/data/{service}/routes_geo.json with route stop sequences,
+    shape polylines, and current-snapshot delay stats.
+
+    Static geo data (stop sequences + shapes) is cached in
+    .cache/routes_static/{service.name}.json and only rebuilt when the GTFS
+    static feed is newer than the cache (i.e. once per 24 h).
+    Delay stats are always recomputed from station_data.
+    """
+    from scripts.processing.routes import build_routes_static, compute_route_stats
+    from scripts.config import CACHE_DIR
+
+    cache_dir = CACHE_DIR / "routes_static"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_path = cache_dir / f"{service.name}.json"
+
+    # Rebuild static geo only when GTFS stops.txt is newer than cache
+    gtfs_stops = gtfs_dir / "stops.txt"
+    need_rebuild = (
+        not cache_path.exists()
+        or not gtfs_stops.exists()
+        or gtfs_stops.stat().st_mtime > cache_path.stat().st_mtime
+    )
+
+    if need_rebuild:
+        log.info(f"[{service.label}] Rebuilding routes static geo (GTFS refreshed)")
+        static_routes = build_routes_static(gtfs_dir)
+        cache_path.write_text(
+            json.dumps(static_routes, ensure_ascii=False, separators=(",", ":")),
+            encoding="utf-8",
+        )
+        log.info(f"[{service.label}] Routes static geo cached — {len(static_routes)} routes")
+    else:
+        static_routes = json.loads(cache_path.read_text(encoding="utf-8"))
+        log.info(f"[{service.label}] Routes static geo loaded from cache — {len(static_routes)} routes")
+
+    # Always update stats from current snapshot
+    route_stats = compute_route_stats(station_data)
+    _empty_stats = {
+        "total": 0, "delayed": 0, "cancelled": 0,
+        "delayed_pct": 0.0, "avg_delay_min": 0.0, "max_delay_min": 0.0,
+    }
+    for r in static_routes:
+        r["stats"] = route_stats.get(r["route_id"], dict(_empty_stats))
+
+    # Sort by delayed_pct desc, then by total desc
+    static_routes.sort(key=lambda r: (-r["stats"]["delayed_pct"], -r["stats"]["total"]))
+
+    path = service.data_dir / "routes_geo.json"
+    path.write_text(
+        json.dumps({
+            "generated_at": datetime.now(_TZ_MADRID).isoformat(timespec="seconds"),
+            "routes": static_routes,
+        }, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    log.info(
+        f"[{service.label}] Wrote routes_geo.json — "
+        f"{len(static_routes)} routes, "
+        f"{sum(1 for r in static_routes if r['stats']['total'] > 0)} active"
+    )
+
+
 def write_insights(insights: list, service: ServiceConfig) -> None:
     """Write computed insights to public/data/{service}/insights.json."""
     path = service.data_dir / "insights.json"
