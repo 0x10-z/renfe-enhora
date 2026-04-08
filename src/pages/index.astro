@@ -712,6 +712,11 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     transition: transform 0.12s, box-shadow 0.12s;
     background: var(--bg-card);
   }
+  :global(.insight-high) {
+    border-color: var(--red); border-width: 2px;
+    background: var(--red-bg);
+    box-shadow: 0 0 0 3px rgba(220,38,38,0.08);
+  }
   :global(.insight-ok)   { border-color: var(--green-border);  background: var(--green-bg); }
   :global(.insight-warn) { border-color: var(--yellow-border); background: var(--yellow-bg); }
   :global(.insight-bad)  { border-color: var(--red); border-width: 1.5px; background: var(--red-bg); }
@@ -722,6 +727,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
+  :global(.insight-high .insight-icon-wrap) { background: rgba(220,38,38,0.15);  color: var(--red); }
   :global(.insight-ok   .insight-icon-wrap) { background: rgba(5,150,105,0.14);  color: var(--green); }
   :global(.insight-warn .insight-icon-wrap) { background: rgba(180,83,9,0.12);   color: var(--yellow); }
   :global(.insight-bad  .insight-icon-wrap) { background: rgba(220,38,38,0.1);   color: var(--red); }
@@ -734,6 +740,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     text-transform: uppercase; letter-spacing: 0.08em;
     margin-bottom: 0.2rem;
   }
+  :global(.insight-high .insight-label) { color: var(--red); font-weight: 700; letter-spacing: 0.08em; }
   :global(.insight-ok   .insight-label) { color: var(--green); }
   :global(.insight-warn .insight-label) { color: var(--yellow); }
   :global(.insight-bad  .insight-label) { color: var(--red); }

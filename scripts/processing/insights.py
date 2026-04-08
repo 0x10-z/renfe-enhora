@@ -33,6 +33,13 @@ def compute_insights(station_data: dict, stats: dict, history_path: Path) -> lis
         _insight_H(history, insights)
         _insight_I(history, stats, now, insights)
 
+    # ── Anomaly alerts (F15) — always last so we can sort them first ──────────
+    if len(history) >= 20:
+        _insight_J(history, stats, insights)
+
+    # Alerts ("high") always surface first
+    insights.sort(key=lambda x: 0 if x.get("severity") == "high" else 1)
+
     log.info(f"Computed {len(insights)} insights ({len(history)} history records available)")
     return insights
 
@@ -377,3 +384,54 @@ def _insight_I(history: list, stats: dict, now: datetime, insights: list) -> Non
             f"Hoy es un {day} excepcionalmente puntual — muy por debajo de la media histórica "
             f"({today_pct:.0f}% hoy vs {hist_avg:.0f}% habitual)",
             "ok")
+
+
+# ── J: anomalía por tipo de tren (F15) ───────────────────────────────────────
+
+def _insight_J(history: list, stats: dict, insights: list) -> None:
+    """
+    Alert when a train type's current delayed_pct is ≥ 1.5× its historical mean.
+    Requires ≥ 20 global history records AND ≥ 8 records with data for that type.
+    Only fires when the current delayed_pct also exceeds 20% in absolute terms,
+    to avoid false alarms on normally-punctual types with low base rates.
+    """
+    ANOMALY_RATIO   = 1.5   # current must be ≥ 1.5× historical mean
+    ABS_THRESHOLD   = 0.20  # current must be ≥ 20% to be worth alerting
+    MIN_TYPE_SAMPLES = 8    # need at least this many history snapshots for the type
+    MIN_HIST_MEAN   = 0.05  # skip types that are normally < 5% delayed (noise)
+
+    current_by_type = stats.get("by_train_type", {})
+
+    for tt, curr in current_by_type.items():
+        curr_pct = curr.get("delayed_pct", 0.0)
+        if curr_pct < ABS_THRESHOLD:
+            continue
+
+        hist_pcts: list[float] = []
+        for r in history:
+            rec = r.get("by_type", {}).get(tt)
+            if not rec:
+                continue
+            total, delayed, _ = rec
+            if total < 5:
+                continue
+            hist_pcts.append(delayed / total)
+
+        if len(hist_pcts) < MIN_TYPE_SAMPLES:
+            continue
+
+        hist_mean = sum(hist_pcts) / len(hist_pcts)
+        if hist_mean < MIN_HIST_MEAN:
+            continue
+
+        ratio = curr_pct / hist_mean
+        if ratio < ANOMALY_RATIO:
+            continue
+
+        ratio_str = f"{ratio:.1f}×"
+        _append(insights, "J",
+            f"Anomalía en trenes {tt}: los retrasos están a {ratio_str} su media histórica "
+            f"({curr_pct*100:.0f}% hoy vs {hist_mean*100:.0f}% habitual). "
+            f"Basado en {len(hist_pcts)} registros.",
+            "high",
+            meta={"train_type": tt})
