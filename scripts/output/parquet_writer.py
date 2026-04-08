@@ -113,8 +113,13 @@ def _append(path: Path, table: pa.Table) -> None:
     """Append a PyArrow table to a parquet file, creating it if needed."""
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
-        existing = pq.read_table(path)
-        combined = pa.concat_tables([existing, table])
+        try:
+            existing = pq.read_table(path)
+            combined = pa.concat_tables([existing, table])
+        except Exception as exc:
+            log.warning("Corrupt parquet file %s (%s) — recreating from scratch", path, exc)
+            path.unlink()
+            combined = table
     else:
         combined = table
     pq.write_table(combined, path, compression="zstd")
