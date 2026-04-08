@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-04-08
 **Autor del análisis:** Claude Sonnet 4.6 (experto UX)
-**Estado:** Propuesta inicial
+**Estado:** Sprints A/B/C/E completados · Sprint D pendiente de pipeline
 **Nota:** Este documento integra la UX de las features pendientes en [plan-mejoras-2026.md](plan-mejoras-2026.md) — concretamente **F5** (Comparativa zonas) y **F15** (Alertas por umbral histórico). El diseño UX de esas features está planificado aquí antes de que se implementen.
 
 ---
@@ -56,22 +56,22 @@ Un periodista, un jubilado, un estudiante que coge el Cercanías cada día — n
 
 | # | Mejora | Impacto | Dificultad | Estado |
 |---|--------|---------|------------|--------|
-| U1 | Hero status: frase humana como titular del estado actual | Alto | Fácil | Pendiente |
-| U2 | Renombrar secciones y navegación con lenguaje natural | Alto | Fácil | Pendiente |
-| U3 | Subtítulos explicativos en cada gráfico | Alto | Fácil | Pendiente |
-| U4 | Insight cards: eliminar etiquetas A-I, rediseñar como alertas narrativas | Alto | Fácil | Pendiente |
-| U5 | Búsqueda de estación como acción principal visible desde el hero | Alto | Media | Pendiente |
-| U6 | Simplificar gráfico histórico: 3 opciones en lugar de 6 | Medio | Fácil | Pendiente |
-| U7 | Limpiar páginas de detalle de ruta: lenguaje humano, sin jerga técnica | Alto | Fácil | Pendiente |
-| U8 | Página /rutas: añadir contexto de entrada (¿qué es esto y para qué sirve?) | Medio | Fácil | Pendiente |
-| U9 | Estados vacíos empáticos y útiles | Medio | Fácil | Pendiente |
-| U10 | Leyenda CCAA con contexto cualitativo (bien / regular / mal) | Medio | Fácil | Pendiente |
-| U11 | Footer visible con sección "Sobre el proyecto" | Bajo | Fácil | Pendiente |
-| U12 | Primer viaje: tooltip/banner de bienvenida descartable | Medio | Media | Pendiente |
-| U13 | Accesibilidad: iconos junto a colores para no depender solo del color | Medio | Media | Pendiente |
-| U14 | Mobile: reordenar jerarquía de contenidos para pantallas pequeñas | Alto | Difícil | Pendiente |
-| U15 | **[F15]** Alertas de umbral: integrarlas como el tipo de insight más urgente y visible | Alto | Fácil | Pendiente |
-| U16 | **[F5]** Página "Zonas": narrativa automática de abandono/buen servicio con lenguaje periodístico | Alto | Media | Pendiente |
+| U1 | Hero status: frase humana como titular del estado actual | Alto | Fácil | ✓ Sprint B |
+| U2 | Renombrar secciones y navegación con lenguaje natural | Alto | Fácil | ✓ Sprint A |
+| U3 | Subtítulos explicativos en cada gráfico (dinámicos por vista) | Alto | Fácil | ✓ Sprint A+C |
+| U4 | Insight cards: eliminar etiquetas A-I, rediseñar como alertas narrativas | Alto | Fácil | ✓ Sprint B |
+| U5 | Búsqueda de estación como acción principal visible desde el hero | Alto | Media | ✗ Descartado |
+| U6 | Simplificar gráfico histórico: 4 opciones con nombres descriptivos | Medio | Fácil | ✓ Sprint C |
+| U7 | Limpiar páginas de detalle de ruta: lenguaje humano, sin jerga técnica | Alto | Fácil | ✓ Sprint B |
+| U8 | Página /rutas: añadir contexto de entrada (¿qué es esto y para qué sirve?) | Medio | Fácil | ✓ Sprint A |
+| U9 | Estados vacíos empáticos y útiles | Medio | Fácil | ✓ Sprint A |
+| U10 | Leyenda CCAA con contexto cualitativo (bien / regular / mal) | Medio | Fácil | ✓ Sprint B |
+| U11 | Footer visible con sección "Sobre el proyecto" | Bajo | Fácil | ✓ Sprint C |
+| U12 | Primer viaje: banner de bienvenida descartable (localStorage) | Medio | Media | ✓ Sprint C |
+| U13 | Accesibilidad: iconos junto a colores en badges de estado | Medio | Media | ✓ Sprint E |
+| U14 | Mobile: scroll horizontal en stat cards, límite de insights con "Ver más" | Alto | Difícil | ✓ Sprint E |
+| U15 | **[F15]** Alertas de umbral: integrarlas como el tipo de insight más urgente y visible | Alto | Fácil | ⏳ Pendiente pipeline F15 |
+| U16 | **[F5]** Página "Zonas": narrativa automática de abandono/buen servicio con lenguaje periodístico | Alto | Media | ⏳ Pendiente pipeline F5 |
 
 ---
 
@@ -643,31 +643,31 @@ Tablero   Rutas   Zonas   ¿Cómo funciona?
 ## Orden de implementación sugerido
 
 ```
-Sprint A — Quick wins de texto (½ día, máximo impacto por mínimo esfuerzo)
+Sprint A — Quick wins de texto ✓ COMPLETADO
   ├── [U2]  Renombrar secciones y navegación
   ├── [U3]  Subtítulos en gráficos
   ├── [U9]  Estados vacíos empáticos
   └── [U8]  Contexto de entrada en /rutas
 
-Sprint B — Componentes nuevos (2–3 días)
+Sprint B — Componentes nuevos ✓ COMPLETADO
   ├── [U1]  Hero status dinámico
   ├── [U4]  Rediseño de insight cards (+ tipo "alerta" para F15)
   ├── [U7]  Detalle de ruta en lenguaje humano
   └── [U10] Leyenda CCAA cualitativa
 
-Sprint C — Experiencia completa (3–5 días)
-  ├── [U5]  Búsqueda en hero
-  ├── [U6]  Simplificar gráfico histórico
-  ├── [U11] Footer expandido
-  └── [U12] Banner primera visita
+Sprint C — Experiencia completa ✓ COMPLETADO
+  ├── [U5]  Búsqueda en hero  ← descartado por decisión de diseño
+  ├── [U6]  Simplificar gráfico histórico (4 botones con nombres descriptivos + subtitle dinámico)
+  ├── [U11] Footer expandido (3 columnas)
+  └── [U12] Banner primera visita (localStorage)
 
-Sprint D — Features pendientes con UX diseñada (según avance de pipeline)
+Sprint D — Features pendientes con UX diseñada ⏳ BLOQUEADO por pipeline
   ├── [U15] Alertas umbral  ← implementar junto con F15 del pipeline
   └── [U16] Página Zonas    ← implementar junto con F5 del pipeline
 
-Sprint E — Calidad y accesibilidad (2–3 días)
-  ├── [U13] Iconos junto a colores
-  └── [U14] Reordenado mobile
+Sprint E — Calidad y accesibilidad ✓ COMPLETADO
+  ├── [U13] Iconos junto a colores en badges (✓ ⚠ ✕)
+  └── [U14] Mobile: scroll horizontal stat cards + "Ver más" en insights
 ```
 
 ---

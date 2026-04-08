@@ -16,15 +16,19 @@ export const INSIGHT_ICONS: Record<string, string> = {
 
 export const CHEVRON_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
 
+const MOBILE_INSIGHTS_LIMIT = 3;
+
 export function renderInsights(insights: any[]) {
-  const section = document.getElementById("insights-section")!;
-  const grid    = document.getElementById("insights-grid")!;
-  const countEl = document.getElementById("insight-count")!;
+  const section  = document.getElementById("insights-section")!;
+  const grid     = document.getElementById("insights-grid")!;
+  const countEl  = document.getElementById("insight-count")!;
+  const showMore = document.getElementById("insights-show-more") as HTMLButtonElement | null;
 
   if (!insights.length) { section.style.display = "none"; return; }
 
   countEl.textContent = `${insights.length}`;
-  grid.innerHTML = insights.map(({ id, text, severity = "info", meta }) => {
+
+  const renderCards = (list: any[]) => list.map(({ id, text, severity = "info", meta }) => {
     const drillable = meta && ["A", "B", "C"].includes(id);
     const extraCls  = drillable ? " insight-drillable" : "";
     const dataAttrs = drillable
@@ -42,6 +46,26 @@ export function renderInsights(insights: any[]) {
       ${cta}
     </div>`;
   }).join("");
+
+  const isMobile = () => window.innerWidth <= 600;
+  const hasMore  = insights.length > MOBILE_INSIGHTS_LIMIT;
+
+  if (showMore) {
+    if (isMobile() && hasMore) {
+      grid.innerHTML = renderCards(insights.slice(0, MOBILE_INSIGHTS_LIMIT));
+      showMore.style.display = "flex";
+      showMore.onclick = () => {
+        grid.innerHTML = renderCards(insights);
+        showMore.style.display = "none";
+      };
+    } else {
+      grid.innerHTML = renderCards(insights);
+      showMore.style.display = "none";
+    }
+  } else {
+    grid.innerHTML = renderCards(insights);
+  }
+
   section.style.display = "block";
 }
 

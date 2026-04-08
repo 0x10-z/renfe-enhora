@@ -126,6 +126,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
         <span class="count-badge" id="insight-count">—</span>
       </div>
       <div class="insights-grid" id="insights-grid"></div>
+      <button class="insights-show-more" id="insights-show-more" style="display:none">Ver todos los datos <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
     </section>
 
     <section class="train-type-section" id="train-type-section" style="display:none">
@@ -521,10 +522,23 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     .stats-grid { grid-template-columns: repeat(3, 1fr); }
   }
   @media (max-width: 600px) {
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 380px) {
-    .stats-grid { grid-template-columns: 1fr; }
+    /* Horizontal scroll: 2 cards visible at a time */
+    .stats-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 0.6rem;
+      padding-bottom: 0.5rem;
+      /* hide scrollbar but keep scrollability */
+      scrollbar-width: none;
+    }
+    .stats-grid::-webkit-scrollbar { display: none; }
+    .stats-grid > :global(*) {
+      flex: 0 0 calc(50% - 0.3rem);
+      scroll-snap-align: start;
+      min-width: 0;
+    }
   }
 
   :global(.stat-unit) {
@@ -668,6 +682,24 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     gap: 0.5rem;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   }
+  .insights-show-more {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.6rem;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .insights-show-more:hover { border-color: var(--accent-border); color: var(--accent); }
 
   :global(.insight-card) {
     display: flex;
@@ -960,6 +992,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
   .range-btns {
     display: flex;
     gap: 0.25rem;
+    flex-wrap: wrap;
   }
   .range-btn {
     font-size: 0.72rem;
