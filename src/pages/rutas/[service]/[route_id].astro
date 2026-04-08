@@ -107,24 +107,29 @@ const chronicPct = Math.round((chronic.chronic_delayed_pct ?? 0) * 100);
 
     <!-- Chronic / historical -->
     <div class="stat-card">
-      <h2 class="card-title">Histórico</h2>
+      <h2 class="card-title">
+        {hasChronicData
+          ? `Histórico · ${chronic.chronic_n_snapshots} registro${chronic.chronic_n_snapshots !== 1 ? "s" : ""}`
+          : "Histórico"}
+      </h2>
       {hasChronicData ? (
-        <div class="stat-row">
-          <div class="stat-item">
-            <span class="stat-value" style={`color:${chronicPct >= 30 ? "#dc2626" : chronicPct >= 10 ? "#b45309" : "#059669"}`}>{chronicPct}%</span>
-            <span class="stat-label">con retraso</span>
+        <>
+          {chronic.chronic_n_snapshots < 5 && (
+            <p class="no-data reliability-warn">⚠ Pocos datos aún — el histórico mejorará con el tiempo</p>
+          )}
+          <div class="stat-row">
+            <div class="stat-item">
+              <span class="stat-value" style={`color:${chronicPct >= 30 ? "#dc2626" : chronicPct >= 10 ? "#b45309" : "#059669"}`}>{chronicPct}%</span>
+              <span class="stat-label">con retraso</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{chronic.chronic_avg_delay_min > 0 ? `${chronic.chronic_avg_delay_min.toFixed(1)} min` : "—"}</span>
+              <span class="stat-label">media histórica</span>
+            </div>
           </div>
-          <div class="stat-item">
-            <span class="stat-value">{chronic.chronic_avg_delay_min > 0 ? `${chronic.chronic_avg_delay_min.toFixed(1)} min` : "—"}</span>
-            <span class="stat-label">media histórica</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">{chronic.chronic_n_snapshots}</span>
-            <span class="stat-label">snapshots</span>
-          </div>
-        </div>
+        </>
       ) : (
-        <p class="no-data">Sin datos históricos aún</p>
+        <p class="no-data">Acumulando datos históricos…</p>
       )}
     </div>
   </div>
@@ -307,6 +312,11 @@ const chronicPct = Math.round((chronic.chronic_delayed_pct ?? 0) * 100);
   .no-data {
     font-size: 0.82rem;
     color: var(--text-muted);
+  }
+  .reliability-warn {
+    font-size: 0.75rem;
+    color: var(--yellow);
+    margin-bottom: 0.5rem;
   }
 
   /* ── Detail layout ───────────────────────────────────────────────────────── */

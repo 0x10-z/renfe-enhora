@@ -29,6 +29,12 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     <button class="tab" data-svc="cercanias" role="tab">Cercanías</button>
   </div>
 
+  <!-- Hero status -->
+  <div id="hero-status" class="hero-status" style="display:none">
+    <span id="hero-icon" class="hero-icon" aria-hidden="true"></span>
+    <span id="hero-message"></span>
+  </div>
+
   <!-- Stats grid -->
   <div class="stats-grid">
     <StatCard
@@ -438,6 +444,22 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     margin-top: 0.25rem;
   }
 
+  .hero-status {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .hero-icon { font-size: 1rem; flex-shrink: 0; }
+  .hero-ok   { background: var(--green-bg);  border-color: var(--green-border);  color: var(--green); }
+  .hero-warn { background: var(--yellow-bg); border-color: var(--yellow-border); color: var(--yellow); }
+  .hero-bad  { background: var(--red-bg);    border-color: var(--red-border);    color: var(--red); }
+
   .refresh-info {
     text-align: right;
     font-size: 0.78rem;
@@ -662,7 +684,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
   }
   :global(.insight-ok)   { border-color: var(--green-border);  background: var(--green-bg); }
   :global(.insight-warn) { border-color: var(--yellow-border); background: var(--yellow-bg); }
-  :global(.insight-bad)  { border-color: var(--red-border);    background: var(--red-bg); }
+  :global(.insight-bad)  { border-color: var(--red); border-width: 1.5px; background: var(--red-bg); }
   :global(.insight-info) { border-color: var(--accent-border); background: var(--accent-bg); }
 
   :global(.insight-icon-wrap) {
@@ -1627,6 +1649,27 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     setText("sub-trips", s.stations_count ? `de ${s.stations_count} estaciones` : "—");
 
     setText("last-updated", `Actualizado ${timeAgo(generatedAt)}`);
+
+    // Hero status banner
+    const heroEl  = document.getElementById("hero-status") as HTMLElement;
+    const heroMsg = document.getElementById("hero-message") as HTMLElement;
+    const heroIcon = document.getElementById("hero-icon") as HTMLElement;
+    if (heroEl && heroMsg && heroIcon && pct !== null) {
+      const svcLabel = state.activeSvc === "cercanias" ? "Cercanías" : "AVE y Larga Distancia";
+      let icon: string, msg: string, cls: string;
+      if (pct >= 25) {
+        icon = "⚠"; msg = `Atención: el ${pct}% de los trenes de ${svcLabel} están llegando tarde`; cls = "hero-bad";
+      } else if (pct >= 10) {
+        icon = "⚡"; msg = `Retrasos moderados en ${svcLabel}: el ${pct}% de los trenes con demora`; cls = "hero-warn";
+      } else {
+        icon = "✓"; msg = `Los trenes de ${svcLabel} van bien: solo el ${pct}% con retraso`; cls = "hero-ok";
+      }
+      heroIcon.textContent = icon;
+      heroMsg.textContent  = msg;
+      heroEl.className = `hero-status hero-${cls}`;
+      heroEl.style.display = "flex";
+    }
+
     renderTrainTypes(s.by_train_type ?? {});
   }
 

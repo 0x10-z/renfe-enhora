@@ -4,7 +4,7 @@ import { openModal } from "./stationModal";
 import { stationHTML } from "./stations";
 
 export const SEVERITY_LABELS: Record<string, string> = {
-  ok: "Todo bien", warn: "Aviso", bad: "Alerta", info: "Dato",
+  ok: "Sin problemas", warn: "Atención", bad: "Alerta", info: "Dato del día",
 };
 
 export const INSIGHT_ICONS: Record<string, string> = {
