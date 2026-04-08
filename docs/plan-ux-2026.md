@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-04-08
 **Autor del análisis:** Claude Sonnet 4.6 (experto UX)
-**Estado:** Sprints A/B/C/E completados · Sprint D pendiente de pipeline
+**Estado:** Sprints A/B/C/E completados · Sprint D parcialmente completado (U15 ✓, U16 pendiente)
 **Nota:** Este documento integra la UX de las features pendientes en [plan-mejoras-2026.md](plan-mejoras-2026.md) — concretamente **F5** (Comparativa zonas) y **F15** (Alertas por umbral histórico). El diseño UX de esas features está planificado aquí antes de que se implementen.
 
 ---
@@ -70,7 +70,7 @@ Un periodista, un jubilado, un estudiante que coge el Cercanías cada día — n
 | U12 | Primer viaje: banner de bienvenida descartable (localStorage) | Medio | Media | ✓ Sprint C |
 | U13 | Accesibilidad: iconos junto a colores en badges de estado | Medio | Media | ✓ Sprint E |
 | U14 | Mobile: scroll horizontal en stat cards, límite de insights con "Ver más" | Alto | Difícil | ✓ Sprint E |
-| U15 | **[F15]** Alertas de umbral: integrarlas como el tipo de insight más urgente y visible | Alto | Fácil | ⏳ Pendiente pipeline F15 |
+| U15 | **[F15]** Alertas de umbral: integrarlas como el tipo de insight más urgente y visible | Alto | Fácil | ✓ Sprint D |
 | U16 | **[F5]** Página "Zonas": narrativa automática de abandono/buen servicio con lenguaje periodístico | Alto | Media | ⏳ Pendiente pipeline F5 |
 
 ---
@@ -661,9 +661,9 @@ Sprint C — Experiencia completa ✓ COMPLETADO
   ├── [U11] Footer expandido (3 columnas)
   └── [U12] Banner primera visita (localStorage)
 
-Sprint D — Features pendientes con UX diseñada ⏳ BLOQUEADO por pipeline
-  ├── [U15] Alertas umbral  ← implementar junto con F15 del pipeline
-  └── [U16] Página Zonas    ← implementar junto con F5 del pipeline
+Sprint D — Features pendientes con UX diseñada (parcialmente completado)
+  ├── [U15] Alertas umbral  ✓ COMPLETADO — severity "high", icono rayo, ordenadas primero, `.insight-high` CSS
+  └── [U16] Página Zonas    ⏳ PENDIENTE — espera pipeline F5 (regresión lineal por CCAA)
 
 Sprint E — Calidad y accesibilidad ✓ COMPLETADO
   ├── [U13] Iconos junto a colores en badges (✓ ⚠ ✕)

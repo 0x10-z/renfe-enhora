@@ -1,7 +1,7 @@
 # Plan de Mejoras — Andén / renfe-enhora
 
 **Fecha inicio:** 2026-04-01
-**Última actualización:** 2026-04-08 (F4 completado)
+**Última actualización:** 2026-04-08 (F15 completado)
 **Estado:** En progreso
 
 ---
@@ -61,7 +61,7 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 | 12 | Ranking de rutas/líneas con más retrasos | Media | ✓ Completado | Pipeline + Frontend |
 | 13 | SEO / OpenGraph: meta tags dinámicos por servicio | Fácil | ✓ Completado | Frontend |
 | 14 | Tendencias históricas: weekday vs weekend + evolución por tipo de tren | Media | ✓ Completado | Frontend |
-| 15 | Alertas por umbral: insight cuando una zona/línea supera su media histórica | Media | Pendiente | Pipeline |
+| 15 | Alertas por umbral: insight cuando una zona/línea supera su media histórica | Media | ✓ Completado | Pipeline + Frontend |
 
 **Alcance:** Cercanías + AVE/Larga Distancia en todos los features.
 
@@ -405,40 +405,30 @@ Sección `08 · Equipo` en `sobre.astro` con tarjetas para Iker Ocio y Jorge Bu�
 
 ## Feature 15 — Alertas por umbral histórico
 
-> Dificultad: Media — **PENDIENTE**
+> Dificultad: Media — ✓ COMPLETADO
 
-### Propuesta
+### Lo implementado
 
-En `scripts/processing/insights.py`, añadir un nuevo tipo de insight (tipo "alerta") cuando:
+**Pipeline (`scripts/processing/insights.py`):**
 
-- Una CCAA supera 1.5× su propia media histórica (últimos 30 días)
-- Un tipo de tren supera 2× su media histórica
-- Una línea (`train_name`) supera 2× su media histórica
+- Nueva función `_insight_J`: detecta anomalías por tipo de tren comparando `delayed_pct` actual contra la media histórica extraída del campo `by_type` de `history.json`
+- Umbral: ratio ≥ 1.5×, delayed_pct actual ≥ 20%, ≥ 8 snapshots históricos con datos para ese tipo, media histórica ≥ 5%
+- Requiere ≥ 20 registros globales en history para activarse (evita falsos positivos con poco historial)
+- Los insights con `severity: "high"` se ordenan siempre los primeros antes de escribir el JSON
 
-Se mostraría con `severity: "high"` en el panel de insights, destacado visualmente.
+**Frontend:**
 
-### Fuente de datos históricos (Parquet)
+- `insightModal.ts`: nueva etiqueta "Anomalía" con icono de rayo (`⚡` SVG) para `severity: "high"`
+- `index.astro`: clase `.insight-high` con borde rojo 2px, fondo rojizo y halo de sombra — visualmente diferenciado del resto
 
-Los 30 días de baseline se calculan directamente desde Parquet — no requiere cambios en `history.json`:
+### Decisión de implementación
 
-```python
-import pandas as pd
-from datetime import datetime, timedelta
+Se usa `history.json` (campo `by_type: {tt: [total, delayed, avg_min]}`) en lugar de los Parquet, porque `history.json` ya contiene datos compactos por tipo de tren en cada snapshot y no requiere dependencia de pandas. Más robusto y sin overhead.
 
-cutoff = datetime.now() - timedelta(days=30)
+### Pendiente (posibles extensiones)
 
-# Baseline por CCAA
-ccaa_df = pd.read_parquet("data/by_ccaa/history.parquet")
-baseline_ccaa = (ccaa_df[ccaa_df.ts >= cutoff]
-    .groupby(["service", "ccaa"])["delayed_pct"].mean())
-
-# Baseline por tipo de tren
-type_df = pd.read_parquet("data/by_type/history.parquet")
-baseline_type = (type_df[type_df.ts >= cutoff]
-    .groupby(["service", "train_type"])["delayed_pct"].mean())
-```
-
-Comparar con el snapshot actual (`stats["by_ccaa"]`, `stats["by_train_type"]`) para detectar anomalías.
+- Alertas por CCAA (requeriría añadir `by_ccaa` compacto a `history.json` — hoy no se guarda)
+- Alertas por línea/ruta individual (requeriría Parquet de `arrivals`)
 
 ---
 
@@ -459,7 +449,7 @@ Comparar con el snapshot actual (`stats["by_ccaa"]`, `stats["by_train_type"]`) p
 [12] Ranking rutas     → versión light de [4]             ✓ completado
 [13] SEO / OpenGraph   → independiente                    ✓ completado
 [14] Tendencias        → independiente (datos ya existen) ✓ completado
-[15] Alertas umbral    → depende de [3] + [6]             pendiente
+[15] Alertas umbral    → depende de [3] + [6]             ✓ completado
 ```
 
 ## Orden de implementación sugerido
@@ -476,7 +466,7 @@ Sprint 4 — Rutas completas ✓ COMPLETADO
   └── [4b] src/pages/rutas/[service]/[route_id].astro — diagrama de paradas + mapa ✓
 
 Sprint 5 — Narrativa avanzada (3–5 días)
-  ├── [15] Alertas por umbral — usa data/by_ccaa/history.parquet + data/by_type/history.parquet
-  └── [5]  Comparativa zonas — insights.py + zonas.astro
+  ├── [15] Alertas por umbral ✓ COMPLETADO (usa by_type en history.json)
+  └── [5]  Comparativa zonas — insights.py + zonas.astro  ← PENDIENTE
            (usa data/by_ccaa/history.parquet para regresión de tendencias)
 ```
