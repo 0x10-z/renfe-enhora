@@ -9,11 +9,11 @@ import CcaaDetailModal from "../components/modals/CcaaDetailModal.astro";
 import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
 ---
 
-<Layout title="Tablero de Llegadas">
+<Layout title="¿Cómo van los trenes hoy?">
   <div class="page-header">
     <div>
-      <h1>Tablero de Llegadas</h1>
-      <p class="subtitle">Renfe España · Próximos 60 minutos</p>
+      <h1>¿Cómo van los trenes hoy?</h1>
+      <p class="subtitle">Cercanías y AVE · próxima hora de servicio</p>
     </div>
     <div class="refresh-info">
       <span id="last-updated" class="muted">Cargando datos…</span>
@@ -33,8 +33,8 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
   <div class="stats-grid">
     <StatCard
       valueId="v-total"
-      label="Paradas analizadas"
-      tip="Paradas con llegada programada en la ventana de 60 min siguiente al último análisis. Una misma línea suma una parada por estación."
+      label="Estaciones con trenes ahora"
+      tip="Estaciones con al menos una llegada programada en la próxima hora. Una misma línea cuenta una vez por estación."
     >
       <svg slot="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
       <div slot="sub" class="stat-sub" id="sub-stations">— estaciones</div>
@@ -72,8 +72,8 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
 
     <StatCard
       valueId="v-trips"
-      label="Trenes en ruta"
-      tip="Viajes únicos (trip_ids distintos) en la ventana de análisis. Representa el número real de trenes en circulación en ese momento."
+      label="Trenes en circulación"
+      tip="Número de trenes distintos con paradas previstas en la próxima hora."
     >
       <svg slot="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="16" rx="2"/><path d="M4 11h16"/><path d="M12 3v8"/><circle cx="8.5" cy="17.5" r="1.5"/><circle cx="15.5" cy="17.5" r="1.5"/></svg>
       <div slot="sub" class="stat-sub" id="sub-trips">— estaciones activas</div>
@@ -110,6 +110,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
           <button class="range-btn" data-days="-2">Mapa de calor</button>
         </div>
       </div>
+      <p class="section-subtitle">Porcentaje de trenes que llegaron tarde en cada captura. Barras más altas = peor momento del día.</p>
       <div class="chart-card">
         <div id="echart-main" style="height:220px;width:100%;transition:height 0.2s"></div>
       </div>
@@ -117,7 +118,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
 
     <section class="insights-section" id="insights-section" style="display:none">
       <div class="section-header">
-        <h2>Observaciones</h2>
+        <h2>Lo que dicen los datos</h2>
         <span class="count-badge" id="insight-count">—</span>
       </div>
       <div class="insights-grid" id="insights-grid"></div>
@@ -125,11 +126,12 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
 
     <section class="train-type-section" id="train-type-section" style="display:none">
       <div class="section-header">
-        <h2>Por tipo de tren</h2>
+        <h2>¿Qué tren va peor?</h2>
         <button class="info-btn" id="train-type-info-btn" aria-label="Información sobre tipos de tren">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         </button>
       </div>
+      <p class="section-subtitle">Cada barra es un tipo de tren. Las más largas indican que ese tipo llegó tarde con más frecuencia hoy.</p>
       <div class="chart-card">
         <p id="train-type-narrative" class="train-type-narrative"></p>
         <div id="echart-train-type" style="width:100%"></div>
@@ -139,33 +141,36 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     <!-- Route ranking section -->
     <section class="route-section" id="route-section" style="display:none">
       <div class="section-header">
-        <h2>Por línea / servicio</h2>
+        <h2>Las rutas con más retrasos</h2>
       </div>
+      <p class="section-subtitle">Líneas ordenadas por porcentaje de trenes con retraso en la captura actual.</p>
       <div id="route-ranking" class="route-ranking"></div>
     </section>
 
     <!-- Zones section -->
     <section class="tendencias-section" id="tendencias-section" style="display:none">
       <div class="section-header">
-        <h2>Tendencias históricas</h2>
+        <h2>¿Cuándo hay más retrasos?</h2>
       </div>
+      <p class="section-subtitle">Comparativa laborables vs. fin de semana, y evolución por tipo de tren en los últimos meses.</p>
       <div id="weekday-stats" class="weekday-stats" style="display:none"></div>
       <div id="echart-type-history" style="width:100%;display:none"></div>
     </section>
 
     <section class="zones-section" id="zones-section" style="display:none">
       <div class="section-header">
-        <h2>Por comunidad autónoma</h2>
+        <h2>¿Dónde hay más retrasos?</h2>
       </div>
+      <p class="section-subtitle">Cada región coloreada por % de trenes tarde. Haz clic en una comunidad para ver las llegadas afectadas.</p>
       <div class="zones-row">
         <div class="zones-map-col">
           <div id="ccaa-map-container" class="ccaa-map-container"></div>
           <div class="ccaa-map-legend" aria-hidden="true">
-            <span class="legend-item"><span class="legend-dot" style="background:#16a34a"></span>&lt;3%</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#65a30d"></span>3–10%</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#d97706"></span>10–20%</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#ea580c"></span>20–30%</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#dc2626"></span>&gt;30%</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#16a34a"></span>Servicio bueno &lt;3%</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#65a30d"></span>Retrasos leves 3–10%</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#d97706"></span>Retrasos notables 10–20%</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#ea580c"></span>Servicio deficiente 20–30%</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#dc2626"></span>Servicio muy malo &gt;30%</span>
             <span class="legend-item"><span class="legend-dot" style="background:#94a3b8;opacity:0.4"></span>Sin datos</span>
           </div>
         </div>
@@ -530,6 +535,14 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-muted);
+  }
+
+  .section-subtitle {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: -0.4rem;
+    margin-bottom: 0.65rem;
+    line-height: 1.45;
   }
 
   .count-badge {

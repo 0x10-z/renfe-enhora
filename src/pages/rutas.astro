@@ -3,14 +3,14 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout
-  title="Rutas"
+  title="Rutas con más retrasos"
   description="Ranking de rutas de Renfe por porcentaje de retraso. Mapa interactivo con trayectos y paradas de Cercanías, AVE y Larga Distancia."
   ogUrl="https://enhora.info/rutas"
 >
   <div class="page-header">
     <div>
-      <h1>Rutas</h1>
-      <p class="subtitle">Selecciona una ruta para ver su trayecto y todas sus paradas</p>
+      <h1>Rutas con más retrasos</h1>
+      <p class="subtitle">Líneas ordenadas de peor a mejor puntualidad · haz clic en una ruta para ver su trayecto y el estado de cada parada</p>
     </div>
     <span id="last-updated" class="muted"></span>
   </div>
@@ -40,7 +40,7 @@ import Layout from "../layouts/Layout.astro";
       <!-- ── VIEW A: Ranking ────────────────────────────────────────── -->
       <div id="view-ranking">
         <div class="panel-head">
-          <span class="panel-title">Ranking de rutas</span>
+          <span class="panel-title">Ordenadas por retraso</span>
           <span id="routes-count" class="muted small"></span>
         </div>
         <div class="filter-bar">
