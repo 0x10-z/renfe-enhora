@@ -66,18 +66,64 @@ const fullTitle = `${title} · enhora.info`;
       </nav>
     </header>
 
+    <!-- First-visit banner (U12) -->
+    <div id="welcome-banner" class="welcome-banner" style="display:none" role="alert">
+      <div class="welcome-banner-inner">
+        <span class="welcome-banner-icon" aria-hidden="true">👋</span>
+        <div class="welcome-banner-text">
+          <strong>Bienvenido a enhora.info</strong> — datos de retrasos de Renfe actualizados cada hora. Los datos son de la última captura disponible.
+        </div>
+        <button class="welcome-banner-close" id="welcome-banner-close" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
     <main>
       <slot />
     </main>
 
+    <!-- Expanded footer (U11) -->
     <footer>
-      <p>
-        Hecho por <a href="https://ikerocio.com" target="_blank" rel="noopener">Iker Ocio (0x10)</a>
-        · Datos: <a href="https://data.renfe.com" target="_blank" rel="noopener">Renfe Open Data</a>
-        · Licencia CC BY 4.0 · Actualización cada hora
-        · <a href="https://github.com/0x10-z/renfe-enhora" target="_blank" rel="noopener">GitHub</a>
-      </p>
+      <div class="footer-expanded">
+        <div class="footer-col">
+          <span class="footer-col-title">enhora.info</span>
+          <p>Tablero en tiempo real de retrasos de Renfe. Datos GTFS actualizados cada hora.</p>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Páginas</span>
+          <nav class="footer-nav">
+            <a href="/">Tablero</a>
+            <a href="/rutas">Rutas</a>
+            <a href="/sobre">¿Cómo funciona?</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Fuentes</span>
+          <nav class="footer-nav">
+            <a href="https://data.renfe.com" target="_blank" rel="noopener">Renfe Open Data</a>
+            <a href="https://github.com/0x10-z/renfe-enhora" target="_blank" rel="noopener">Código en GitHub</a>
+            <a href="https://ikerocio.com" target="_blank" rel="noopener">Autor: Iker Ocio</a>
+          </nav>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        Licencia CC BY 4.0 · Actualización cada hora · Datos: <a href="https://data.renfe.com" target="_blank" rel="noopener">Renfe Open Data</a>
+      </div>
     </footer>
+
+    <script>
+      // U12: First-visit banner
+      const banner = document.getElementById("welcome-banner");
+      if (banner && !localStorage.getItem("enhora_visited")) {
+        banner.style.display = "block";
+      }
+      document.getElementById("welcome-banner-close")?.addEventListener("click", () => {
+        const b = document.getElementById("welcome-banner");
+        if (b) b.style.display = "none";
+        localStorage.setItem("enhora_visited", "1");
+      });
+    </script>
   </body>
 </html>
 
@@ -196,19 +242,95 @@ const fullTitle = `${title} · enhora.info`;
     width: 100%;
   }
 
+  /* ── Welcome banner (U12) ────────────────────────────────────────────────── */
+  .welcome-banner {
+    background: var(--accent-bg);
+    border-bottom: 1px solid var(--accent-border);
+  }
+  .welcome-banner-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0.65rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .welcome-banner-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .welcome-banner-text {
+    flex: 1;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+  .welcome-banner-text strong { color: var(--text); }
+  .welcome-banner-close {
+    background: none;
+    border: none;
+    color: var(--text-sub);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    transition: color 0.15s;
+  }
+  .welcome-banner-close:hover { color: var(--text); }
+
+  /* ── Footer ──────────────────────────────────────────────────────────────── */
   footer {
     border-top: 1px solid var(--border);
-    padding: 1rem 1.5rem;
-    text-align: center;
-    font-size: 0.72rem;
-    color: var(--text-sub);
     background: #fff;
   }
-  footer a {
+  .footer-expanded {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 1rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2rem;
+  }
+  @media (max-width: 640px) {
+    .footer-expanded { grid-template-columns: 1fr; gap: 1.25rem; }
+  }
+  .footer-col-title {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-sub);
+    margin-bottom: 0.5rem;
+  }
+  .footer-col p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .footer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .footer-nav a {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer-nav a:hover { color: var(--accent); }
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--text-sub);
+  }
+  .footer-bottom a {
     color: var(--text-muted);
     text-decoration: none;
   }
-  footer a:hover { color: var(--text); }
+  .footer-bottom a:hover { color: var(--text); }
 
   h1 {
     font-size: 1.4rem;

@@ -108,15 +108,13 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
       <div class="section-header">
         <h2>Histórico de retrasos</h2>
         <div class="range-btns" role="group">
-          <button class="range-btn" data-days="7">7d</button>
-          <button class="range-btn" data-days="30">30d</button>
-          <button class="range-btn" data-days="90">90d</button>
-          <button class="range-btn" data-days="0">Todo</button>
-          <button class="range-btn active" data-days="-1">Por hora</button>
+          <button class="range-btn" data-days="7">Última semana</button>
+          <button class="range-btn" data-days="30">Último mes</button>
+          <button class="range-btn active" data-days="-1">Por hora del día</button>
           <button class="range-btn" data-days="-2">Mapa de calor</button>
         </div>
       </div>
-      <p class="section-subtitle">Porcentaje de trenes que llegaron tarde en cada captura. Barras más altas = peor momento del día.</p>
+      <p class="section-subtitle" id="history-subtitle">Media de retrasos agrupada por hora. Descubre en qué franja hay más problemas.</p>
       <div class="chart-card">
         <div id="echart-main" style="height:220px;width:100%;transition:height 0.2s"></div>
       </div>
@@ -1709,12 +1707,23 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
   // Search
   document.getElementById("station-search")?.addEventListener("input", filterAndRender);
 
+
   // Range buttons
+  const HISTORY_SUBTITLES: Record<string, string> = {
+    "7":  "Porcentaje de trenes con retraso en cada captura horaria de la última semana.",
+    "30": "Porcentaje de trenes con retraso en cada captura horaria del último mes.",
+    "-1": "Media de retrasos agrupada por hora del día. Descubre en qué franja hay más problemas.",
+    "-2": "Intensidad de retrasos por hora del día y día de la semana.",
+  };
   document.querySelectorAll<HTMLButtonElement>(".range-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       state.activeDays = Number(btn.dataset.days);
       document.querySelectorAll(".range-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
+      const subtitle = document.getElementById("history-subtitle");
+      if (subtitle && btn.dataset.days !== undefined) {
+        subtitle.textContent = HISTORY_SUBTITLES[btn.dataset.days] ?? "";
+      }
       renderHistory();
     });
   });
