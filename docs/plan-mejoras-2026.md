@@ -1,7 +1,7 @@
 # Plan de Mejoras — Andén / renfe-enhora
 
 **Fecha inicio:** 2026-04-01
-**Última actualización:** 2026-04-07 (post-F12, arquitectura Parquet)
+**Última actualización:** 2026-04-08 (F4 completado)
 **Estado:** En progreso
 
 ---
@@ -50,7 +50,7 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 | 1 | Recategorizar umbrales de retraso (5 min = en hora) | Fácil | ✓ Completado | Pipeline + Frontend |
 | 2 | Tipo de tren: ranking + drilldown modal (click en gráfico) | Media | ✓ Completado | Pipeline + Frontend |
 | 3 | Zonas geográficas: CCAA + núcleos, mapa coropleta, modal de detalle | Media | ✓ Completado | Pipeline + Frontend |
-| 4 | Peores conexiones: rutas completas con todas las paradas | Difícil | Pendiente | Pipeline + Frontend |
+| 4 | Peores conexiones: rutas completas con todas las paradas | Difícil | ✓ Completado | Pipeline + Frontend |
 | 5 | Comparativa zonas: abandonadas vs bien servidas (narrativa automática) | Difícil | Pendiente | Pipeline + Frontend |
 | 6 | Almacenamiento histórico en Parquet (snapshots, arrivals, stations, by_type, by_ccaa) | Media | ✓ Completado | Pipeline |
 | 7 | Cron cada 5 minutos | Fácil | ✓ Completado | Infra |
@@ -153,7 +153,18 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 
 ## Feature 4 — Peores conexiones: rutas completas
 
-> Dificultad: Difícil — **PENDIENTE** (depende de: F3 ✓, F6 ✓)
+> Dificultad: Difícil — ✓ COMPLETADO (depende de: F3 ✓, F6 ✓)
+
+### Lo implementado
+
+| Pieza | Estado |
+| --- | --- |
+| `scripts/processing/routes.py` — geo estática + `compute_route_chronic_stats` desde Parquet | ✅ |
+| `writer.py` → `routes_geo.json` con `stats` (snapshot) + `chronic_stats` (histórico) | ✅ |
+| `by_route_arrivals.json` — arrivals por ruta (snapshot actual) | ✅ (F12) |
+| `src/pages/rutas.astro` — ranking, mapa, filtros, link ↗ a detalle | ✅ |
+| `src/pages/rutas/[service]/[route_id].astro` — página detalle con mapa + paradas + stats | ✅ |
+| Bloque top-3 en `index.astro` | ✅ |
 
 ### Objetivo
 
@@ -437,7 +448,7 @@ Comparar con el snapshot actual (`stats["by_ccaa"]`, `stats["by_train_type"]`) p
 [1]  Umbrales          → base para todos                  ✓ completado
 [2]  Tipo de tren      → necesario para [4] y [5]         ✓ completado
 [3]  Zonas             → necesario para [4] y [5]         ✓ completado
-[4]  Rutas completas   → necesario para [5]               pendiente
+[4]  Rutas completas   → necesario para [5]               ✓ completado
 [5]  Comparativa       → depende de [2] + [3] + [4] + [6] pendiente
 [6]  Parquet histórico → necesario para [4], [5] y [15]   ✓ completado
 [7]  Cron 5min         → independiente                    ✓ completado
@@ -460,9 +471,9 @@ Sprint 3 — Quick wins ✓ COMPLETADO
   ├── [14] Tendencias históricas ✓
   └── [12] Ranking rutas simplificado ✓
 
-Sprint 4 — Rutas completas (3–5 días)
-  └── [4]  Rutas completas — routes.py + routes.json + página /rutas
-           (usa data/arrivals/*.parquet para métricas crónicas)
+Sprint 4 — Rutas completas ✓ COMPLETADO
+  ├── [4a] Métricas crónicas en routes.py desde data/arrivals/*.parquet ✓
+  └── [4b] src/pages/rutas/[service]/[route_id].astro — diagrama de paradas + mapa ✓
 
 Sprint 5 — Narrativa avanzada (3–5 días)
   ├── [15] Alertas por umbral — usa data/by_ccaa/history.parquet + data/by_type/history.parquet

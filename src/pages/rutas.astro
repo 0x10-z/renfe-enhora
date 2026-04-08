@@ -219,6 +219,8 @@ import Layout from "../layouts/Layout.astro";
         statsStr = parts.join(" · ");
       }
 
+      const slug = r.route_id.replace(/[^a-zA-Z0-9_-]/g, "_");
+      const detailUrl = `/rutas/${currentService}/${slug}`;
       return `<li class="route-card${isActive ? "" : " route-card--inactive"}" data-route-id="${r.route_id}" tabindex="0" role="button" title="${displayName}">
         <div class="rc-top">
           <span class="rc-rank">${rank}</span>
@@ -230,7 +232,7 @@ import Layout from "../layouts/Layout.astro";
         <div class="rc-bar-wrap">
           <div class="rc-bar" style="width:${pct}%;background:${color}"></div>
         </div>
-        <div class="rc-stats">${statsStr}</div>` : ""}
+        <div class="rc-stats">${statsStr} <a class="rc-detail-link" href="${detailUrl}" title="Ver detalle de ruta">↗</a></div>` : ""}
       </li>`;
     }).join("");
 
@@ -549,6 +551,14 @@ import Layout from "../layouts/Layout.astro";
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  :global(.rc-detail-link) {
+    color: var(--accent);
+    text-decoration: none;
+    margin-left: 0.3rem;
+    font-size: 0.72rem;
+    opacity: 0.7;
+  }
+  :global(.rc-detail-link:hover) { opacity: 1; }
 
   /* ── Detail view ─────────────────────────────────────────────────────────── */
   #view-detail {

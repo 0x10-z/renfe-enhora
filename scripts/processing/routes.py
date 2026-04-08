@@ -252,3 +252,54 @@ def compute_route_stats(station_data: dict) -> Dict[str, dict]:
             "max_delay_min": round(max(dvals), 1) if dvals else 0.0,
         }
     return result
+
+
+def compute_route_chronic_stats(service_name: str, data_root: Path) -> Dict[str, dict]:
+    """
+    Read data/arrivals/*.parquet and compute chronic (historical) stats per route_id.
+    Returns {route_id: {chronic_avg_delay_min, chronic_delayed_pct, chronic_n_snapshots}}.
+    Falls back to {} on any error (parquet unavailable, no data, etc.).
+    """
+    arrivals_dir = data_root / "arrivals"
+    parquet_files = sorted(arrivals_dir.glob("*.parquet"))
+    if not parquet_files:
+        return {}
+
+    try:
+        import pandas as pd
+
+        dfs = []
+        for f in parquet_files:
+            try:
+                dfs.append(pd.read_parquet(
+                    f, columns=["service", "route_id", "delay_min", "status", "snapshot_id"]
+                ))
+            except Exception as exc:
+                log.warning("[routes] Skipping corrupt parquet %s: %s", f.name, exc)
+
+        if not dfs:
+            return {}
+
+        df = pd.concat(dfs, ignore_index=True)
+        df = df[df["service"] == service_name]
+        if df.empty:
+            return {}
+
+        result: Dict[str, dict] = {}
+        for route_id, grp in df.groupby("route_id"):
+            total = len(grp)
+            delayed = int(grp["status"].isin(["retraso_leve", "retraso_alto", "cancelado"]).sum())
+            delay_vals = grp.loc[grp["delay_min"] > 0, "delay_min"]
+            n_snapshots = int(grp["snapshot_id"].nunique())
+            result[str(route_id)] = {
+                "chronic_avg_delay_min": round(float(delay_vals.mean()), 1) if len(delay_vals) > 0 else 0.0,
+                "chronic_delayed_pct":   round(float(delayed / total), 4) if total > 0 else 0.0,
+                "chronic_n_snapshots":   n_snapshots,
+            }
+
+        log.info("[routes] Chronic stats computed — %d routes from %d parquet files", len(result), len(dfs))
+        return result
+
+    except Exception as exc:
+        log.warning("[routes] Could not compute chronic stats: %s", exc)
+        return {}

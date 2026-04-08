@@ -412,8 +412,8 @@ def write_routes_geo(gtfs_dir, station_data: StationData, service: ServiceConfig
     static feed is newer than the cache (i.e. once per 24 h).
     Delay stats are always recomputed from station_data.
     """
-    from scripts.processing.routes import build_routes_static, compute_route_stats
-    from scripts.config import CACHE_DIR
+    from scripts.processing.routes import build_routes_static, compute_route_stats, compute_route_chronic_stats
+    from scripts.config import CACHE_DIR, BASE_DIR
 
     cache_dir = CACHE_DIR / "routes_static"
     cache_dir.mkdir(parents=True, exist_ok=True)
@@ -445,8 +445,11 @@ def write_routes_geo(gtfs_dir, station_data: StationData, service: ServiceConfig
         "total": 0, "delayed": 0, "cancelled": 0,
         "delayed_pct": 0.0, "avg_delay_min": 0.0, "max_delay_min": 0.0,
     }
+    chronic_stats = compute_route_chronic_stats(service.name, BASE_DIR / "data")
+    _empty_chronic = {"chronic_avg_delay_min": 0.0, "chronic_delayed_pct": 0.0, "chronic_n_snapshots": 0}
     for r in static_routes:
         r["stats"] = route_stats.get(r["route_id"], dict(_empty_stats))
+        r["chronic_stats"] = chronic_stats.get(r["route_id"], dict(_empty_chronic))
 
     # Sort by delayed_pct desc, then by total desc
     static_routes.sort(key=lambda r: (-r["stats"]["delayed_pct"], -r["stats"]["total"]))

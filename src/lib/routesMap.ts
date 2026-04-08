@@ -31,6 +31,12 @@ export interface RouteStats {
   max_delay_min: number;
 }
 
+export interface ChronicStats {
+  chronic_avg_delay_min: number;
+  chronic_delayed_pct: number;
+  chronic_n_snapshots: number;
+}
+
 export interface RouteGeo {
   route_id: string;
   route_short_name: string;
@@ -39,6 +45,7 @@ export interface RouteGeo {
   stops: RouteStop[];
   shape: [number, number][];
   stats: RouteStats;
+  chronic_stats?: ChronicStats;
 }
 
 /** Derive a human-readable "Origin → Destination" label for a route. */
