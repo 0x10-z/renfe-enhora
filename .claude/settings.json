@@ -74,7 +74,13 @@
       "Bash(python -c \"import pandas; print\\(''pandas ok'', pandas.__version__\\)\")",
       "Bash(venv/Scripts/python -c \"import pyarrow; import pandas; print\\(''pyarrow'', pyarrow.__version__, ''| pandas'', pandas.__version__\\)\")",
       "Bash(venv/Scripts/python -c \":*)",
-      "Bash(ls -la data/arrivals/2026-04.parquet data/*/2026-04.parquet)"
+      "Bash(ls -la data/arrivals/2026-04.parquet data/*/2026-04.parquet)",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\(''public/data/cercanias/routes_geo.json''\\)\\); r=d[''routes''][0]; print\\(list\\(r.keys\\(\\)\\)\\); print\\(''chronic_stats:'', r[''chronic_stats'']\\)\")",
+      "Bash(python -c \"import json; d=json.load\\(open\\(''public/data/cercanias/routes_geo.json''\\)\\); r=d[''routes''][0]; print\\(list\\(r.keys\\(\\)\\)\\); print\\(''chronic_stats:'', r[''chronic_stats'']\\)\")",
+      "Bash(python -c \"import json; d=json.load\\(open\\(''public/data/cercanias/routes_geo.json'', encoding=''utf-8''\\)\\); r=d[''routes''][0]; print\\(list\\(r.keys\\(\\)\\)\\); print\\(''chronic_stats:'', r[''chronic_stats'']\\)\")"
+    ],
+    "additionalDirectories": [
+      "d:\\Workroot\\renfe-enhora\\renfe-enhora\\src\\pages\\rutas"
     ]
   }
 }

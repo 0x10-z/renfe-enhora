@@ -133,7 +133,11 @@ const chronicPct = Math.round((chronic.chronic_delayed_pct ?? 0) * 100);
   <div class="detail-layout">
     <!-- Map -->
     <div class="map-wrap">
-      <div id="route-map" class="route-map"></div>
+      <div
+        id="route-map"
+        class="route-map"
+        data-route={JSON.stringify({ shape: route.shape, stops: route.stops, stats: route.stats })}
+      ></div>
     </div>
 
     <!-- Stops rail -->
@@ -157,31 +161,25 @@ const chronicPct = Math.round((chronic.chronic_delayed_pct ?? 0) * 100);
   </div>
 </Layout>
 
-<script define:vars={{ routeData: route }}>
-  async function initMap() {
-    const container = document.getElementById("route-map");
-    if (!container) return;
+<script>
+  import "leaflet/dist/leaflet.css";
+  import L from "leaflet";
 
-    await import("leaflet/dist/leaflet.css");
-    const L = (await import("leaflet")).default;
+  const container = document.getElementById("route-map") as HTMLElement;
+  if (container) {
+    const routeData = JSON.parse(container.dataset.route!);
+    const shape = routeData.shape as [number, number][];
+    const stops = routeData.stops as { lat: number; lon: number; name: string }[] || [];
 
-    const map = L.map(container, {
-      center: [40.2, -3.5],
-      zoom: 6,
-      zoomControl: true,
-    });
-
+    const map = L.map(container, { center: [40.2, -3.5], zoom: 6 });
     L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: "abcd",
       maxZoom: 19,
     }).addTo(map);
 
-    const shape = routeData.shape;
-    const stops = routeData.stops || [];
-
     if (shape && shape.length >= 2) {
-      const pct = routeData.stats?.delayed_pct ?? 0;
+      const pct   = routeData.stats?.delayed_pct ?? 0;
       const total = routeData.stats?.total ?? 0;
       const color = total === 0 ? "#c8cfd8"
         : pct >= 0.5 ? "#dc2626"
@@ -189,15 +187,12 @@ const chronicPct = Math.round((chronic.chronic_delayed_pct ?? 0) * 100);
         : pct >= 0.1 ? "#b45309"
         : pct > 0    ? "#65a30d"
         : "#059669";
-
       const line = L.polyline(shape, { color, weight: 4, opacity: 0.85 }).addTo(map);
       map.fitBounds(line.getBounds(), { padding: [32, 32] });
     } else if (stops.length > 0) {
-      const coords = stops.map((s) => [s.lat, s.lon]);
-      map.fitBounds(L.latLngBounds(coords), { padding: [32, 32] });
+      map.fitBounds(L.latLngBounds(stops.map(s => [s.lat, s.lon])), { padding: [32, 32] });
     }
 
-    // Stop markers
     for (let i = 0; i < stops.length; i++) {
       const s = stops[i];
       const isTerminal = i === 0 || i === stops.length - 1;
@@ -210,8 +205,6 @@ const chronicPct = Math.round((chronic.chronic_delayed_pct ?? 0) * 100);
       }).bindTooltip(s.name, { sticky: true }).addTo(map);
     }
   }
-
-  initMap();
 </script>
 
 <style>
