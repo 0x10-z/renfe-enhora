@@ -247,8 +247,13 @@ export function renderHourly() {
     h.samples === 0 ? 0.12 : 0.35 + 0.65 * (h.samples / maxSamples)
   );
   const tripsRaw = byHour.map(h => avgArr(h.trips));
-  const maxTripsH = Math.max(...tripsRaw.filter(v => v != null) as number[], 1);
-  const tripsData = tripsRaw.map(v => v != null ? +(v / maxTripsH * 100).toFixed(1) : null);
+  const tripsData = tripsRaw.map(v => v ?? null);
+
+  // Dynamic Y-axis max: gives headroom above the real peak so bars don't hit the top
+  const peakPct = Math.max(...pctData);
+  const yMax = peakPct <= 5  ? Math.max(Math.ceil(peakPct * 1.5), 2)
+             : peakPct <= 95 ? Math.ceil(peakPct * 1.25 / 5) * 5
+             : 100;
   const p50Data = byHour.map(h => avgArr(h.p50s));
   const p75Data = byHour.map(h => avgArr(h.p75s));
   const p90Data = byHour.map(h => avgArr(h.p90s));
@@ -290,7 +295,7 @@ export function renderHourly() {
     yAxis: [
       {
         type: "value",
-        max: 100,
+        max: yMax,
         axisLabel: { formatter: "{value}%", color: CHART_COLORS.subtext, fontSize: 10 },
         splitLine: { lineStyle: { color: CHART_COLORS.grid } },
         axisLine: { show: false },
@@ -304,6 +309,12 @@ export function renderHourly() {
         splitLine: { show: false },
         axisLine: { show: false },
         axisTick: { show: false },
+      },
+      {
+        // Hidden axis for "Trenes en ruta" so it doesn't constrain the % scale
+        type: "value",
+        show: false,
+        min: 0,
       },
     ],
     series: [
@@ -321,7 +332,7 @@ export function renderHourly() {
       {
         name: "Trenes en ruta",
         type: "line",
-        yAxisIndex: 0,
+        yAxisIndex: 2,
         data: tripsData,
         smooth: true,
         symbol: "none",
