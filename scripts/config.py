@@ -6,7 +6,7 @@ from typing import Optional
 BASE_DIR = Path(__file__).parent.parent
 CACHE_DIR = BASE_DIR / ".cache" / "gtfs"
 
-# Processing thresholds (shared across all services)
+# Processing thresholds (defaults — can be overridden per service)
 LOOKAHEAD_MINUTES = 60
 ON_TIME_THRESHOLD_SEC = 5 * 60   # <= 5 min  → en_hora
 DELAY_LEVE_MAX_SEC = 10 * 60     # <= 10 min → retraso_leve
@@ -46,6 +46,8 @@ class ServiceConfig:
     gtfs_rt_json_url: Optional[str]
     gtfs_rt_pb_url: Optional[str]
     cache_subdir: str     # subfolder inside CACHE_DIR
+    on_time_threshold_sec: int = ON_TIME_THRESHOLD_SEC
+    delay_leve_max_sec: int = DELAY_LEVE_MAX_SEC
 
     @property
     def data_dir(self) -> Path:
@@ -67,6 +69,8 @@ CERCANIAS = ServiceConfig(
     gtfs_rt_json_url="https://gtfsrt.renfe.com/trip_updates.json",
     gtfs_rt_pb_url="https://gtfsrt.renfe.com/trip_updates.pb",
     cache_subdir="gtfs_cercanias",
+    on_time_threshold_sec=1 * 60,   # 1 min — cercanías headways are 5–10 min
+    delay_leve_max_sec=5 * 60,      # 1–5 min → retraso_leve, >5 min → retraso_alto
 )
 
 AV_LD = ServiceConfig(

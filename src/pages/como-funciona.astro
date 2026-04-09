@@ -135,22 +135,61 @@ import Layout from "../layouts/Layout.astro";
         </p>
       </div>
 
-      <div class="thresholds">
-        <div class="threshold">
-          <span class="badge badge-en_hora">En hora</span>
-          <span class="threshold-desc">Retraso igual o inferior a <strong>5 minutos</strong></span>
+      <div class="prose" style="margin-bottom:1.25rem">
+        <p>
+          Los umbrales no son iguales para todos los servicios porque la frecuencia de paso
+          cambia radicalmente entre ellos. Un cercanías circula cada 5–10 minutos: un retraso
+          de 3 minutos equivale a perder casi la mitad del intervalo hasta el siguiente tren,
+          lo que es muy perceptible para el viajero. En cambio, un AVE o un tren de larga
+          distancia con trayectos de 1–3 horas absorbe mejor pequeñas desviaciones; la
+          referencia habitual en ferrocarril de alta velocidad europeo es 5 minutos.
+          Aplicar el mismo umbral a ambos servicios distorsionaría los datos: con 5 minutos
+          cercanías aparecería casi siempre «en hora» aunque haya retrasos reales.
+        </p>
+      </div>
+
+      <div class="thresholds-wrap">
+        <div class="thresholds-group">
+          <div class="thresholds-label">Cercanías</div>
+          <div class="thresholds">
+            <div class="threshold">
+              <span class="badge badge-en_hora">En hora</span>
+              <span class="threshold-desc">Retraso inferior a <strong>1 minuto</strong></span>
+            </div>
+            <div class="threshold">
+              <span class="badge badge-retraso_leve">Retraso leve</span>
+              <span class="threshold-desc">Entre <strong>1 y 5 minutos</strong> de retraso</span>
+            </div>
+            <div class="threshold">
+              <span class="badge badge-retraso_alto">Retraso alto</span>
+              <span class="threshold-desc">Más de <strong>5 minutos</strong> de retraso</span>
+            </div>
+            <div class="threshold">
+              <span class="badge badge-cancelado">Cancelado</span>
+              <span class="threshold-desc">El tren figura como cancelado en el feed RT</span>
+            </div>
+          </div>
         </div>
-        <div class="threshold">
-          <span class="badge badge-retraso_leve">Retraso leve</span>
-          <span class="threshold-desc">Entre <strong>5 y 10 minutos</strong> de retraso</span>
-        </div>
-        <div class="threshold">
-          <span class="badge badge-retraso_alto">Retraso alto</span>
-          <span class="threshold-desc">Más de <strong>10 minutos</strong> de retraso</span>
-        </div>
-        <div class="threshold">
-          <span class="badge badge-cancelado">Cancelado</span>
-          <span class="threshold-desc">El tren figura como cancelado en el feed RT</span>
+        <div class="thresholds-group">
+          <div class="thresholds-label">Alta Velocidad / Larga Distancia</div>
+          <div class="thresholds">
+            <div class="threshold">
+              <span class="badge badge-en_hora">En hora</span>
+              <span class="threshold-desc">Retraso inferior a <strong>5 minutos</strong></span>
+            </div>
+            <div class="threshold">
+              <span class="badge badge-retraso_leve">Retraso leve</span>
+              <span class="threshold-desc">Entre <strong>5 y 10 minutos</strong> de retraso</span>
+            </div>
+            <div class="threshold">
+              <span class="badge badge-retraso_alto">Retraso alto</span>
+              <span class="threshold-desc">Más de <strong>10 minutos</strong> de retraso</span>
+            </div>
+            <div class="threshold">
+              <span class="badge badge-cancelado">Cancelado</span>
+              <span class="threshold-desc">El tren figura como cancelado en el feed RT</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -597,11 +636,25 @@ import Layout from "../layouts/Layout.astro";
   }
 
   /* Thresholds */
+  .thresholds-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.25rem 0;
+  }
+  @media (max-width: 640px) { .thresholds-wrap { grid-template-columns: 1fr; } }
+  .thresholds-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-sub);
+    margin-bottom: 0.6rem;
+  }
   .thresholds {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin: 1.25rem 0;
+    gap: 0.5rem;
   }
   .threshold {
     display: flex;

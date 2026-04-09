@@ -31,6 +31,8 @@ def build_station_arrivals(
     gtfs_dir: Path,
     rt_updates: TripUpdates,
     now: Optional[datetime] = None,
+    on_time_threshold_sec: int = ON_TIME_THRESHOLD_SEC,
+    delay_leve_max_sec: int = DELAY_LEVE_MAX_SEC,
 ) -> StationData:
     """Build per-station arrivals for the next LOOKAHEAD_MINUTES window."""
     if now is None:
@@ -124,9 +126,9 @@ def build_station_arrivals(
                 delay_min = round(delay_sec / 60, 1)
                 estimated_str = estimated.strftime("%H:%M")
 
-                if delay_sec <= ON_TIME_THRESHOLD_SEC:
+                if delay_sec <= on_time_threshold_sec:
                     status = "en_hora"
-                elif delay_sec <= DELAY_LEVE_MAX_SEC:
+                elif delay_sec <= delay_leve_max_sec:
                     status = "retraso_leve"
                 else:
                     status = "retraso_alto"

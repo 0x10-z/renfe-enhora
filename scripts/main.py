@@ -48,7 +48,11 @@ def run_service(service) -> None:
 
     gtfs_dir = get_gtfs_dir(service)
     rt_updates = fetch_trip_updates(service)
-    station_data = build_station_arrivals(gtfs_dir, rt_updates)
+    station_data = build_station_arrivals(
+        gtfs_dir, rt_updates,
+        on_time_threshold_sec=service.on_time_threshold_sec,
+        delay_leve_max_sec=service.delay_leve_max_sec,
+    )
     stats = compute_stats(station_data)
     write_all(station_data, stats, service)
     write_history(stats, service)
