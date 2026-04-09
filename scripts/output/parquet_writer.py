@@ -289,3 +289,33 @@ def append_snapshot(
         f"{len(arrival_rows)} arrivals, {len(station_rows)} stations, "
         f"{len(by_type_rows)} types, {len(by_ccaa_rows)} ccaa"
     )
+
+    # ── monthly totals ────────────────────────────────────────────────────────
+    month_label = now.strftime("%Y-%m")
+
+    def _stats(path: Path, date_col: str = "date") -> str:
+        """Return 'N rows | YYYY-MM-DD → YYYY-MM-DD' or 'missing' if file absent."""
+        try:
+            t = pq.read_table(path, columns=[date_col])
+            col = t.column(date_col).to_pylist()
+            if date_col == "snapshot_id":
+                # format: "service_2026-04-09T08:26" — extract YYYY-MM-DD
+                dates = sorted({str(v)[str(v).rfind("_") + 1:str(v).rfind("_") + 11] for v in col if v})
+                date_range = f"{dates[0]} → {dates[-1]}" if dates else "?"
+            else:
+                dates = sorted(v for v in col if v)
+                date_range = f"{dates[0]} → {dates[-1]}" if dates else "?"
+            return f"{t.num_rows:,} rows | {date_range}"
+        except Exception:
+            return "missing"
+
+    arrivals_path  = _month_path("arrivals", now)
+    stations_path  = _month_path("stations", now)
+    snapshots_path = _DATA_ROOT / "snapshots" / "snapshots.parquet"
+
+    log.info(
+        f"[{service_name}] Parquet {month_label} — "
+        f"arrivals: {_stats(arrivals_path, 'snapshot_id')} | "
+        f"stations: {_stats(stations_path, 'snapshot_id')} | "
+        f"snapshots(all): {_stats(snapshots_path, 'date')}"
+    )
