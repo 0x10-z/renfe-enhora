@@ -1,15 +1,52 @@
 {
-  "generated_at": "2026-04-09T12:20",
+  "generated_at": "2026-04-09T12:25",
   "insights": [
+    {
+      "id": "J",
+      "text": "Anomalía en trenes Alvia: los retrasos están a 2.4× su media histórica (76% hoy vs 32% habitual). Basado en 536 registros.",
+      "severity": "high",
+      "meta": {
+        "train_type": "Alvia"
+      }
+    },
+    {
+      "id": "J",
+      "text": "Anomalía en trenes Regional: los retrasos están a 1.7× su media histórica (20% hoy vs 12% habitual). Basado en 601 registros.",
+      "severity": "high",
+      "meta": {
+        "train_type": "Regional"
+      }
+    },
+    {
+      "id": "A",
+      "text": "A las 12h se están acumulando los retrasos — 82 trenes afectados",
+      "severity": "warn",
+      "meta": {
+        "hour": 12
+      }
+    },
+    {
+      "id": "B",
+      "text": "El mayor retraso en este momento es de 44 minutos — tren desde Jaen con parada en Cádiz",
+      "severity": "bad",
+      "meta": {
+        "station_id": "51405",
+        "station_name": "Cádiz"
+      }
+    },
+    {
+      "id": "C",
+      "text": "Tafalla es la estación más afectada ahora mismo: 3 de 4 trenes con retraso",
+      "severity": "bad",
+      "meta": {
+        "station_id": "80108",
+        "station_name": "Tafalla"
+      }
+    },
     {
       "id": "D",
       "text": "Históricamente los miércoles son el día con más retrasos (media 20%); los jueves son los más puntuales",
       "severity": "info"
-    },
-    {
-      "id": "E",
-      "text": "Hasta las 12:20 hay un 100% menos retrasos de lo habitual para un jueves (0% vs media histórica 18%)",
-      "severity": "ok"
     },
     {
       "id": "F",
@@ -25,11 +62,6 @@
       "id": "H",
       "text": "La semana del 23/03 fue la peor del último mes con un 22% de trenes con retraso de media",
       "severity": "info"
-    },
-    {
-      "id": "I",
-      "text": "Hasta las 12:20, este jueves va excepcionalmente bien — muy por debajo de la media histórica (0% vs 18% habitual)",
-      "severity": "ok"
     }
   ]
 }
