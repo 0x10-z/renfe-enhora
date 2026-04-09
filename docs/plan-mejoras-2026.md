@@ -1,8 +1,8 @@
 # Plan de Mejoras — Andén / renfe-enhora
 
 **Fecha inicio:** 2026-04-01
-**Última actualización:** 2026-04-08 (F15 completado)
-**Estado:** En progreso
+**Última actualización:** 2026-04-09 (F5 completado — todos los features terminados)
+**Estado:** ✓ Completado (15/15 features)
 
 ---
 
@@ -51,7 +51,7 @@ El plan gratuito de Vercel (Hobby) permite 100 builds/día. Se excedería en 2.8
 | 2 | Tipo de tren: ranking + drilldown modal (click en gráfico) | Media | ✓ Completado | Pipeline + Frontend |
 | 3 | Zonas geográficas: CCAA + núcleos, mapa coropleta, modal de detalle | Media | ✓ Completado | Pipeline + Frontend |
 | 4 | Peores conexiones: rutas completas con todas las paradas | Difícil | ✓ Completado | Pipeline + Frontend |
-| 5 | Comparativa zonas: abandonadas vs bien servidas (narrativa automática) | Difícil | Pendiente | Pipeline + Frontend |
+| 5 | Comparativa zonas: abandonadas vs bien servidas (narrativa automática) | Difícil | ✓ Completado | Pipeline + Frontend |
 | 6 | Almacenamiento histórico en Parquet (snapshots, arrivals, stations, by_type, by_ccaa) | Media | ✓ Completado | Pipeline |
 | 7 | Cron cada 5 minutos | Fácil | ✓ Completado | Infra |
 | 8 | Desacoplar pipeline de Vercel (run_pipeline.sh / push_to_git.sh) | Fácil | ✓ Completado | Infra |
@@ -251,54 +251,46 @@ route_stats = (
 
 ## Feature 5 — Comparativa zonas: abandonadas vs bien servidas
 
-> Dificultad: Difícil — **PENDIENTE** (depende de: F3 ✓, F4 pendiente)
+> Dificultad: Difícil — ✓ COMPLETADO (depende de: F3 ✓, F6 ✓)
 
-### Objetivo
+### Lo implementado
 
-Mostrar de forma visual y objetiva qué zonas están sistemáticamente mal atendidas vs bien atendidas, con narrativa generada automáticamente desde los datos.
+**Pipeline (`scripts/processing/zones_analysis.py`):**
+
+- `compute_zone_trends(service_name, data_root)` — nuevo módulo, puro PyArrow (sin pandas/scipy)
+- Lee `data/by_ccaa/history.parquet`, filtra por servicio, agrupa por CCAA, toma últimos 30 registros
+- Regresión lineal OLS en Python puro para calcular pendiente de `delayed_pct`
+- Clasifica cada CCAA en `zona_critica`, `zona_deterioro`, `zona_estable`, `zona_referencia`
+- Genera narrativa automática por zona con contexto vs media nacional
+- Media nacional = media ponderada de todas las CCAA (igual peso por región)
+
+**`writer.py` — `write_zones()` actualizado:**
+
+- Llama a `compute_zone_trends()` y fusiona los campos `label`, `trend`, `narrative`, `historical_avg_pct`, `national_avg_pct`, `n_records` en cada entrada CCAA de `zones.json`
+- Degradación elegante: si no hay Parquet, los campos se rellenan con valores neutros
+
+**Frontend (`src/pages/zonas.astro`):**
+
+- Nueva página `/zonas` con tabs Cercanías / AVE
+- Narrativa hero: frase automática del peor y mejor zona
+- Dos columnas: top 5 peores / top 5 mejores con flechas de tendencia
+- Tabla completa ordenable por % hoy, media histórica o nombre
+- Badges de zona (`zona_critica` → rojo, `zona_referencia` → verde)
+- Badges de tendencia (↑ empeorando / ↓ mejorando / → estable)
+- Degradación elegante si no hay datos históricos
+
+**`index.astro`:** CTA "Ver análisis completo por comunidad →" al final de la sección CCAA
+
+**`Layout.astro`:** "Zonas" añadido a la navegación global
 
 ### Criterios de clasificación
 
-| Etiqueta | Criterios |
+| Etiqueta | Criterio |
 | --- | --- |
-| `zona_critica` | avg_delay > 2× media nacional AND trend = "worsening" |
-| `zona_deterioro` | avg_delay > media nacional AND trend = "worsening" |
-| `zona_estable` | avg_delay ≈ media nacional (±20%) |
-| `zona_referencia` | avg_delay < 0.7× media nacional AND trend = "stable" o "improving" |
-
-El campo `trend` usa regresión lineal sobre los últimos N registros históricos por zona.
-
-### Narrativa automática (ejemplos)
-
-- *"La Región de Murcia acumula un retraso medio de 11.4 min, 3.2× la media nacional, y la tendencia es creciente."*
-- *"El Núcleo de Madrid es el mejor servido: retraso medio de 2.1 min, 88% en hora."*
-
-### Fuente de datos históricos (Parquet)
-
-El campo `trend` usa regresión lineal sobre `data/by_ccaa/history.parquet` (una fila por CCAA por snapshot, campos: `snapshot_id`, `ts`, `service`, `ccaa`, `total`, `delayed`, `avg_delay_min`, `delayed_pct`). Ya existe — no requiere cambios en el pipeline de escritura.
-
-```python
-import pandas as pd
-from scipy import stats as scipy_stats
-
-df = pd.read_parquet("data/by_ccaa/history.parquet")
-ccaa_trend = {}
-for ccaa, grp in df[df.service == "cercanias"].groupby("ccaa"):
-    grp = grp.sort_values("ts").tail(30)
-    slope, *_ = scipy_stats.linregress(range(len(grp)), grp["delayed_pct"])
-    ccaa_trend[ccaa] = "worsening" if slope > 0.001 else "improving" if slope < -0.001 else "stable"
-```
-
-### Cambios en pipeline
-
-- `scripts/processing/insights.py` — nuevos tipos de insight (J–N) para zonas; lee `data/by_ccaa/history.parquet`
-- `zones.json` — añadir campos `label` y `narrative` por zona
-- `history.json` — **no requiere cambios**: los datos históricos por CCAA ya están en `data/by_ccaa/history.parquet`
-
-### Cambios en frontend
-
-1. Página `src/pages/zonas.astro`: mapa de calor, tabla de ranking, sección "más afectadas" vs "mejor servidas", gráfico de tendencia histórica por zona (ECharts multi-line)
-2. `pages/index.astro` — bloque resumen: *"X zonas en estado crítico"* con enlace
+| `zona_critica` | hist_avg ≥ 2× media nacional AND trend = "worsening" |
+| `zona_deterioro` | hist_avg > media nacional AND trend = "worsening" |
+| `zona_estable` | resto de casos |
+| `zona_referencia` | hist_avg < 0.7× media nacional |
 
 ---
 
@@ -439,7 +431,7 @@ Se usa `history.json` (campo `by_type: {tt: [total, delayed, avg_min]}`) en luga
 [2]  Tipo de tren      → necesario para [4] y [5]         ✓ completado
 [3]  Zonas             → necesario para [4] y [5]         ✓ completado
 [4]  Rutas completas   → necesario para [5]               ✓ completado
-[5]  Comparativa       → depende de [2] + [3] + [4] + [6] pendiente
+[5]  Comparativa       → depende de [2] + [3] + [4] + [6] ✓ completado
 [6]  Parquet histórico → necesario para [4], [5] y [15]   ✓ completado
 [7]  Cron 5min         → independiente                    ✓ completado
 [8]  Desacoplar Vercel → independiente                    ✓ completado
@@ -467,6 +459,5 @@ Sprint 4 — Rutas completas ✓ COMPLETADO
 
 Sprint 5 — Narrativa avanzada (3–5 días)
   ├── [15] Alertas por umbral ✓ COMPLETADO (usa by_type en history.json)
-  └── [5]  Comparativa zonas — insights.py + zonas.astro  ← PENDIENTE
-           (usa data/by_ccaa/history.parquet para regresión de tendencias)
+  └── [5]  Comparativa zonas ✓ COMPLETADO (zones_analysis.py + zonas.astro + nav + CTA)
 ```

@@ -1,0 +1,477 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="¿Dónde están los trenes peor atendidos?"
+  description="Análisis de puntualidad de Renfe por comunidad autónoma. Qué zonas tienen más retrasos, cuáles mejoran y cuáles empeoran."
+  ogUrl="https://enhora.info/zonas"
+>
+  <div class="page-header">
+    <div>
+      <h1>¿Dónde están los trenes peor atendidos?</h1>
+      <p class="subtitle">Puntualidad por comunidad autónoma · tendencia histórica de los últimos 30 registros</p>
+    </div>
+    <span id="last-updated" class="muted"></span>
+  </div>
+
+  <!-- Service tabs -->
+  <div class="tabs" id="service-tabs" role="tablist">
+    <button class="tab" data-svc="ave-larga-distancia" role="tab">AVE · Larga y Media Distancia</button>
+    <button class="tab" data-svc="cercanias" role="tab">Cercanías</button>
+  </div>
+
+  <!-- Narrative hero -->
+  <div id="zones-narrative" class="zones-narrative" style="display:none">
+    <div class="narrative-worst">
+      <span class="narrative-label narrative-bad">Peor zona</span>
+      <p id="narrative-worst-text" class="narrative-text"></p>
+    </div>
+    <div class="narrative-best">
+      <span class="narrative-label narrative-ok">Mejor zona</span>
+      <p id="narrative-best-text" class="narrative-text"></p>
+    </div>
+  </div>
+
+  <!-- Top worst / best -->
+  <div class="top-columns" id="top-columns" style="display:none">
+    <div class="top-col top-col--bad">
+      <h2 class="top-col-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Con más problemas
+      </h2>
+      <ol id="top-worst-list" class="top-list"></ol>
+    </div>
+    <div class="top-col top-col--ok">
+      <h2 class="top-col-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Más puntuales
+      </h2>
+      <ol id="top-best-list" class="top-list"></ol>
+    </div>
+  </div>
+
+  <!-- Full table -->
+  <section id="zones-table-section" style="display:none">
+    <div class="section-header">
+      <h2>Todas las comunidades</h2>
+      <div class="sort-btns" role="group" aria-label="Ordenar por">
+        <button class="sort-btn active" data-sort="delayed_pct">% retraso hoy</button>
+        <button class="sort-btn" data-sort="historical_avg_pct">media histórica</button>
+        <button class="sort-btn" data-sort="name">nombre</button>
+      </div>
+    </div>
+    <p class="section-subtitle">Haz clic en una columna de cabecera para ordenar. La tendencia indica si los retrasos suben o bajan en los últimos registros.</p>
+    <div class="table-wrap">
+      <table class="zones-table" id="zones-table">
+        <thead>
+          <tr>
+            <th>Comunidad</th>
+            <th class="th-num">% hoy</th>
+            <th class="th-num">Media histórica</th>
+            <th class="th-num">Tendencia</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody id="zones-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div id="zones-empty" class="zones-empty" style="display:none">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <p>Aún no hay datos históricos suficientes para este servicio. Los análisis de tendencia se generan a partir de 5 registros.</p>
+  </div>
+</Layout>
+
+<script>
+  const SERVICES: Record<string, string> = {
+    "cercanias":           "/data/cercanias/zones.json",
+    "ave-larga-distancia": "/data/ave-larga-distancia/zones.json",
+  };
+
+  const LABEL_CONFIG: Record<string, { text: string; cls: string }> = {
+    zona_critica:    { text: "Situación crítica",    cls: "label-critica" },
+    zona_deterioro:  { text: "Situación preocupante", cls: "label-deterioro" },
+    zona_estable:    { text: "Servicio normal",       cls: "label-estable" },
+    zona_referencia: { text: "Referencia",            cls: "label-referencia" },
+  };
+
+  const TREND_CONFIG: Record<string, { icon: string; cls: string; text: string }> = {
+    worsening: { icon: "↑", cls: "trend-bad",  text: "Empeorando" },
+    improving: { icon: "↓", cls: "trend-ok",   text: "Mejorando" },
+    stable:    { icon: "→", cls: "trend-muted", text: "Estable" },
+  };
+
+  let state = {
+    activeSvc: "cercanias" as string,
+    sortKey:   "delayed_pct" as string,
+    sortAsc:   false,
+    ccaaData:  [] as any[],
+  };
+
+  const cache: Record<string, any> = {};
+
+  function esc(s: string): string {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function fmt(v: number): string {
+    return (v * 100).toFixed(1) + "%";
+  }
+
+  async function loadZones(svc: string) {
+    if (cache[svc]) return cache[svc];
+    const res = await fetch(SERVICES[svc]);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    cache[svc] = await res.json();
+    return cache[svc];
+  }
+
+  function renderAll(data: any) {
+    const ccaa: any[] = data.ccaa ?? [];
+    state.ccaaData = ccaa;
+
+    // Last updated
+    const lu = document.getElementById("last-updated");
+    if (lu && data.generated_at) {
+      lu.textContent = `Actualizado: ${data.generated_at.replace("T", " ").slice(0, 16)}`;
+    }
+
+    // Filter to CCAA with at least today's data
+    const active = ccaa.filter(c => c.total > 0);
+    const withTrends = active.filter(c => c.n_records >= 1);
+
+    if (!active.length) {
+      document.getElementById("zones-empty")!.style.display = "flex";
+      document.getElementById("zones-narrative")!.style.display = "none";
+      document.getElementById("top-columns")!.style.display = "none";
+      document.getElementById("zones-table-section")!.style.display = "none";
+      return;
+    }
+
+    document.getElementById("zones-empty")!.style.display = "none";
+    document.getElementById("zones-narrative")!.style.display = withTrends.length >= 2 ? "grid" : "none";
+    document.getElementById("top-columns")!.style.display = "grid";
+    document.getElementById("zones-table-section")!.style.display = "block";
+
+    renderNarrative(withTrends.length >= 2 ? withTrends : active);
+    renderTopColumns(active);
+    renderTable();
+  }
+
+  function renderNarrative(ccaa: any[]) {
+    const sorted = [...ccaa].sort((a, b) => (b.delayed_pct ?? 0) - (a.delayed_pct ?? 0));
+    const worst = sorted[0];
+    const best  = sorted[sorted.length - 1];
+
+    const wEl = document.getElementById("narrative-worst-text")!;
+    const bEl = document.getElementById("narrative-best-text")!;
+
+    wEl.textContent = worst.narrative
+      || `${worst.name}: ${fmt(worst.delayed_pct)} de trenes con retraso hoy.`;
+    bEl.textContent = best.narrative
+      || `${best.name}: ${fmt(best.delayed_pct)} de trenes con retraso hoy.`;
+  }
+
+  function renderTopColumns(ccaa: any[]) {
+    const sorted = [...ccaa].sort((a, b) => (b.delayed_pct ?? 0) - (a.delayed_pct ?? 0));
+    const worst5 = sorted.slice(0, 5);
+    const best5  = [...sorted].reverse().slice(0, 5);
+
+    const wList = document.getElementById("top-worst-list")!;
+    const bList = document.getElementById("top-best-list")!;
+
+    wList.innerHTML = worst5.map(c => topItem(c, true)).join("");
+    bList.innerHTML = best5.map(c => topItem(c, false)).join("");
+  }
+
+  function topItem(c: any, isBad: boolean): string {
+    const pct = fmt(c.delayed_pct ?? 0);
+    const trend = TREND_CONFIG[c.trend] ?? TREND_CONFIG.stable;
+    const trendHtml = c.n_records > 0
+      ? `<span class="top-trend ${trend.cls}">${trend.icon}</span>`
+      : "";
+    return `<li class="top-item">
+      <span class="top-name">${esc(c.name)}</span>
+      ${trendHtml}
+      <span class="top-pct ${isBad ? "pct-bad" : "pct-ok"}">${pct}</span>
+    </li>`;
+  }
+
+  function renderTable() {
+    const ccaa = [...state.ccaaData].filter(c => c.total > 0);
+    const key = state.sortKey;
+
+    ccaa.sort((a, b) => {
+      let va = key === "name" ? a.name : (a[key] ?? 0);
+      let vb = key === "name" ? b.name : (b[key] ?? 0);
+      if (typeof va === "string") return state.sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+      return state.sortAsc ? va - vb : vb - va;
+    });
+
+    const tbody = document.getElementById("zones-tbody")!;
+    tbody.innerHTML = ccaa.map(c => {
+      const lcfg = LABEL_CONFIG[c.label] ?? LABEL_CONFIG.zona_estable;
+      const tcfg = TREND_CONFIG[c.trend]  ?? TREND_CONFIG.stable;
+      const hasHistory = (c.n_records ?? 0) > 0;
+      const histCell = hasHistory
+        ? `${fmt(c.historical_avg_pct)} <span class="hist-n">(${c.n_records} reg.)</span>`
+        : `<span class="muted">—</span>`;
+      const trendCell = hasHistory
+        ? `<span class="trend-badge ${tcfg.cls}" title="${tcfg.text}">${tcfg.icon} ${tcfg.text}</span>`
+        : `<span class="muted">Sin datos</span>`;
+      return `<tr>
+        <td class="td-name">${esc(c.name)}</td>
+        <td class="td-num">${fmt(c.delayed_pct ?? 0)}</td>
+        <td class="td-num">${histCell}</td>
+        <td class="td-num">${trendCell}</td>
+        <td><span class="zone-label ${lcfg.cls}">${lcfg.text}</span></td>
+      </tr>`;
+    }).join("");
+  }
+
+  async function switchSvc(svc: string) {
+    state.activeSvc = svc;
+    document.querySelectorAll<HTMLButtonElement>(".tab").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.svc === svc);
+    });
+    try {
+      const data = await loadZones(svc);
+      renderAll(data);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  // Tab events
+  document.querySelectorAll<HTMLButtonElement>(".tab[data-svc]").forEach(btn => {
+    btn.addEventListener("click", () => switchSvc(btn.dataset.svc!));
+  });
+
+  // Sort button events
+  document.querySelectorAll<HTMLButtonElement>(".sort-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const newKey = btn.dataset.sort!;
+      if (state.sortKey === newKey) {
+        state.sortAsc = !state.sortAsc;
+      } else {
+        state.sortKey = newKey;
+        state.sortAsc = false;
+      }
+      document.querySelectorAll(".sort-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderTable();
+    });
+  });
+
+  // Init
+  switchSvc("cercanias");
+</script>
+
+<style>
+  /* ── Shared (scoped copy from rutas.astro / index.astro) ─────────────────── */
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+    flex-wrap: wrap;
+  }
+  .page-header h1 { font-size: 1.3rem; font-weight: 700; line-height: 1.2; }
+  .subtitle       { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem; }
+  #last-updated   { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
+
+  .tabs { display: flex; gap: 0.4rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .tab {
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .tab.active, .tab:hover {
+    background: var(--accent-bg);
+    color: var(--accent);
+    border-color: var(--accent-border);
+  }
+
+  /* ── Page-specific ────────────────────────────────────────────────────────── */
+
+  /* Narrative hero */
+  .zones-narrative {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 640px) { .zones-narrative { grid-template-columns: 1fr; } }
+  .narrative-worst,
+  .narrative-best {
+    padding: 1rem 1.125rem;
+    border-radius: var(--radius);
+    border: 1px solid;
+  }
+  .narrative-worst { background: var(--red-bg); border-color: var(--red-border); }
+  .narrative-best  { background: var(--green-bg); border-color: var(--green-border); }
+  .narrative-label {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 0.4rem;
+  }
+  .narrative-bad { color: var(--red); }
+  .narrative-ok  { color: var(--green); }
+  .narrative-text { font-size: 0.85rem; color: var(--text); line-height: 1.5; margin: 0; }
+
+  /* Top columns */
+  .top-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+  @media (max-width: 600px) { .top-columns { grid-template-columns: 1fr; } }
+  .top-col {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.125rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .top-col--bad { border-top: 3px solid var(--red); }
+  .top-col--ok  { border-top: 3px solid var(--green); }
+  .top-col-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+  .top-col--bad .top-col-title { color: var(--red); }
+  .top-col--ok  .top-col-title { color: var(--green); }
+  .top-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .top-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+  }
+  .top-name { flex: 1; color: var(--text); }
+  .top-pct  { font-weight: 600; font-family: var(--font-mono); font-size: 0.78rem; }
+  .pct-bad { color: var(--red); }
+  .pct-ok  { color: var(--green); }
+  .top-trend { font-size: 0.8rem; font-weight: 700; }
+
+  /* Table */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.35rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .section-header h2 { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+  .section-subtitle {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+  .sort-btns { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .sort-btn {
+    font-size: 0.72rem;
+    font-weight: 500;
+    font-family: var(--font-mono);
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .sort-btn:hover { border-color: var(--border-bright); color: var(--text); }
+  .sort-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .table-wrap { overflow-x: auto; }
+  .zones-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  .zones-table th {
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-sub);
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  .zones-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .zones-table tbody tr:hover { background: var(--bg-card-hover); }
+  .th-num, .td-num { text-align: right; }
+  .td-name { font-weight: 500; }
+  .hist-n { font-size: 0.68rem; color: var(--text-sub); }
+
+  /* Trend badges */
+  .trend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+  .trend-bad   { color: var(--red);    background: var(--red-bg);   }
+  .trend-ok    { color: var(--green);  background: var(--green-bg); }
+  .trend-muted { color: var(--text-sub); background: var(--bg); }
+
+  /* Zone label badges */
+  .zone-label {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.18rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .label-critica    { background: var(--red-bg);    color: var(--red);    border: 1px solid var(--red-border); }
+  .label-deterioro  { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+  .label-estable    { background: var(--bg);        color: var(--text-muted); border: 1px solid var(--border); }
+  .label-referencia { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-border); }
+
+  /* Empty state */
+  .zones-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 3rem 1rem;
+    color: var(--text-sub);
+    text-align: center;
+  }
+  .zones-empty p { font-size: 0.88rem; max-width: 400px; line-height: 1.6; }
+
+  .muted { color: var(--text-sub); font-size: 0.78rem; }
+</style>

@@ -183,6 +183,10 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
           <div id="echart-ccaa" style="width:100%"></div>
         </div>
       </div>
+      <a href="/zonas" class="zones-cta">
+        Ver análisis completo por comunidad · tendencias históricas
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
     </section>
   </div>
 
@@ -809,6 +813,18 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
   .weekday-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
 
   .zones-section { margin-bottom: 2.5rem; }
+  .zones-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    transition: gap 0.15s;
+  }
+  .zones-cta:hover { gap: 0.6rem; }
   .zones-row {
     display: grid;
     grid-template-columns: 1fr 1fr;

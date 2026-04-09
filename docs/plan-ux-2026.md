@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-04-08
 **Autor del análisis:** Claude Sonnet 4.6 (experto UX)
-**Estado:** Sprints A/B/C/E completados · Sprint D parcialmente completado (U15 ✓, U16 pendiente)
+**Estado:** ✓ Completado — todos los sprints terminados (16/16 mejoras implementadas)
 **Nota:** Este documento integra la UX de las features pendientes en [plan-mejoras-2026.md](plan-mejoras-2026.md) — concretamente **F5** (Comparativa zonas) y **F15** (Alertas por umbral histórico). El diseño UX de esas features está planificado aquí antes de que se implementen.
 
 ---

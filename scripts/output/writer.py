@@ -300,19 +300,35 @@ def write_by_ccaa_arrivals(station_data: StationData, service: ServiceConfig) ->
 
 
 def write_zones(stats: dict, service: ServiceConfig) -> None:
-    """Write public/data/{service}/zones.json with per-CCAA and per-nucleo stats."""
+    """Write public/data/{service}/zones.json with per-CCAA and per-nucleo stats + trends."""
+    from scripts.processing.zones_analysis import compute_zone_trends
+    from scripts.config import BASE_DIR
+
+    trends = compute_zone_trends(service.name, BASE_DIR / "data")
+
+    ccaa_list = stats.get("by_ccaa", [])
+    for entry in ccaa_list:
+        t = trends.get(entry["name"], {})
+        entry["label"]              = t.get("label", "zona_estable")
+        entry["trend"]              = t.get("trend", "stable")
+        entry["narrative"]          = t.get("narrative", "")
+        entry["historical_avg_pct"] = t.get("historical_avg_pct", 0.0)
+        entry["national_avg_pct"]   = t.get("national_avg_pct", 0.0)
+        entry["n_records"]          = t.get("n_records", 0)
+
     path = service.data_dir / "zones.json"
     path.write_text(
         json.dumps({
             "generated_at": datetime.now(_TZ_MADRID).isoformat(timespec="seconds"),
-            "ccaa":   stats.get("by_ccaa", []),
+            "ccaa":   ccaa_list,
             "nucleos": stats.get("by_nucleo", []),
         }, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
     log.info(
         f"[{service.label}] Wrote zones.json — "
-        f"{len(stats.get('by_ccaa', []))} CCAA, {len(stats.get('by_nucleo', []))} nucleos"
+        f"{len(ccaa_list)} CCAA ({len(trends)} with trends), "
+        f"{len(stats.get('by_nucleo', []))} nucleos"
     )
 
 
