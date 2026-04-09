@@ -48,18 +48,18 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
 
     <StatCard
       valueId="v-delayed"
-      label="Con retraso"
-      tip="Paradas con más de 5 min de retraso según el RT de Renfe en el momento del análisis"
+      label="Trenes con retraso"
+      tip="Trenes distintos con al menos una parada retrasada en la próxima hora. Un tren cuenta una sola vez aunque tenga varias paradas afectadas."
       variant="warn"
     >
       <svg slot="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <div slot="sub" class="stat-sub" id="sub-pct">—% del total</div>
+      <div slot="sub" class="stat-sub" id="sub-pct">—% de — trenes</div>
     </StatCard>
 
     <StatCard
       valueId="v-avg"
       label="Media de retraso"
-      tip="Media de minutos de retraso calculada sobre las paradas con retraso en la última captura"
+      tip="Media de minutos de retraso calculada sobre los trenes retrasados en la última captura"
     >
       <svg slot="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       <div slot="sub" class="stat-sub" id="sub-avg"></div>
@@ -115,6 +115,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
         </div>
       </div>
       <p class="section-subtitle" id="history-subtitle">Media de retrasos agrupada por hora. Descubre en qué franja hay más problemas.</p>
+      <div id="now-vs-avg" style="display:none;align-items:center;gap:0.5rem;flex-wrap:wrap;padding:0.5rem 0.85rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.78rem;color:var(--text-sub);margin-bottom:0.75rem"></div>
       <div class="chart-card">
         <div id="echart-main" style="height:220px;width:100%;transition:height 0.2s"></div>
       </div>
@@ -1621,6 +1622,9 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     document.getElementById("train-type-section")!.style.display = "none";
     document.getElementById("route-section")!.style.display = "none";
     document.getElementById("lineas-section")!.style.display = "none";
+    _nowVsAvgStats = null;
+    const nva = document.getElementById("now-vs-avg");
+    if (nva) nva.style.display = "none";
     document.getElementById("tendencias-section")!.style.display = "none";
     document.getElementById("zones-section")!.style.display = "none";
     state.typeHistoryChart?.dispose();
@@ -1881,6 +1885,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
       const { records = [] } = await res.json();
       state.historyRecords = records;
       renderHistory();
+      renderNowVsAvg(null);
       if (records.length >= 7) {
         document.getElementById("tendencias-section")!.style.display = "";
         renderWeekdayStats(records);
@@ -1902,18 +1907,86 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     }
   }
 
+  let _nowVsAvgStats: any = null;
+
+  function renderNowVsAvg(stats: any) {
+    if (stats !== null) _nowVsAvgStats = stats;
+    const el = document.getElementById("now-vs-avg");
+    if (!el) return;
+
+    const s = _nowVsAvgStats;
+    if (!s || !state.historyRecords.length) return;
+    if (!s.unique_trips || s.unique_trips <= 0) { el.style.display = "none"; return; }
+
+    const now = new Date();
+    const hour = now.getHours();
+    const isWeekend = [0, 6].includes(now.getDay());
+
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - 60);
+    const cutoffStr = cutoff.toISOString().slice(0, 10);
+
+    const peers = state.historyRecords.filter((r: any) => {
+      if (!r.ts || (r.trips ?? 0) <= 0) return false;
+      if (r.ts.slice(0, 10) < cutoffStr) return false;
+      if (parseInt(r.ts.slice(11, 13), 10) !== hour) return false;
+      const rDay = new Date(r.ts.slice(0, 10) + "T12:00:00").getDay();
+      return [0, 6].includes(rDay) === isWeekend;
+    });
+
+    if (peers.length < 4) { el.style.display = "none"; return; }
+
+    // Use trips_delayed/trips if available (new records), fall back to delayed/total (old records)
+    const histAvg = peers.reduce((sum: number, r: any) => {
+      const td = r.trips_delayed ?? null;
+      const tt = r.trips ?? 0;
+      if (td !== null && tt > 0) return sum + (td / tt * 100);
+      return sum + (r.delayed / r.total * 100);
+    }, 0) / peers.length;
+    const nowPct = s.unique_trips_delayed / s.unique_trips * 100;
+    const diff    = nowPct - histAvg;
+    const ratio   = histAvg > 0.5 ? nowPct / histAvg : null;
+
+    const hourLabel = `${String(hour).padStart(2, "0")}h`;
+    const dayType   = isWeekend ? "fin de semana" : "laborable";
+
+    let arrow: string, color: string, verdict: string;
+    if (ratio !== null && ratio >= 1.5) {
+      arrow = "↑"; color = "#dc2626";
+      verdict = `+${diff.toFixed(0)} pp por encima de la media`;
+    } else if (ratio !== null && ratio <= 0.5 && nowPct < 5) {
+      arrow = "↓"; color = "#16a34a";
+      verdict = `${Math.abs(diff).toFixed(0)} pp por debajo de la media`;
+    } else {
+      arrow = "≈"; color = "var(--text-sub)";
+      verdict = "dentro de la media habitual";
+    }
+
+    el.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>Media habitual a las <strong style="font-family:var(--font-mono)">${hourLabel}</strong> (${dayType}): <strong style="font-family:var(--font-mono)">${histAvg.toFixed(1)}%</strong></span>
+      <span style="color:var(--border)">·</span>
+      <span>Ahora: <strong style="font-family:var(--font-mono);color:${color}">${nowPct.toFixed(1)}%</strong></span>
+      <span style="color:var(--border)">·</span>
+      <span style="color:${color}">${arrow} ${verdict}</span>
+    `;
+    el.style.display = "flex";
+  }
+
   function renderStats(s: any, generatedAt: string) {
     setValueWithUnit("v-total", s.total_trains?.toLocaleString("es") ?? null, " paradas");
     setText("sub-stations", `${s.stations_count ?? "—"} estaciones`);
-    setValueWithUnit("v-delayed", s.delayed?.toLocaleString("es") ?? null, " paradas");
+    const tripsDelayed = s.unique_trips_delayed ?? null;
+    const tripsTotal   = s.unique_trips ?? null;
+    setValueWithUnit("v-delayed", tripsDelayed?.toLocaleString("es") ?? null, " trenes");
 
-    const pct = s.total_trains
-      ? Math.round((s.delayed / s.total_trains) * 100)
+    const pct = tripsTotal && tripsTotal > 0 && tripsDelayed !== null
+      ? Math.round((tripsDelayed / tripsTotal) * 100)
       : null;
-    setText("sub-pct", pct !== null ? `${pct}% del total` : "—");
+    setText("sub-pct", pct !== null ? `${pct}% de ${tripsTotal?.toLocaleString("es")} trenes` : "—");
 
     setValueWithUnit("v-avg", s.avg_delay_min != null ? s.avg_delay_min : null, " min");
-    setText("sub-avg", s.delayed > 0 ? `sobre ${s.delayed} tren${s.delayed !== 1 ? "es" : ""} retrasado${s.delayed !== 1 ? "s" : ""}` : "");
+    setText("sub-avg", tripsDelayed && tripsDelayed > 0 ? `sobre ${tripsDelayed} tren${tripsDelayed !== 1 ? "es" : ""} retrasado${tripsDelayed !== 1 ? "s" : ""}` : "");
 
     setValueWithUnit("v-max", s.max_delay_min != null ? s.max_delay_min : null, " min");
     const maxSt = s.max_delay_station;
@@ -1956,6 +2029,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     }
 
     renderTrainTypes(s.by_train_type ?? {});
+    renderNowVsAvg(s);
   }
 
   function startCountdown() {
