@@ -146,9 +146,9 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     <!-- Route ranking section -->
     <section class="route-section" id="route-section" style="display:none">
       <div class="section-header">
-        <h2>Las rutas con más retrasos</h2>
+        <h2>Las 3 rutas con más retrasos ahora</h2>
       </div>
-      <p class="section-subtitle">Líneas ordenadas por porcentaje de trenes con retraso en la captura actual.</p>
+      <p class="section-subtitle">Líneas con mayor porcentaje de trenes retrasados en la captura actual.</p>
       <div id="route-ranking" class="route-ranking"></div>
     </section>
 
@@ -1493,19 +1493,21 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
 
   /* ── Route ranking ───────────────────────────────────────────────────────── */
   .route-section { margin-top: 1.5rem; }
-  .route-ranking { overflow-x: auto; }
-  .route-ranking-table { width: 100%; }
-  .route-ranking-table thead th { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border); font-weight: 500; }
-  .route-ranking-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; }
-  .route-ranking-table tbody tr:last-child { border-bottom: none; }
-  .route-ranking-table tbody tr:hover { background: var(--bg-sub); }
-  .route-ranking-table td { padding: 0.45rem 0.6rem; vertical-align: middle; }
-  .route-bar-cell { width: 55%; min-width: 120px; }
-  .route-bar-wrap { display: flex; align-items: center; gap: 0.5rem; }
-  .route-bar-fill { height: 8px; border-radius: 4px; background: var(--accent); opacity: 0.75; min-width: 2px; flex-shrink: 0; }
-  .route-bar-label { font-size: 0.75rem; font-family: var(--font-mono); color: var(--text); white-space: nowrap; }
-  .route-stat-cell { font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted); white-space: nowrap; }
-  .route-total-cell { color: var(--text-sub); }
+  :global(.route-compact-list) { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.75rem; }
+  :global(.route-compact-row) {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.55rem 0.75rem;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); transition: background 0.12s;
+  }
+  :global(.route-compact-row:hover) { background: var(--bg-card-hover); }
+  :global(.route-rank) { font-size: 0.7rem; font-weight: 700; color: var(--text-sub); font-family: var(--font-mono); width: 1rem; flex-shrink: 0; }
+  :global(.route-bar-wrap) { flex: 1; min-width: 60px; }
+  :global(.route-bar-fill) { height: 6px; border-radius: 3px; background: var(--accent); opacity: 0.75; min-width: 2px; }
+  :global(.route-compact-pct) { font-size: 0.82rem; font-weight: 600; font-family: var(--font-mono); color: var(--text); white-space: nowrap; width: 2.8rem; text-align: right; flex-shrink: 0; }
+  :global(.route-compact-avg) { font-size: 0.72rem; color: var(--text-sub); white-space: nowrap; flex-shrink: 0; }
+  :global(.route-see-all) { font-size: 0.78rem; color: var(--accent); text-decoration: none; display: block; text-align: right; padding: 0.2rem 0; }
+  :global(.route-see-all:hover) { text-decoration: underline; }
 </style>
 
 <script>

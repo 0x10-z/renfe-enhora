@@ -701,16 +701,21 @@ export function renderWeekdayStats(records: any[]) {
   const wePct  = avg(weekend, r => r.delayed / r.total * 100);
   const weAvg  = avg(weekend, r => r.avg_min ?? 0);
 
+  const cardStyle = "background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem";
+  const titleStyle = "font-size:0.78rem;color:var(--text-sub);margin-bottom:0.4rem";
+  const statStyle  = "font-size:1.6rem;font-weight:700;font-family:var(--font-mono);color:var(--text)";
+  const subStyle   = "font-size:0.75rem;color:var(--text-muted);margin-top:0.2rem";
+
   el.innerHTML = `
-    <div class="weekday-card">
-      <div class="weekday-card-title">Laborables (L–V)</div>
-      <div class="weekday-stat">${wdPct.toFixed(1)}%</div>
-      <div class="weekday-sub">con retraso · media ${fmtDelay(wdAvg, false)}</div>
+    <div style="${cardStyle}">
+      <div style="${titleStyle}">Laborables (L–V)</div>
+      <div style="${statStyle}">${wdPct.toFixed(1)}%</div>
+      <div style="${subStyle}">con retraso · media ${fmtDelay(wdAvg, false)}</div>
     </div>
-    <div class="weekday-card">
-      <div class="weekday-card-title">Fin de semana (S–D)</div>
-      <div class="weekday-stat">${wePct.toFixed(1)}%</div>
-      <div class="weekday-sub">con retraso · media ${fmtDelay(weAvg, false)}</div>
+    <div style="${cardStyle}">
+      <div style="${titleStyle}">Fin de semana (S–D)</div>
+      <div style="${statStyle}">${wePct.toFixed(1)}%</div>
+      <div style="${subStyle}">con retraso · media ${fmtDelay(weAvg, false)}</div>
     </div>`;
   el.style.display = "grid";
 }
@@ -816,7 +821,7 @@ export function renderRouteRanking(routes: any[]) {
   const top = routes
     .filter(r => r.total > 0)
     .sort((a, b) => b.delayed_pct - a.delayed_pct)
-    .slice(0, 15);
+    .slice(0, 3);
 
   if (!top.length) {
     section.style.display = "none";
@@ -827,38 +832,29 @@ export function renderRouteRanking(routes: any[]) {
 
   const maxPct = Math.max(...top.map(r => r.delayed_pct), 0.01);
 
-  const rows = top.map(r => {
-    const pct     = Math.round(r.delayed_pct * 100);
-    const barW    = Math.round((r.delayed_pct / maxPct) * 100);
+  const rows = top.map((r, idx) => {
+    const pct      = Math.round(r.delayed_pct * 100);
+    const barW     = Math.round((r.delayed_pct / maxPct) * 100);
     const badgeCls = TYPE_BADGE_CLASS[r.train_type] ?? "reg";
-    const avgStr  = r.avg_delay_min > 0 ? fmtDelay(r.avg_delay_min, false) : "—";
-    return `<tr class="route-ranking-row" data-route="${r.train_name.replace(/"/g, "&quot;")}">
-      <td><span class="tt-badge tt-${badgeCls}">${r.train_name}</span></td>
-      <td class="route-bar-cell">
-        <div class="route-bar-wrap">
-          <div class="route-bar-fill" style="width:${barW}%"></div>
-          <span class="route-bar-label">${pct}%</span>
-        </div>
-      </td>
-      <td class="route-stat-cell">${avgStr}</td>
-      <td class="route-stat-cell route-total-cell">${r.total}</td>
-    </tr>`;
+    const avgStr   = r.avg_delay_min > 0 ? fmtDelay(r.avg_delay_min, false) : "—";
+    const rank     = idx + 1;
+    return `<div class="route-compact-row" data-route="${r.train_name.replace(/"/g, "&quot;")}"
+      style="display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);transition:background 0.12s;cursor:pointer">
+      <span style="font-size:0.7rem;font-weight:700;color:var(--text-sub);font-family:var(--font-mono);width:1rem;flex-shrink:0;text-align:right">${rank}</span>
+      <span class="tt-badge tt-${badgeCls}" style="flex-shrink:0">${r.train_name}</span>
+      <div style="flex:1;min-width:60px">
+        <div style="height:6px;border-radius:3px;background:var(--accent);opacity:0.75;min-width:2px;width:${barW}%"></div>
+      </div>
+      <span style="font-size:0.82rem;font-weight:600;font-family:var(--font-mono);color:var(--text);width:2.8rem;text-align:right;flex-shrink:0">${pct}%</span>
+      <span style="font-size:0.72rem;color:var(--text-sub);white-space:nowrap;flex-shrink:0">${avgStr !== "—" ? avgStr + " media" : "sin retrasos"}</span>
+    </div>`;
   }).join("");
 
   el.innerHTML = `
-    <table class="board route-ranking-table">
-      <thead>
-        <tr>
-          <th>Línea</th>
-          <th>% retrasos</th>
-          <th>Media</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>${rows}</tbody>
-    </table>`;
+    <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.75rem">${rows}</div>
+    <a href="/rutas" style="font-size:0.78rem;color:var(--accent);text-decoration:none;display:block;text-align:right;padding:0.15rem 0">Ver todas las rutas →</a>`;
 
-  el.querySelectorAll<HTMLTableRowElement>(".route-ranking-row").forEach(row => {
+  el.querySelectorAll<HTMLElement>(".route-compact-row").forEach(row => {
     row.style.cursor = "pointer";
     row.addEventListener("click", () => {
       const name = row.dataset.route ?? "";

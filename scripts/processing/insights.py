@@ -189,6 +189,10 @@ def _insight_D(history: list, insights: list) -> None:
 # ── E: hoy vs media histórica para este día de la semana ─────────────────────
 
 def _insight_E(history: list, stats: dict, now: datetime, insights: list) -> None:
+    # Skip if there aren't enough trains active to make a meaningful comparison
+    if stats.get("total_trains", 0) < 30:
+        return
+
     today_str = now.strftime("%Y-%m-%d")
     weekday = now.weekday()
 
@@ -216,16 +220,17 @@ def _insight_E(history: list, stats: dict, now: datetime, insights: list) -> Non
     if abs(diff_pct) < 15:
         return
 
-    day = WEEKDAYS_ES[weekday]
+    hora = now.strftime("%H:%M")
+    day  = WEEKDAYS_ES[weekday]
     if diff_pct > 0:
         _append(insights, "E",
-            f"Hoy hay un {diff_pct}% más retrasos de lo habitual para un {day} "
-            f"(hoy {today_pct:.0f}% vs media histórica {hist_avg:.0f}%)",
+            f"Hasta las {hora} hay un {diff_pct}% más retrasos de lo habitual para un {day} "
+            f"({today_pct:.0f}% vs media histórica {hist_avg:.0f}%)",
             "bad" if diff_pct > 50 else "warn")
     else:
         _append(insights, "E",
-            f"Hoy hay un {abs(diff_pct)}% menos retrasos de lo habitual para un {day} "
-            f"(hoy {today_pct:.0f}% vs media histórica {hist_avg:.0f}%)",
+            f"Hasta las {hora} hay un {abs(diff_pct)}% menos retrasos de lo habitual para un {day} "
+            f"({today_pct:.0f}% vs media histórica {hist_avg:.0f}%)",
             "ok")
 
 
@@ -348,6 +353,9 @@ def _insight_H(history: list, insights: list) -> None:
 # ── I: anomalía vs media del mismo día de la semana ─────────────────────────
 
 def _insight_I(history: list, stats: dict, now: datetime, insights: list) -> None:
+    if stats.get("total_trains", 0) < 30:
+        return
+
     today_str = now.strftime("%Y-%m-%d")
     weekday   = now.weekday()
 
@@ -372,17 +380,18 @@ def _insight_I(history: list, stats: dict, now: datetime, insights: list) -> Non
         return
 
     ratio = today_pct / hist_avg
+    hora  = now.strftime("%H:%M")
     day   = WEEKDAYS_ES[weekday]
 
     if ratio >= 2.0:
         _append(insights, "I",
-            f"Hoy es un {day} inusualmente malo — los retrasos duplican la media histórica "
-            f"({today_pct:.0f}% hoy vs {hist_avg:.0f}% habitual)",
+            f"Hasta las {hora}, este {day} va inusualmente mal — los retrasos duplican la media histórica "
+            f"({today_pct:.0f}% vs {hist_avg:.0f}% habitual)",
             "bad")
     elif ratio <= 0.3 and today_pct < 5:
         _append(insights, "I",
-            f"Hoy es un {day} excepcionalmente puntual — muy por debajo de la media histórica "
-            f"({today_pct:.0f}% hoy vs {hist_avg:.0f}% habitual)",
+            f"Hasta las {hora}, este {day} va excepcionalmente bien — muy por debajo de la media histórica "
+            f"({today_pct:.0f}% vs {hist_avg:.0f}% habitual)",
             "ok")
 
 

@@ -71,7 +71,7 @@ Un periodista, un jubilado, un estudiante que coge el Cercanías cada día — n
 | U13 | Accesibilidad: iconos junto a colores en badges de estado | Medio | Media | ✓ Sprint E |
 | U14 | Mobile: scroll horizontal en stat cards, límite de insights con "Ver más" | Alto | Difícil | ✓ Sprint E |
 | U15 | **[F15]** Alertas de umbral: integrarlas como el tipo de insight más urgente y visible | Alto | Fácil | ✓ Sprint D |
-| U16 | **[F5]** Página "Zonas": narrativa automática de abandono/buen servicio con lenguaje periodístico | Alto | Media | ⏳ Pendiente pipeline F5 |
+| U16 | **[F5]** Página "Zonas": narrativa automática de abandono/buen servicio con lenguaje periodístico | Alto | Media | ✓ Sprint D |
 
 ---
 
@@ -661,9 +661,9 @@ Sprint C — Experiencia completa ✓ COMPLETADO
   ├── [U11] Footer expandido (3 columnas)
   └── [U12] Banner primera visita (localStorage)
 
-Sprint D — Features pendientes con UX diseñada (parcialmente completado)
-  ├── [U15] Alertas umbral  ✓ COMPLETADO — severity "high", icono rayo, ordenadas primero, `.insight-high` CSS
-  └── [U16] Página Zonas    ⏳ PENDIENTE — espera pipeline F5 (regresión lineal por CCAA)
+Sprint D — Features pendientes con UX diseñada ✓ COMPLETADO
+  ├── [U15] Alertas umbral  ✓ severity "high", icono rayo, ordenadas primero, `.insight-high` CSS
+  └── [U16] Página Zonas    ✓ /zonas con narrativa automática, top worst/best, tabla ordenable, tendencias
 
 Sprint E — Calidad y accesibilidad ✓ COMPLETADO
   ├── [U13] Iconos junto a colores en badges (✓ ⚠ ✕)
