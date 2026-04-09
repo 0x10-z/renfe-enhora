@@ -61,7 +61,7 @@ import Layout from "../layouts/Layout.astro";
         <button class="sort-btn" data-sort="name">nombre</button>
       </div>
     </div>
-    <p class="section-subtitle">Haz clic en una columna de cabecera para ordenar. La tendencia indica si los retrasos suben o bajan en los últimos registros.</p>
+    <p class="section-subtitle">La tendencia indica si los retrasos suben o bajan en los últimos registros históricos.</p>
     <div class="table-wrap">
       <table class="zones-table" id="zones-table">
         <thead>
@@ -80,7 +80,7 @@ import Layout from "../layouts/Layout.astro";
 
   <div id="zones-empty" class="zones-empty" style="display:none">
     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    <p>Aún no hay datos históricos suficientes para este servicio. Los análisis de tendencia se generan a partir de 5 registros.</p>
+    <p id="zones-empty-msg">Aún no hay datos disponibles para este servicio.</p>
   </div>
 </Layout>
 
@@ -140,9 +140,14 @@ import Layout from "../layouts/Layout.astro";
 
     // Filter to CCAA with at least today's data
     const active = ccaa.filter(c => c.total > 0);
-    const withTrends = active.filter(c => c.n_records >= 1);
+    // Only zones with real historical data (≥5 records and non-zero avg)
+    const withHistory = active.filter(c => c.n_records >= 5 && (c.historical_avg_pct ?? 0) > 0.001);
+    // Zones with meaningful delay today (at least some are delayed)
+    const hasVariation = active.some(c => (c.delayed_pct ?? 0) > 0.001);
 
     if (!active.length) {
+      const msg = document.getElementById("zones-empty-msg");
+      if (msg) msg.textContent = "Aún no hay datos de trenes para este servicio en este momento.";
       document.getElementById("zones-empty")!.style.display = "flex";
       document.getElementById("zones-narrative")!.style.display = "none";
       document.getElementById("top-columns")!.style.display = "none";
@@ -151,12 +156,12 @@ import Layout from "../layouts/Layout.astro";
     }
 
     document.getElementById("zones-empty")!.style.display = "none";
-    document.getElementById("zones-narrative")!.style.display = withTrends.length >= 2 ? "grid" : "none";
-    document.getElementById("top-columns")!.style.display = "grid";
+    document.getElementById("zones-narrative")!.style.display = withHistory.length >= 2 ? "grid" : "none";
+    document.getElementById("top-columns")!.style.display = hasVariation ? "grid" : "none";
     document.getElementById("zones-table-section")!.style.display = "block";
 
-    renderNarrative(withTrends.length >= 2 ? withTrends : active);
-    renderTopColumns(active);
+    if (withHistory.length >= 2) renderNarrative(withHistory);
+    if (hasVariation) renderTopColumns(active);
     renderTable();
   }
 
@@ -266,7 +271,7 @@ import Layout from "../layouts/Layout.astro";
   });
 
   // Init
-  switchSvc("cercanias");
+  switchSvc("ave-larga-distancia");
 </script>
 
 <style>
