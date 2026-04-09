@@ -40,7 +40,7 @@ def run_service(service) -> None:
     from scripts.processing.merger import build_station_arrivals
     from scripts.processing.stats import compute_stats
     from scripts.processing.insights import compute_insights
-    from scripts.output.writer import write_all, write_by_ccaa_arrivals, write_by_route_arrivals, write_by_type_arrivals, write_history, write_insights, write_routes_geo, write_station_history, write_zones
+    from scripts.output.writer import write_all, write_by_ccaa_arrivals, write_by_route_arrivals, write_by_trayecto, write_by_type_arrivals, write_history, write_insights, write_routes_geo, write_station_history, write_zones
     from scripts.output.parquet_writer import append_snapshot
 
     start = datetime.now()
@@ -60,6 +60,7 @@ def run_service(service) -> None:
     write_by_type_arrivals(station_data, service)
     write_by_ccaa_arrivals(station_data, service)
     write_by_route_arrivals(station_data, service)
+    write_by_trayecto(station_data, service)
     write_routes_geo(gtfs_dir, station_data, service)
     write_zones(stats, service)
     insights = compute_insights(station_data, stats, service.data_dir / "history.json")

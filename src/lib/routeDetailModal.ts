@@ -14,9 +14,10 @@ interface RouteEntry {
 }
 
 let _byRouteData: RouteEntry[] | null = null;
+let _byTrayectoData: any[] | null = null;
 let _generatedAt = "";
 
-export async function openRouteDetail(trainName: string) {
+export async function openRouteDetail(trainName: string, nucleo?: string) {
   const modal = document.getElementById("route-detail-modal")!;
   const title = document.getElementById("route-detail-title")!;
   const meta  = document.getElementById("route-detail-meta")!;
@@ -46,7 +47,7 @@ export async function openRouteDetail(trainName: string) {
     }
   }
 
-  renderRouteDetail(trainName);
+  renderRouteDetail(trainName, nucleo);
 }
 
 export function closeRouteDetail() {
@@ -56,11 +57,69 @@ export function closeRouteDetail() {
 
 export function invalidateRouteDetailCache() {
   _byRouteData = null;
+  _byTrayectoData = null;
   _generatedAt = "";
 }
 
-function renderRouteDetail(trainName: string) {
-  const route = _byRouteData?.find(r => r.train_name === trainName);
+export async function openTrayectoDetail(trainType: string, headsign: string) {
+  const modal = document.getElementById("route-detail-modal")!;
+  const title = document.getElementById("route-detail-title")!;
+  const meta  = document.getElementById("route-detail-meta")!;
+  const body  = document.getElementById("route-detail-body")!;
+  const empty = document.getElementById("route-detail-empty")!;
+  const chips = document.getElementById("route-detail-chips")!;
+
+  title.textContent = `${trainType} → ${headsign}`;
+  meta.textContent  = "Cargando…";
+  body.innerHTML    = Array(4).fill(`<tr class="skeleton-modal"><td colspan="6"><div class="skeleton-cell"></div></td></tr>`).join("");
+  empty.style.display = "none";
+  chips.innerHTML   = "";
+  modal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+
+  if (!_byTrayectoData) {
+    try {
+      const res = await fetch(`/data/${state.activeSvc}/by_trayecto.json?t=${Date.now()}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      _byTrayectoData = json.trayectos ?? [];
+      _generatedAt    = json.generated_at ?? "";
+    } catch {
+      body.innerHTML = "";
+      meta.textContent = "Error al cargar los datos.";
+      return;
+    }
+  }
+
+  const trayecto = _byTrayectoData.find(t => t.train_type === trainType && t.headsign === headsign);
+  const arrivals: any[] = trayecto?.arrivals ?? [];
+  const upd = document.getElementById("route-detail-updated")!;
+  upd.textContent = _generatedAt ? `Actualizado ${timeAgo(_generatedAt)}` : "";
+
+  if (!arrivals.length) {
+    body.innerHTML = "";
+    empty.style.display = "flex";
+    meta.textContent = "Sin retrasos en la última captura";
+    return;
+  }
+
+  const maxDelay  = Math.max(...arrivals.map((a: any) => a.delay_min ?? 0));
+  const cancelled = arrivals.filter((a: any) => a.status === "cancelado").length;
+  meta.textContent = `${arrivals.length} servicio${arrivals.length !== 1 ? "s" : ""} con retraso`;
+  empty.style.display = "none";
+  chips.innerHTML = [
+    `<span class="chip chip-yellow">${arrivals.length} con retraso</span>`,
+    maxDelay > 0 ? `<span class="chip chip-red">${fmtDelay(maxDelay)} máx</span>` : "",
+    cancelled > 0 ? `<span class="chip chip-gray">${cancelled} cancelado${cancelled !== 1 ? "s" : ""}</span>` : "",
+  ].filter(Boolean).join("");
+
+  body.innerHTML = arrivals.map(rowHTML).join("");
+}
+
+function renderRouteDetail(trainName: string, nucleo?: string) {
+  const route = _byRouteData?.find(r =>
+    r.train_name === trainName && (nucleo === undefined || (r as any).nucleo === nucleo || !(r as any).nucleo)
+  );
   const arrivals: any[] = route?.arrivals ?? [];
 
   const body   = document.getElementById("route-detail-body")!;

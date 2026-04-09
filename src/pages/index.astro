@@ -143,7 +143,16 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
       </div>
     </section>
 
-    <!-- Route ranking section -->
+    <!-- Lines / trayectos section -->
+    <section class="lineas-section" id="lineas-section" style="display:none">
+      <div class="section-header">
+        <h2 id="lineas-title">Estado de líneas</h2>
+      </div>
+      <p class="section-subtitle" id="lineas-subtitle"></p>
+      <div id="lineas-body"></div>
+    </section>
+
+    <!-- Route ranking section (top-3 compact, kept for AVE context) -->
     <section class="route-section" id="route-section" style="display:none">
       <div class="section-header">
         <h2>Las 3 rutas con más retrasos ahora</h2>
@@ -1508,6 +1517,40 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
   :global(.route-compact-avg) { font-size: 0.72rem; color: var(--text-sub); white-space: nowrap; flex-shrink: 0; }
   :global(.route-see-all) { font-size: 0.78rem; color: var(--accent); text-decoration: none; display: block; text-align: right; padding: 0.2rem 0; }
   :global(.route-see-all:hover) { text-decoration: underline; }
+
+  /* ── Líneas / Trayectos ──────────────────────────────────────────────────── */
+  .lineas-section { margin-top: 1.5rem; }
+  :global(.nucleo-group) { margin-bottom: 1.25rem; }
+  :global(.nucleo-label) {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--text-sub); margin-bottom: 0.5rem;
+  }
+  :global(.lineas-grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.4rem;
+  }
+  :global(.linea-card) {
+    padding: 0.55rem 0.65rem;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); transition: background 0.12s;
+  }
+  :global(.linea-card:hover) { background: var(--bg-card-hover); }
+  :global(.linea-card--delayed) { border-color: var(--border); }
+  :global(.linea-card-top) { display: flex; align-items: center; justify-content: space-between; gap: 0.3rem; margin-bottom: 0.25rem; }
+  :global(.linea-trips) { font-size: 0.9rem; font-weight: 700; font-family: var(--font-mono); }
+  :global(.linea-card-meta) { font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  :global(.trayectos-list) { display: flex; flex-direction: column; gap: 0.45rem; }
+  :global(.trayecto-row) {
+    display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+    padding: 0.55rem 0.75rem;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  :global(.trayecto-dest) { flex: 1; min-width: 120px; font-size: 0.82rem; color: var(--text); }
+  :global(.trayecto-trips) { font-size: 0.8rem; font-weight: 600; font-family: var(--font-mono); white-space: nowrap; }
+  :global(.trayecto-delay) { font-size: 0.72rem; color: var(--text-sub); white-space: nowrap; }
+  :global(.lineas-ok) { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-sub); padding: 0.75rem 0; }
 </style>
 
 <script>
@@ -1517,7 +1560,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
   import { openModal, closeModal, closeTrainViewer, openTrainViewer } from "../lib/stationModal";
   import { renderInsights, openInsightDrilldown, closeInsightModal } from "../lib/insightModal";
   import { closeTrainTypeDetail, invalidateTypeDetailCache } from "../lib/trainTypeDetailModal";
-  import { closeRouteDetail, invalidateRouteDetailCache } from "../lib/routeDetailModal";
+  import { closeRouteDetail, invalidateRouteDetailCache, openRouteDetail, openTrayectoDetail } from "../lib/routeDetailModal";
   import { filterAndRender, showNoData } from "../lib/stations";
   import { initMap, loadGeoIfNeeded, renderMapMarkers } from "../lib/map";
   import { renderCcaaChoropleth, destroyCcaaMap, setCcaaClickHandler } from "../lib/ccaaMap";
@@ -1577,6 +1620,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     document.getElementById("insights-section")!.style.display = "none";
     document.getElementById("train-type-section")!.style.display = "none";
     document.getElementById("route-section")!.style.display = "none";
+    document.getElementById("lineas-section")!.style.display = "none";
     document.getElementById("tendencias-section")!.style.display = "none";
     document.getElementById("zones-section")!.style.display = "none";
     state.typeHistoryChart?.dispose();
@@ -1606,6 +1650,190 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     } catch {
       // zones not yet available
     }
+  }
+
+  // ── Líneas / Trayectos ─────────────────────────────────────────────────────
+
+  const LINE_COLORS: Record<string, string> = {
+    // Madrid
+    "C1":"#0891b2","C2":"#15803d","C3":"#be185d","C4":"#1e3a8a","C4a":"#1d4ed8",
+    "C4b":"#4c1d95","C5":"#a16207","C7":"#dc2626","C8":"#6b7280","C9":"#0f766e",
+    "C10":"#4d7c0f",
+    // Barcelona
+    "R1":"#dc2626","R2":"#9333ea","R2N":"#9333ea","R3":"#16a34a","R4":"#d97706",
+    "R7":"#0891b2","R8":"#374151","R11":"#be185d","R12":"#0f766e","R14":"#1d4ed8",
+    "R15":"#b45309","R16":"#065f46","RG1":"#6b7280",
+    // Sevilla / Cádiz / Málaga
+    "C1_sev":"#0891b2",
+    // Generic fallback handled via code
+  };
+  function lineColor(name: string): string {
+    return LINE_COLORS[name] ?? "#6b7280";
+  }
+
+  const NUCLEO_LABELS: Record<string, string> = {
+    madrid: "Madrid", barcelona: "Barcelona", valencia: "Valencia",
+    sevilla: "Sevilla", bilbao: "Bilbao", cadiz: "Cádiz",
+    asturias: "Asturias", santander: "Santander", murcia: "Murcia",
+    san_sebastian: "San Sebastián", zaragoza: "Zaragoza", malaga: "Málaga",
+  };
+
+  const TYPE_BADGE_MAP: Record<string, string> = {
+    "AVE": "ave", "AVLO": "avlo", "Alvia": "alvia", "Avant": "avant",
+    "Media Distancia": "md", "Regional": "reg", "Larga Distancia": "ld",
+    "Cercanías": "c", "Otros": "reg",
+  };
+
+  function delayColor(avg: number): string {
+    if (avg <= 0) return "var(--green)";
+    if (avg < 5)  return "var(--yellow)";
+    return "var(--red)";
+  }
+
+  async function loadLineas() {
+    const section  = document.getElementById("lineas-section")!;
+    const body     = document.getElementById("lineas-body")!;
+    const title    = document.getElementById("lineas-title")!;
+    const subtitle = document.getElementById("lineas-subtitle")!;
+    const isCerc   = state.activeSvc === "cercanias";
+
+    try {
+      const res = await fetch(`/data/${state.activeSvc}/by_trayecto.json?t=${Date.now()}`);
+      if (!res.ok) return;
+      const { trayectos = [] } = await res.json();
+
+      if (isCerc) {
+        // Also load by_route_arrivals for nucleo grouping
+        const res2 = await fetch(`/data/${state.activeSvc}/by_route_arrivals.json?t=${Date.now()}`);
+        if (!res2.ok) return;
+        const { routes = [] } = await res2.json();
+        renderLineasCercanias(routes, body, title, subtitle, section);
+      } else {
+        renderLineasAVE(trayectos, body, title, subtitle, section);
+      }
+    } catch {
+      // not yet available
+    }
+  }
+
+  function renderLineasCercanias(routes: any[], body: HTMLElement, title: HTMLElement, subtitle: HTMLElement, section: HTMLElement) {
+    const byNucleo: Record<string, any[]> = {};
+    for (const r of routes) {
+      const n = r.nucleo || "";
+      if (!byNucleo[n]) byNucleo[n] = [];
+      byNucleo[n].push(r);
+    }
+
+    const nucleoKeys = Object.keys(byNucleo)
+      .filter(n => n && byNucleo[n].some(r => r.unique_trips > 0))
+      .sort((a, b) => {
+        const sumA = byNucleo[a].reduce((s: number, r: any) => s + r.unique_trips_delayed, 0);
+        const sumB = byNucleo[b].reduce((s: number, r: any) => s + r.unique_trips_delayed, 0);
+        return sumB - sumA;
+      });
+
+    if (!nucleoKeys.length) { section.style.display = "none"; return; }
+
+    title.textContent = "Estado de líneas";
+    subtitle.textContent = "Trenes con retraso por línea y ciudad en la próxima hora.";
+
+    const html = nucleoKeys.map(n => {
+      const label = NUCLEO_LABELS[n] ?? n.charAt(0).toUpperCase() + n.slice(1);
+      const lineRoutes = byNucleo[n]
+        .filter((r: any) => r.unique_trips > 0)
+        .sort((a: any, b: any) => {
+          const parseLineName = (name: string) => {
+            const m = name.match(/^([A-Za-z]+)(\d+)(.*)$/);
+            if (!m) return [name, 0, ""] as [string, number, string];
+            return [m[1].toUpperCase(), parseInt(m[2], 10), m[3]] as [string, number, string];
+          };
+          const [prefA, numA, sufA] = parseLineName(a.train_name);
+          const [prefB, numB, sufB] = parseLineName(b.train_name);
+          if (prefA !== prefB) return prefA.localeCompare(prefB);
+          if (numA !== numB) return numA - numB;
+          return sufA.localeCompare(sufB);
+        });
+
+      const cards = lineRoutes.map((r: any) => {
+        const hasDelay = r.unique_trips_delayed > 0;
+        const bg = lineColor(r.train_name);
+        const incidenciasNum = hasDelay
+          ? `<span style="font-weight:700;font-family:var(--font-mono);color:#dc2626">${r.unique_trips_delayed}</span>`
+          : `<span style="font-weight:700;font-family:var(--font-mono);color:#16a34a">0</span>`;
+        const mediaStr = hasDelay
+          ? `<span style="font-weight:700;font-family:var(--font-mono);color:var(--text)">${r.avg_delay_min} min</span>`
+          : `<span style="font-weight:700;font-family:var(--font-mono);color:#16a34a">—</span>`;
+        return `<div data-route="${r.train_name.replace(/"/g,"&quot;")}" data-nucleo="${r.nucleo ?? ""}"
+          style="padding:0.9rem 1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:background 0.12s;min-width:0"
+          onmouseenter="this.style.background='var(--bg-sub)'" onmouseleave="this.style.background='var(--bg-card)'">
+          <div style="margin-bottom:0.65rem">
+            <span style="display:inline-block;background:${bg};color:#fff;font-weight:700;font-size:0.82rem;padding:0.25rem 0.6rem;border-radius:6px;letter-spacing:0.02em">${r.train_name}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--text-sub);margin-bottom:0.3rem">
+            <span>Con incidencias</span>${incidenciasNum}
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--text-sub)">
+            <span>Retraso medio</span>${mediaStr}
+          </div>
+        </div>`;
+      }).join("");
+
+      return `<div style="margin-bottom:1.25rem">
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-sub);margin-bottom:0.5rem">${label}</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:0.6rem">${cards}</div>
+      </div>`;
+    }).join("");
+
+    body.innerHTML = html;
+    section.style.display = "";
+
+    body.querySelectorAll<HTMLElement>("[data-route]").forEach(card => {
+      card.addEventListener("click", () => {
+        const name   = card.dataset.route ?? "";
+        const nucleo = card.dataset.nucleo ?? undefined;
+        if (name) openRouteDetail(name, nucleo);
+      });
+    });
+  }
+
+  function renderLineasAVE(trayectos: any[], body: HTMLElement, title: HTMLElement, subtitle: HTMLElement, section: HTMLElement) {
+    title.textContent = "Trayectos afectados";
+
+    if (!trayectos.length) {
+      subtitle.textContent = "Todos los trayectos circulan con normalidad.";
+      body.innerHTML = `<p style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:var(--text-sub);padding:0.75rem 0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Sin retrasos detectados en este momento
+      </p>`;
+      section.style.display = "";
+      return;
+    }
+
+    subtitle.textContent = `${trayectos.length} trayecto${trayectos.length > 1 ? "s" : ""} con retrasos en la próxima hora.`;
+
+    const rows = trayectos.map((t: any) => {
+      const badgeCls = TYPE_BADGE_MAP[t.train_type] ?? "reg";
+      const color = delayColor(t.avg_delay_min);
+      return `<div data-ttype="${t.train_type.replace(/"/g,"&quot;")}" data-theadsign="${t.headsign.replace(/"/g,"&quot;")}"
+        style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;padding:0.55rem 0.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:background 0.12s"
+        onmouseenter="this.style.background='var(--bg-sub)'" onmouseleave="this.style.background='var(--bg-card)'">
+        <span class="tt-badge tt-${badgeCls}">${t.train_type}</span>
+        <span style="flex:1;min-width:120px;font-size:0.82rem;color:var(--text)">→ ${t.headsign}</span>
+        <span style="font-size:0.8rem;font-weight:600;font-family:var(--font-mono);white-space:nowrap;color:${color}">${t.unique_trips_delayed}/${t.unique_trips} trenes</span>
+        <span style="font-size:0.72rem;color:var(--text-sub);white-space:nowrap">${t.avg_delay_min}m media · ${t.max_delay_min}m máx</span>
+      </div>`;
+    }).join("");
+
+    body.innerHTML = `<div style="display:flex;flex-direction:column;gap:0.45rem">${rows}</div>`;
+    section.style.display = "";
+
+    body.querySelectorAll<HTMLElement>("[data-ttype]").forEach(row => {
+      row.addEventListener("click", () => {
+        const ttype    = row.dataset.ttype ?? "";
+        const theadsign = row.dataset.theadsign ?? "";
+        if (ttype && theadsign) openTrayectoDetail(ttype, theadsign);
+      });
+    });
   }
 
   // ── Routes ─────────────────────────────────────────────────────────────────
@@ -1643,6 +1871,7 @@ import RouteDetailModal from "../components/modals/RouteDetailModal.astro";
     loadInsights();
     loadZones();
     loadRoutes();
+    loadLineas();
   }
 
   async function loadHistory() {
