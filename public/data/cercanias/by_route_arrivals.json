@@ -1,6 +1,121 @@
 {
-  "generated_at": "2026-04-10T21:55:13+02:00",
+  "generated_at": "2026-04-10T22:00:13+02:00",
   "routes": [
+    {
+      "train_name": "R11",
+      "train_type": "Otros",
+      "total": 10,
+      "unique_trips": 4,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
+      "cancelled": 0,
+      "delayed_pct": 0.1,
+      "avg_delay_min": 26.0,
+      "max_delay_min": 26.0,
+      "arrivals": [
+        {
+          "train_name": "R11",
+          "headsign": "Barcelona-Sants",
+          "origin": "Figueres",
+          "stop_id": "79009",
+          "stop_name": "Barcelona-El Clot",
+          "scheduled_time": "22:09",
+          "estimated_time": "22:35",
+          "delay_min": 26.0,
+          "status": "retraso_alto"
+        }
+      ],
+      "nucleo": "barcelona"
+    },
+    {
+      "train_name": "C4a",
+      "train_type": "Cercanías",
+      "total": 39,
+      "unique_trips": 9,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
+      "cancelled": 0,
+      "delayed_pct": 0.0256,
+      "avg_delay_min": 2.0,
+      "max_delay_min": 2.0,
+      "arrivals": [
+        {
+          "train_name": "C4a",
+          "headsign": "Madrid-Atocha Cercanías",
+          "origin": "Alcobendas-San Sebastián De Los Reyes",
+          "stop_id": "17001",
+          "stop_name": "Fuencarral",
+          "scheduled_time": "22:04",
+          "estimated_time": "22:06",
+          "delay_min": 2.0,
+          "status": "retraso_leve"
+        }
+      ],
+      "nucleo": ""
+    },
+    {
+      "train_name": "R2S",
+      "train_type": "Otros",
+      "total": 94,
+      "unique_trips": 13,
+      "unique_trips_delayed": 2,
+      "delayed": 2,
+      "cancelled": 0,
+      "delayed_pct": 0.0213,
+      "avg_delay_min": 2.5,
+      "max_delay_min": 3.0,
+      "arrivals": [
+        {
+          "train_name": "R2S",
+          "headsign": "Sant Vicenç De Calders",
+          "origin": "Barcelona Estació De França",
+          "stop_id": "71700",
+          "stop_name": "Vilanova I La Geltrú",
+          "scheduled_time": "22:02",
+          "estimated_time": "22:05",
+          "delay_min": 3.0,
+          "status": "retraso_leve"
+        },
+        {
+          "train_name": "R2S",
+          "headsign": "Barcelona Estació De França",
+          "origin": "Garraf",
+          "stop_id": "71802",
+          "stop_name": "Barcelona-Passeig De Gràcia",
+          "scheduled_time": "22:01",
+          "estimated_time": "22:03",
+          "delay_min": 2.0,
+          "status": "retraso_leve"
+        }
+      ],
+      "nucleo": "barcelona"
+    },
+    {
+      "train_name": "C5",
+      "train_type": "Cercanías",
+      "total": 59,
+      "unique_trips": 15,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
+      "cancelled": 0,
+      "delayed_pct": 0.0169,
+      "avg_delay_min": 2.0,
+      "max_delay_min": 2.0,
+      "arrivals": [
+        {
+          "train_name": "C5",
+          "headsign": "Móstoles-El Soto",
+          "origin": "Humanes",
+          "stop_id": "37001",
+          "stop_name": "Madrid-Villaverde Alto",
+          "scheduled_time": "22:01",
+          "estimated_time": "22:03",
+          "delay_min": 2.0,
+          "status": "retraso_leve"
+        }
+      ],
+      "nucleo": "madrid"
+    },
     {
       "train_name": "C7",
       "train_type": "Cercanías",
@@ -17,10 +132,10 @@
           "train_name": "C7",
           "headsign": "Madrid-Príncipe Pío",
           "origin": "Alcalá De Henares",
-          "stop_id": "17000",
-          "stop_name": "Madrid-Chamartín-Clara Campoamor",
-          "scheduled_time": "21:59",
-          "estimated_time": "22:01",
+          "stop_id": "70109",
+          "stop_name": "Santa Eugenia",
+          "scheduled_time": "22:01",
+          "estimated_time": "22:03",
           "delay_min": 2.0,
           "status": "retraso_leve"
         }
@@ -28,41 +143,56 @@
       "nucleo": "madrid"
     },
     {
-      "train_name": "R1",
-      "train_type": "Otros",
-      "total": 143,
-      "unique_trips": 17,
+      "train_name": "C10",
+      "train_type": "Cercanías",
+      "total": 104,
+      "unique_trips": 15,
       "unique_trips_delayed": 1,
       "delayed": 1,
       "cancelled": 0,
-      "delayed_pct": 0.007,
-      "avg_delay_min": 1.5,
+      "delayed_pct": 0.0096,
+      "avg_delay_min": 4.0,
+      "max_delay_min": 4.0,
+      "arrivals": [
+        {
+          "train_name": "C10",
+          "headsign": "Villalba De Guadarrama",
+          "origin": "Madrid-Chamartín-Clara Campoamor",
+          "stop_id": "10103",
+          "stop_name": "Torrelodones",
+          "scheduled_time": "22:01",
+          "estimated_time": "22:05",
+          "delay_min": 4.0,
+          "status": "retraso_leve"
+        }
+      ],
+      "nucleo": "madrid"
+    },
+    {
+      "train_name": "C1",
+      "train_type": "Cercanías",
+      "total": 202,
+      "unique_trips": 37,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
+      "cancelled": 0,
+      "delayed_pct": 0.005,
+      "avg_delay_min": 2.0,
       "max_delay_min": 2.0,
       "arrivals": [
         {
-          "train_name": "R1",
-          "headsign": "Mataró",
-          "origin": "L'hospitalet De Llobregat",
-          "stop_id": "79403",
-          "stop_name": "Sant Adrià De Besòs",
-          "scheduled_time": "22:01",
-          "estimated_time": "22:03",
+          "train_name": "C1",
+          "headsign": "Gandia",
+          "origin": "València-Estació Del Nord",
+          "stop_id": "69101",
+          "stop_name": "El Romaní",
+          "scheduled_time": "22:03",
+          "estimated_time": "22:05",
           "delay_min": 2.0,
           "status": "retraso_leve"
-        },
-        {
-          "train_name": "R1",
-          "headsign": "L'hospitalet De Llobregat",
-          "origin": "Arenys De Mar",
-          "stop_id": "71801",
-          "stop_name": "Barcelona-Sants",
-          "scheduled_time": "21:57",
-          "estimated_time": "21:58",
-          "delay_min": 1.0,
-          "status": "en_hora"
         }
       ],
-      "nucleo": "barcelona"
+      "nucleo": ""
     },
     {
       "train_name": "C8b",
@@ -79,10 +209,10 @@
       "nucleo": "madrid"
     },
     {
-      "train_name": "C10",
+      "train_name": "C8a",
       "train_type": "Cercanías",
-      "total": 105,
-      "unique_trips": 15,
+      "total": 25,
+      "unique_trips": 5,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -93,10 +223,10 @@
       "nucleo": "madrid"
     },
     {
-      "train_name": "C8a",
+      "train_name": "C4a",
       "train_type": "Cercanías",
-      "total": 23,
-      "unique_trips": 5,
+      "total": 28,
+      "unique_trips": 8,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -121,37 +251,23 @@
       "nucleo": "madrid"
     },
     {
-      "train_name": "C4b",
-      "train_type": "Cercanías",
-      "total": 26,
-      "unique_trips": 7,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": "madrid"
-    },
-    {
-      "train_name": "C4a",
-      "train_type": "Cercanías",
-      "total": 30,
-      "unique_trips": 9,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": "madrid"
-    },
-    {
       "train_name": "C2",
       "train_type": "Cercanías",
-      "total": 73,
+      "total": 74,
+      "unique_trips": 10,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": [],
+      "nucleo": "madrid"
+    },
+    {
+      "train_name": "C4b",
+      "train_type": "Cercanías",
+      "total": 28,
       "unique_trips": 8,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -165,22 +281,8 @@
     {
       "train_name": "C5",
       "train_type": "Cercanías",
-      "total": 59,
-      "unique_trips": 15,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": "madrid"
-    },
-    {
-      "train_name": "C5",
-      "train_type": "Cercanías",
-      "total": 199,
-      "unique_trips": 23,
+      "total": 191,
+      "unique_trips": 24,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -205,37 +307,35 @@
       "nucleo": "madrid"
     },
     {
-      "train_name": "C4a",
+      "train_name": "C4b",
       "train_type": "Cercanías",
-      "total": 40,
+      "total": 41,
       "unique_trips": 10,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": ""
-    },
-    {
-      "train_name": "C4b",
-      "train_type": "Cercanías",
-      "total": 43,
-      "unique_trips": 11,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
+      "avg_delay_min": 1.0,
+      "max_delay_min": 1.0,
+      "arrivals": [
+        {
+          "train_name": "C4b",
+          "headsign": "Madrid-Atocha Cercanías",
+          "origin": "Colmenar Viejo",
+          "stop_id": "17004",
+          "stop_name": "Tres Cantos",
+          "scheduled_time": "22:01",
+          "estimated_time": "22:02",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        }
+      ],
       "nucleo": ""
     },
     {
       "train_name": "C3",
       "train_type": "Cercanías",
-      "total": 9,
+      "total": 8,
       "unique_trips": 4,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -263,8 +363,8 @@
     {
       "train_name": "C2",
       "train_type": "Cercanías",
-      "total": 90,
-      "unique_trips": 22,
+      "total": 92,
+      "unique_trips": 21,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -277,8 +377,8 @@
     {
       "train_name": "C7",
       "train_type": "Cercanías",
-      "total": 13,
-      "unique_trips": 8,
+      "total": 12,
+      "unique_trips": 7,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -305,62 +405,22 @@
     {
       "train_name": "C3",
       "train_type": "Cercanías",
-      "total": 91,
+      "total": 93,
       "unique_trips": 12,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 1.0,
-      "max_delay_min": 1.0,
-      "arrivals": [
-        {
-          "train_name": "C3",
-          "headsign": "Aranjuez",
-          "origin": "Madrid-Chamartín-Clara Campoamor",
-          "stop_id": "60104",
-          "stop_name": "Valdemoro",
-          "scheduled_time": "22:01",
-          "estimated_time": "22:02",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        }
-      ],
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": [],
       "nucleo": ""
     },
     {
       "train_name": "C1",
       "train_type": "Cercanías",
-      "total": 106,
-      "unique_trips": 11,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": "asturias"
-    },
-    {
-      "train_name": "C8",
-      "train_type": "Cercanías",
-      "total": 28,
-      "unique_trips": 4,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": "asturias"
-    },
-    {
-      "train_name": "C3",
-      "train_type": "Cercanías",
-      "total": 50,
-      "unique_trips": 7,
+      "total": 100,
+      "unique_trips": 10,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -373,7 +433,7 @@
     {
       "train_name": "C4",
       "train_type": "Cercanías",
-      "total": 58,
+      "total": 53,
       "unique_trips": 6,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -388,7 +448,7 @@
       "train_name": "C5a",
       "train_type": "Cercanías",
       "total": 12,
-      "unique_trips": 4,
+      "unique_trips": 3,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -401,8 +461,22 @@
     {
       "train_name": "C5",
       "train_type": "Cercanías",
-      "total": 41,
+      "total": 39,
       "unique_trips": 3,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": [],
+      "nucleo": "asturias"
+    },
+    {
+      "train_name": "C3",
+      "train_type": "Cercanías",
+      "total": 50,
+      "unique_trips": 6,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -415,7 +489,7 @@
     {
       "train_name": "C6",
       "train_type": "Cercanías",
-      "total": 28,
+      "total": 25,
       "unique_trips": 5,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -441,6 +515,20 @@
       "nucleo": "asturias"
     },
     {
+      "train_name": "C8",
+      "train_type": "Cercanías",
+      "total": 29,
+      "unique_trips": 4,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": [],
+      "nucleo": "asturias"
+    },
+    {
       "train_name": "C1",
       "train_type": "Cercanías",
       "total": 30,
@@ -449,27 +537,15 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 1.0,
-      "max_delay_min": 1.0,
-      "arrivals": [
-        {
-          "train_name": "C1",
-          "headsign": "Utrera",
-          "origin": "Sevilla-Santa Justa",
-          "stop_id": "51100",
-          "stop_name": "San Bernardo",
-          "scheduled_time": "21:57",
-          "estimated_time": "21:58",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        }
-      ],
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": [],
       "nucleo": "sevilla"
     },
     {
       "train_name": "C5",
       "train_type": "Cercanías",
-      "total": 16,
+      "total": 15,
       "unique_trips": 4,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -497,28 +573,30 @@
     {
       "train_name": "C1",
       "train_type": "Cercanías",
-      "total": 204,
-      "unique_trips": 39,
+      "total": 24,
+      "unique_trips": 4,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 1.0,
-      "max_delay_min": 1.0,
-      "arrivals": [
-        {
-          "train_name": "C1",
-          "headsign": "Málaga-Centro Alameda",
-          "origin": "Fuengirola",
-          "stop_id": "54503",
-          "stop_name": "Guadalhorce",
-          "scheduled_time": "21:56",
-          "estimated_time": "21:57",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        }
-      ],
-      "nucleo": ""
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": [],
+      "nucleo": "cadiz"
+    },
+    {
+      "train_name": "T1",
+      "train_type": "Otros",
+      "total": 76,
+      "unique_trips": 7,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": [],
+      "nucleo": "cadiz"
     },
     {
       "train_name": "T1",
@@ -535,38 +613,10 @@
       "nucleo": ""
     },
     {
-      "train_name": "C1",
+      "train_name": "C2",
       "train_type": "Cercanías",
-      "total": 22,
-      "unique_trips": 4,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": "cadiz"
-    },
-    {
-      "train_name": "T1",
-      "train_type": "Otros",
-      "total": 74,
-      "unique_trips": 7,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": "cadiz"
-    },
-    {
-      "train_name": "C1",
-      "train_type": "Cercanías",
-      "total": 37,
-      "unique_trips": 8,
+      "total": 48,
+      "unique_trips": 10,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -577,10 +627,10 @@
       "nucleo": "valencia"
     },
     {
-      "train_name": "C2",
+      "train_name": "C1",
       "train_type": "Cercanías",
-      "total": 50,
-      "unique_trips": 10,
+      "total": 35,
+      "unique_trips": 7,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -593,22 +643,34 @@
     {
       "train_name": "C6",
       "train_type": "Cercanías",
-      "total": 57,
+      "total": 56,
       "unique_trips": 7,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
+      "avg_delay_min": 1.0,
+      "max_delay_min": 1.0,
+      "arrivals": [
+        {
+          "train_name": "C6",
+          "headsign": "Castelló De La Plana",
+          "origin": "València-Estació Del Nord",
+          "stop_id": "65200",
+          "stop_name": "Sagunt",
+          "scheduled_time": "22:01",
+          "estimated_time": "22:02",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        }
+      ],
       "nucleo": "valencia"
     },
     {
       "train_name": "C5",
       "train_type": "Cercanías",
-      "total": 4,
-      "unique_trips": 2,
+      "total": 2,
+      "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -621,7 +683,7 @@
     {
       "train_name": "C3",
       "train_type": "Cercanías",
-      "total": 30,
+      "total": 29,
       "unique_trips": 7,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -635,7 +697,7 @@
     {
       "train_name": "C6",
       "train_type": "Cercanías",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -649,7 +711,7 @@
     {
       "train_name": "C1",
       "train_type": "Cercanías",
-      "total": 27,
+      "total": 25,
       "unique_trips": 6,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -664,7 +726,7 @@
       "train_name": "C3",
       "train_type": "Cercanías",
       "total": 9,
-      "unique_trips": 3,
+      "unique_trips": 4,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -703,32 +765,6 @@
       "nucleo": ""
     },
     {
-      "train_name": "R2S",
-      "train_type": "Otros",
-      "total": 96,
-      "unique_trips": 15,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 1.0,
-      "max_delay_min": 1.0,
-      "arrivals": [
-        {
-          "train_name": "R2S",
-          "headsign": "Barcelona Estació De França",
-          "origin": "Garraf",
-          "stop_id": "71704",
-          "stop_name": "Platja De Castelldefels",
-          "scheduled_time": "21:58",
-          "estimated_time": "21:59",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        }
-      ],
-      "nucleo": "barcelona"
-    },
-    {
       "train_name": "R15",
       "train_type": "Otros",
       "total": 12,
@@ -751,27 +787,15 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 1.0,
-      "max_delay_min": 1.0,
-      "arrivals": [
-        {
-          "train_name": "R17",
-          "headsign": "Sant Vicenç De Calders",
-          "origin": "Salou-Port Aventura",
-          "stop_id": "71502",
-          "stop_name": "Altafulla-Tamarit",
-          "scheduled_time": "22:05",
-          "estimated_time": "22:06",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        }
-      ],
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": [],
       "nucleo": "barcelona"
     },
     {
       "train_name": "R4",
       "train_type": "Otros",
-      "total": 94,
+      "total": 91,
       "unique_trips": 15,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -784,20 +808,6 @@
     },
     {
       "train_name": "R16",
-      "train_type": "Otros",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": "barcelona"
-    },
-    {
-      "train_name": "R14",
       "train_type": "Otros",
       "total": 1,
       "unique_trips": 1,
@@ -813,7 +823,7 @@
     {
       "train_name": "R14",
       "train_type": "Otros",
-      "total": 9,
+      "total": 8,
       "unique_trips": 2,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -853,34 +863,6 @@
       "nucleo": ""
     },
     {
-      "train_name": "RL4",
-      "train_type": "Otros",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": ""
-    },
-    {
-      "train_name": "R13",
-      "train_type": "Otros",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": ""
-    },
-    {
       "train_name": "RL3",
       "train_type": "Otros",
       "total": 7,
@@ -897,22 +879,8 @@
     {
       "train_name": "R2N",
       "train_type": "Otros",
-      "total": 69,
-      "unique_trips": 9,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": "barcelona"
-    },
-    {
-      "train_name": "R11",
-      "train_type": "Otros",
-      "total": 11,
-      "unique_trips": 4,
+      "total": 67,
+      "unique_trips": 7,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -925,8 +893,22 @@
     {
       "train_name": "R2",
       "train_type": "Otros",
-      "total": 31,
-      "unique_trips": 5,
+      "total": 28,
+      "unique_trips": 4,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": [],
+      "nucleo": "barcelona"
+    },
+    {
+      "train_name": "R1",
+      "train_type": "Otros",
+      "total": 136,
+      "unique_trips": 16,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -939,7 +921,7 @@
     {
       "train_name": "R8",
       "train_type": "Otros",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -949,6 +931,20 @@
       "max_delay_min": 0.0,
       "arrivals": [],
       "nucleo": "barcelona"
+    },
+    {
+      "train_name": "RT1",
+      "train_type": "Otros",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": [],
+      "nucleo": ""
     },
     {
       "train_name": "RG1",
@@ -979,24 +975,10 @@
       "nucleo": ""
     },
     {
-      "train_name": "RG1",
-      "train_type": "Regional",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": "barcelona"
-    },
-    {
       "train_name": "R3",
       "train_type": "Otros",
-      "total": 77,
-      "unique_trips": 41,
+      "total": 74,
+      "unique_trips": 38,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -1009,22 +991,8 @@
     {
       "train_name": "R4",
       "train_type": "Otros",
-      "total": 53,
+      "total": 50,
       "unique_trips": 8,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": [],
-      "nucleo": ""
-    },
-    {
-      "train_name": "R8",
-      "train_type": "Otros",
-      "total": 1,
-      "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -1065,8 +1033,8 @@
     {
       "train_name": "C2",
       "train_type": "Cercanías",
-      "total": 6,
-      "unique_trips": 3,
+      "total": 7,
+      "unique_trips": 4,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -1079,7 +1047,7 @@
     {
       "train_name": "C3",
       "train_type": "Cercanías",
-      "total": 16,
+      "total": 15,
       "unique_trips": 7,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1107,8 +1075,8 @@
     {
       "train_name": "C1",
       "train_type": "Cercanías",
-      "total": 23,
-      "unique_trips": 5,
+      "total": 19,
+      "unique_trips": 4,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -1121,7 +1089,7 @@
     {
       "train_name": "C2",
       "train_type": "Cercanías",
-      "total": 72,
+      "total": 71,
       "unique_trips": 7,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1135,8 +1103,8 @@
     {
       "train_name": "C3",
       "train_type": "Cercanías",
-      "total": 42,
-      "unique_trips": 10,
+      "total": 41,
+      "unique_trips": 9,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -1149,7 +1117,7 @@
     {
       "train_name": "C1",
       "train_type": "Cercanías",
-      "total": 10,
+      "total": 12,
       "unique_trips": 3,
       "unique_trips_delayed": 0,
       "delayed": 0,
