@@ -261,7 +261,9 @@ def compute_route_chronic_stats(service_name: str, data_root: Path) -> Dict[str,
     Falls back to {} on any error (parquet unavailable, no data, etc.).
     """
     arrivals_dir = data_root / "arrivals"
-    parquet_files = sorted(arrivals_dir.glob("*.parquet"))
+    # Part-file layout: arrivals/YYYY-MM-DD/{snapshot}.parquet
+    # Legacy layout: arrivals/YYYY-MM.parquet — both picked up by **/*.parquet
+    parquet_files = sorted(arrivals_dir.glob("**/*.parquet"))
     if not parquet_files:
         return {}
 

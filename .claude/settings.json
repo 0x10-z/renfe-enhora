@@ -79,7 +79,9 @@
       "Bash(python -c \"import json; d=json.load\\(open\\(''public/data/cercanias/routes_geo.json''\\)\\); r=d[''routes''][0]; print\\(list\\(r.keys\\(\\)\\)\\); print\\(''chronic_stats:'', r[''chronic_stats'']\\)\")",
       "Bash(python -c \"import json; d=json.load\\(open\\(''public/data/cercanias/routes_geo.json'', encoding=''utf-8''\\)\\); r=d[''routes''][0]; print\\(list\\(r.keys\\(\\)\\)\\); print\\(''chronic_stats:'', r[''chronic_stats'']\\)\")",
       "Bash(python -c \"import json; d=json.load\\(open\\(''public/data/ave-larga-distancia/insights.json'', encoding=''utf-8''\\)\\); [print\\(i\\) for i in d[''insights''][:3]]\")",
-      "Bash(ls -la \"d:\\\\Workroot\\\\renfe-enhora\\\\renfe-enhora\\\\data\\\\by_ccaa\"\" 2>&1 || echo \"Directory not found \")"
+      "Bash(ls -la \"d:\\\\Workroot\\\\renfe-enhora\\\\renfe-enhora\\\\data\\\\by_ccaa\"\" 2>&1 || echo \"Directory not found \")",
+      "Bash(python -m scripts.migrate_parquet)",
+      "Bash(python -m scripts.migrate_parquet --execute)"
     ],
     "additionalDirectories": [
       "d:\\Workroot\\renfe-enhora\\renfe-enhora\\src\\pages\\rutas"

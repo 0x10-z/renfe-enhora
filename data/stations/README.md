@@ -1,8 +1,8 @@
 # stations/
 
-**Ficheros:** `YYYY-MM.parquet` (uno por mes)
+**Estructura:** `YYYY-MM-DD/{snapshot_id}.parquet` (un fichero por snapshot, en carpetas diarias)
 **Grain:** 1 fila por estación × ejecución del pipeline
-**Append:** sí
+**Escritura:** cada ejecución crea un fichero nuevo — nunca sobreescribe datos anteriores
 
 Versión agregada de `arrivals/` a nivel de estación. Más ligera para análisis de rendimiento por estación a lo largo del tiempo.
 
@@ -25,9 +25,19 @@ Versión agregada de `arrivals/` a nivel de estación. Más ligera para análisi
 ## Ejemplo de consulta
 
 ```python
+import pyarrow.parquet as pq
 import pandas as pd
+import glob
 
-df = pd.read_parquet("data/stations/2026-04.parquet")
+# Leer todo un día
+dataset = pq.ParquetDataset("data/stations/2026-04-10/")
+df = dataset.read().to_pandas()
+
+# Leer varios días
+df = pd.concat([
+    pd.read_parquet(f)
+    for f in sorted(glob.glob("data/stations/2026-04-*/*.parquet"))
+])
 
 # Estaciones con más retraso medio histórico
 ranking = (

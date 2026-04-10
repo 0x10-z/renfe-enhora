@@ -228,10 +228,18 @@ export function renderHourly() {
   for (const r of state.historyRecords) {
     const hour = parseInt(r.ts?.slice(11, 13) ?? "0", 10);
     if (isNaN(hour) || hour < 0 || hour > 23) continue;
-    byHour[hour].totalSum   += r.total   ?? 0;
-    byHour[hour].delayedSum += r.delayed ?? 0;
+    // Use trips_delayed/trips when available (new records), fall back to delayed/total
+    const td = r.trips_delayed ?? null;
+    const tt = r.trips ?? 0;
+    if (td !== null && tt > 0) {
+      byHour[hour].totalSum   += tt;
+      byHour[hour].delayedSum += td;
+    } else {
+      byHour[hour].totalSum   += r.total   ?? 0;
+      byHour[hour].delayedSum += r.delayed ?? 0;
+    }
     byHour[hour].samples++;
-    if (r.trips > 0) byHour[hour].trips.push(r.trips);
+    if (tt > 0) byHour[hour].trips.push(tt);
     if (r.p50 > 0) byHour[hour].p50s.push(r.p50);
     if (r.p75 > 0) byHour[hour].p75s.push(r.p75);
     if (r.p90 > 0) byHour[hour].p90s.push(r.p90);
@@ -738,11 +746,17 @@ export function renderHeatmap() {
     );
 
   for (const r of state.historyRecords) {
-    if (!r.ts || !r.date || r.total === 0) continue;
+    if (!r.ts || !r.date) continue;
     const hour = parseInt(r.ts.slice(11, 13), 10);
     if (isNaN(hour) || hour < 0 || hour > 23) continue;
     const dow = (new Date(r.date).getDay() + 6) % 7; // 0=Lun … 6=Dom
-    const pct = r.delayed / r.total * 100;
+    // Use trips_delayed/trips when available, fall back to delayed/total
+    const td = r.trips_delayed ?? null;
+    const tt = r.trips ?? 0;
+    const denom = (td !== null && tt > 0) ? tt : (r.total ?? 0);
+    const num   = (td !== null && tt > 0) ? td : (r.delayed ?? 0);
+    if (denom === 0) continue;
+    const pct = num / denom * 100;
     matrix[dow][hour].sum += pct;
     matrix[dow][hour].count++;
   }

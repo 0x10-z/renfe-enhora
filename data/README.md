@@ -8,11 +8,11 @@ Los JSONs en `public/data/` son artefactos generados a partir de estos datos par
 
 ## Tablas
 
-| Carpeta | Fichero | Grain | Tamaño estimado |
-|---------|---------|-------|-----------------|
+| Carpeta | Estructura | Grain | Tamaño estimado |
+|---------|-----------|-------|-----------------|
 | `snapshots/` | `snapshots.parquet` | 1 fila por ejecución | < 1 MB/año |
-| `arrivals/` | `YYYY-MM.parquet` | 1 fila por tren × estación × ejecución | ~15-25 MB/mes |
-| `stations/` | `YYYY-MM.parquet` | 1 fila por estación × ejecución | ~3-5 MB/mes |
+| `arrivals/` | `YYYY-MM-DD/{snapshot_id}.parquet` | 1 fila por tren × estación × ejecución | ~5-12 MB/día |
+| `stations/` | `YYYY-MM-DD/{snapshot_id}.parquet` | 1 fila por estación × ejecución | ~1-3 MB/día |
 | `by_type/` | `history.parquet` | 1 fila por tipo de tren × ejecución | < 1 MB/año |
 | `by_ccaa/` | `history.parquet` | 1 fila por CCAA × ejecución | < 1 MB/año |
 
@@ -111,10 +111,21 @@ erDiagram
 ## Cómo leer
 
 ```python
+import pyarrow.parquet as pq
 import pandas as pd
+import glob
 
-df = pd.read_parquet("data/arrivals/2026-04.parquet")
-df.head()
+# Un snapshot concreto
+df = pd.read_parquet("data/arrivals/2026-04-10/cercanias_2026-04-10T08-19.parquet")
+
+# Todo un día
+df = pq.ParquetDataset("data/arrivals/2026-04-10/").read().to_pandas()
+
+# Varios días (arrivals o stations)
+df = pd.concat([
+    pd.read_parquet(f)
+    for f in sorted(glob.glob("data/arrivals/2026-04-*/*.parquet"))
+])
 ```
 
 ## Cómo se generan
@@ -130,6 +141,7 @@ Los ficheros usan compresión **zstd** internamente (gestionada por pyarrow). No
 El pipeline corre cada 5 minutos. Cada ejecución escribe un `snapshot_id` con formato `{service}_{YYYY-MM-DDTHH:MM}` y un campo `ts` (timestamp UTC). Esto permite reconstruir el estado del sistema en cualquier ventana de 5 minutos.
 
 ```python
+import pyarrow.parquet as pq
 import pandas as pd
 
 # Estado global en un instante concreto
@@ -137,11 +149,9 @@ snapshots = pd.read_parquet("data/snapshots/snapshots.parquet")
 estado = snapshots[snapshots.snapshot_id == "cercanias_2026-04-15T08:30"]
 
 # Trenes retrasados el 15 de abril entre 08:25 y 08:35
-arrivals = pd.read_parquet("data/arrivals/2026-04.parquet")
+arrivals = pq.ParquetDataset("data/arrivals/2026-04-15/").read().to_pandas()
 ventana = arrivals[
-    (arrivals.ts >= "2026-04-15 08:25") &
-    (arrivals.ts <= "2026-04-15 08:35") &
-    (arrivals.service == "cercanias")
+    arrivals.snapshot_id.between("cercanias_2026-04-15T08:25", "cercanias_2026-04-15T08:35")
 ]
 ```
 

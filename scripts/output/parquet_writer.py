@@ -1,15 +1,19 @@
 """
 Parquet writer — appends pipeline snapshots to columnar storage.
 
-One call to `append_snapshot()` per service per pipeline run writes to four tables:
+One call to `append_snapshot()` per service per pipeline run writes to five tables:
 
-  data/snapshots/snapshots.parquet       — 1 row per run (global aggregates)
-  data/arrivals/YYYY-MM.parquet          — 1 row per train arrival per run (full grain)
-  data/stations/YYYY-MM.parquet          — 1 row per station per run (station aggregates)
-  data/by_type/history.parquet           — 1 row per train-type per run
-  data/by_ccaa/history.parquet           — 1 row per CCAA per run
+  data/snapshots/snapshots.parquet          — 1 row per run (global aggregates)
+  data/arrivals/YYYY-MM-DD/{snapshot}.parquet — 1 row per train arrival per run (full grain)
+  data/stations/YYYY-MM-DD/{snapshot}.parquet — 1 row per station per run
+  data/by_type/history.parquet              — 1 row per train-type per run
+  data/by_ccaa/history.parquet              — 1 row per CCAA per run
 
-All files are append-only. Schema is enforced on each write so columns stay consistent.
+arrivals and stations use a directory-of-parts layout: each snapshot is a new file inside
+a daily folder (YYYY-MM-DD/). Writing never reads existing data, eliminating the O(n²)
+RAM cost of the old read-concat-rewrite pattern.
+
+To read all arrivals: pq.ParquetDataset("data/arrivals/", use_legacy_dataset=False).read()
 """
 import logging
 from datetime import datetime
@@ -125,8 +129,16 @@ def _append(path: Path, table: pa.Table) -> None:
     pq.write_table(combined, path, compression="zstd")
 
 
-def _month_path(folder: str, now: datetime) -> Path:
-    return _DATA_ROOT / folder / f"{now.strftime('%Y-%m')}.parquet"
+def _day_dir(folder: str, now: datetime) -> Path:
+    """Return the daily directory for part-file tables (arrivals, stations)."""
+    return _DATA_ROOT / folder / now.strftime('%Y-%m-%d')
+
+
+def _write_part(directory: Path, snapshot_id: str, table: pa.Table) -> None:
+    """Write table as a new part file in a daily directory. Never reads existing data."""
+    directory.mkdir(parents=True, exist_ok=True)
+    safe_id = snapshot_id.replace(":", "-")
+    pq.write_table(table, directory / f"{safe_id}.parquet", compression="zstd")
 
 
 # ── public API ─────────────────────────────────────────────────────────────────
@@ -230,13 +242,15 @@ def append_snapshot(
             })
 
     if arrival_rows:
-        _append(
-            _month_path("arrivals", now),
+        _write_part(
+            _day_dir("arrivals", now),
+            snapshot_id,
             pa.Table.from_pylist(arrival_rows, schema=SCHEMA_ARRIVALS),
         )
     if station_rows:
-        _append(
-            _month_path("stations", now),
+        _write_part(
+            _day_dir("stations", now),
+            snapshot_id,
             pa.Table.from_pylist(station_rows, schema=SCHEMA_STATIONS),
         )
 
@@ -290,32 +304,25 @@ def append_snapshot(
         f"{len(by_type_rows)} types, {len(by_ccaa_rows)} ccaa"
     )
 
-    # ── monthly totals ────────────────────────────────────────────────────────
-    month_label = now.strftime("%Y-%m")
-
-    def _stats(path: Path, date_col: str = "date") -> str:
-        """Return 'N rows | YYYY-MM-DD → YYYY-MM-DD' or 'missing' if file absent."""
+    # ── daily totals (metadata-only reads — no column data loaded) ────────────
+    def _dir_row_count(directory: Path) -> str:
+        """Sum row counts from parquet footers in a directory. Reads only metadata."""
         try:
-            t = pq.read_table(path, columns=[date_col])
-            col = t.column(date_col).to_pylist()
-            if date_col == "snapshot_id":
-                # format: "service_2026-04-09T08:26" — extract YYYY-MM-DD
-                dates = sorted({str(v)[str(v).rfind("_") + 1:str(v).rfind("_") + 11] for v in col if v})
-                date_range = f"{dates[0]} → {dates[-1]}" if dates else "?"
-            else:
-                dates = sorted(v for v in col if v)
-                date_range = f"{dates[0]} → {dates[-1]}" if dates else "?"
-            return f"{t.num_rows:,} rows | {date_range}"
+            parts = list(directory.glob("*.parquet"))
+            total = sum(pq.read_metadata(p).num_rows for p in parts)
+            return f"{total:,} rows ({len(parts)} files)"
         except Exception:
             return "missing"
 
-    arrivals_path  = _month_path("arrivals", now)
-    stations_path  = _month_path("stations", now)
-    snapshots_path = _DATA_ROOT / "snapshots" / "snapshots.parquet"
+    def _row_count(path: Path) -> str:
+        try:
+            return f"{pq.read_metadata(path).num_rows:,} rows"
+        except Exception:
+            return "missing"
 
     log.info(
-        f"[{service_name}] Parquet {month_label} — "
-        f"arrivals: {_stats(arrivals_path, 'snapshot_id')} | "
-        f"stations: {_stats(stations_path, 'snapshot_id')} | "
-        f"snapshots(all): {_stats(snapshots_path, 'date')}"
+        f"[{service_name}] Parquet {now.strftime('%Y-%m-%d')} — "
+        f"arrivals: {_dir_row_count(_day_dir('arrivals', now))} | "
+        f"stations: {_dir_row_count(_day_dir('stations', now))} | "
+        f"snapshots(all): {_row_count(_DATA_ROOT / 'snapshots' / 'snapshots.parquet')}"
     )
