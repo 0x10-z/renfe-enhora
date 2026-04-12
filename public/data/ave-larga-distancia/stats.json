@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-04-12T23:40:03+02:00",
+  "generated_at": "2026-04-12T23:45:03+02:00",
   "stats": {
-    "total_trains": 48,
-    "unique_trips": 29,
+    "total_trains": 41,
+    "unique_trips": 27,
     "unique_trips_delayed": 8,
-    "on_time": 37,
-    "delayed": 11,
+    "on_time": 29,
+    "delayed": 12,
     "cancelled": 0,
-    "avg_delay_min": 14.2,
+    "avg_delay_min": 12.8,
     "max_delay_min": 30.0,
     "delay_percentiles": {
-      "p50": 11.0,
+      "p50": 10.0,
       "p75": 18.0,
       "p90": 18.0,
-      "p95": 24.0
+      "p95": 23.4
     },
     "max_delay_station": {
       "stop_id": "51003",
@@ -23,9 +23,9 @@
     },
     "stations_count": 992,
     "busiest_station": {
-      "id": "60000",
-      "name": "Madrid Pta.Atocha - Almudena Grandes",
-      "count": 4
+      "id": "31412",
+      "name": "A Coruña",
+      "count": 3
     },
     "worst_delay_station": {
       "id": "51003",
@@ -37,49 +37,40 @@
         "total": 2,
         "delayed": 1,
         "cancelled": 0,
-        "avg_delay_min": 11.0,
-        "max_delay_min": 11.0,
+        "avg_delay_min": 9.0,
+        "max_delay_min": 9.0,
         "delayed_pct": 0.5,
         "rank_worst": 4
       },
       "Media Distancia": {
-        "total": 16,
-        "delayed": 5,
+        "total": 14,
+        "delayed": 7,
         "cancelled": 0,
-        "avg_delay_min": 15.2,
-        "max_delay_min": 18.0,
-        "delayed_pct": 0.312,
-        "rank_worst": 2
-      },
-      "AVE": {
-        "total": 9,
-        "delayed": 3,
-        "cancelled": 0,
-        "avg_delay_min": 15.0,
-        "max_delay_min": 30.0,
-        "delayed_pct": 0.333,
-        "rank_worst": 3
-      },
-      "AVLO": {
-        "total": 2,
-        "delayed": 1,
-        "cancelled": 0,
-        "avg_delay_min": 18.0,
+        "avg_delay_min": 11.9,
         "max_delay_min": 18.0,
         "delayed_pct": 0.5,
+        "rank_worst": 3
+      },
+      "AVE": {
+        "total": 8,
+        "delayed": 2,
+        "cancelled": 0,
+        "avg_delay_min": 19.0,
+        "max_delay_min": 30.0,
+        "delayed_pct": 0.25,
         "rank_worst": 1
       },
       "Regional": {
-        "total": 14,
+        "total": 13,
         "delayed": 1,
         "cancelled": 0,
         "avg_delay_min": 6.0,
         "max_delay_min": 6.0,
-        "delayed_pct": 0.071,
+        "delayed_pct": 0.077,
         "rank_worst": 5
       },
       "Avant": {
-        "total": 3,
+        "total": 2,
         "delayed": 0,
         "cancelled": 0,
         "avg_delay_min": 0.0,
@@ -87,8 +78,17 @@
         "delayed_pct": 0.0,
         "rank_worst": 6
       },
+      "AVLO": {
+        "total": 1,
+        "delayed": 1,
+        "cancelled": 0,
+        "avg_delay_min": 18.0,
+        "max_delay_min": 18.0,
+        "delayed_pct": 1.0,
+        "rank_worst": 2
+      },
       "Otros": {
-        "total": 2,
+        "total": 1,
         "delayed": 0,
         "cancelled": 0,
         "avg_delay_min": 0.0,
@@ -99,18 +99,6 @@
     },
     "by_ccaa": [
       {
-        "id": "Andalucía",
-        "name": "Andalucía",
-        "stations_count": 8,
-        "total": 12,
-        "delayed": 4,
-        "cancelled": 0,
-        "avg_delay_min": 21.0,
-        "max_delay_min": 30.0,
-        "delayed_pct": 0.333,
-        "rank_worst": 1
-      },
-      {
         "id": "Galicia",
         "name": "Galicia",
         "stations_count": 4,
@@ -120,42 +108,54 @@
         "avg_delay_min": 18.0,
         "max_delay_min": 18.0,
         "delayed_pct": 0.143,
+        "rank_worst": 1
+      },
+      {
+        "id": "Andalucía",
+        "name": "Andalucía",
+        "stations_count": 8,
+        "total": 12,
+        "delayed": 7,
+        "cancelled": 0,
+        "avg_delay_min": 14.6,
+        "max_delay_min": 30.0,
+        "delayed_pct": 0.583,
         "rank_worst": 2
       },
       {
         "id": "Comunidad de Madrid",
         "name": "Comunidad de Madrid",
         "stations_count": 3,
-        "total": 6,
+        "total": 4,
         "delayed": 2,
         "cancelled": 0,
-        "avg_delay_min": 9.5,
-        "max_delay_min": 11.0,
-        "delayed_pct": 0.333,
+        "avg_delay_min": 8.5,
+        "max_delay_min": 9.0,
+        "delayed_pct": 0.5,
         "rank_worst": 3
       },
       {
         "id": "Castilla y León",
         "name": "Castilla y León",
-        "stations_count": 5,
-        "total": 7,
-        "delayed": 3,
+        "stations_count": 3,
+        "total": 4,
+        "delayed": 2,
         "cancelled": 0,
-        "avg_delay_min": 9.3,
+        "avg_delay_min": 8.5,
         "max_delay_min": 11.0,
-        "delayed_pct": 0.429,
+        "delayed_pct": 0.5,
         "rank_worst": 4
       },
       {
         "id": "Cataluña",
         "name": "Cataluña",
-        "stations_count": 12,
-        "total": 15,
-        "delayed": 1,
+        "stations_count": 11,
+        "total": 13,
+        "delayed": 0,
         "cancelled": 0,
-        "avg_delay_min": 7.0,
-        "max_delay_min": 7.0,
-        "delayed_pct": 0.067,
+        "avg_delay_min": 0.0,
+        "max_delay_min": 0.0,
+        "delayed_pct": 0.0,
         "rank_worst": 5
       },
       {
@@ -171,8 +171,8 @@
         "rank_worst": 6
       },
       {
-        "id": "Desconocida",
-        "name": "Desconocida",
+        "id": "País Vasco",
+        "name": "País Vasco",
         "stations_count": 0,
         "total": 0,
         "delayed": 0,
@@ -183,8 +183,8 @@
         "rank_worst": 7
       },
       {
-        "id": "La Rioja",
-        "name": "La Rioja",
+        "id": "Aragón",
+        "name": "Aragón",
         "stations_count": 0,
         "total": 0,
         "delayed": 0,
@@ -207,8 +207,8 @@
         "rank_worst": 9
       },
       {
-        "id": "Aragón",
-        "name": "Aragón",
+        "id": "Región de Murcia",
+        "name": "Región de Murcia",
         "stations_count": 0,
         "total": 0,
         "delayed": 0,
@@ -217,30 +217,6 @@
         "max_delay_min": 0.0,
         "delayed_pct": 0.0,
         "rank_worst": 10
-      },
-      {
-        "id": "País Vasco",
-        "name": "País Vasco",
-        "stations_count": 0,
-        "total": 0,
-        "delayed": 0,
-        "cancelled": 0,
-        "avg_delay_min": 0.0,
-        "max_delay_min": 0.0,
-        "delayed_pct": 0.0,
-        "rank_worst": 11
-      },
-      {
-        "id": "Extremadura",
-        "name": "Extremadura",
-        "stations_count": 0,
-        "total": 0,
-        "delayed": 0,
-        "cancelled": 0,
-        "avg_delay_min": 0.0,
-        "max_delay_min": 0.0,
-        "delayed_pct": 0.0,
-        "rank_worst": 12
       },
       {
         "id": "Cantabria",
@@ -252,7 +228,19 @@
         "avg_delay_min": 0.0,
         "max_delay_min": 0.0,
         "delayed_pct": 0.0,
-        "rank_worst": 13
+        "rank_worst": 11
+      },
+      {
+        "id": "Desconocida",
+        "name": "Desconocida",
+        "stations_count": 0,
+        "total": 0,
+        "delayed": 0,
+        "cancelled": 0,
+        "avg_delay_min": 0.0,
+        "max_delay_min": 0.0,
+        "delayed_pct": 0.0,
+        "rank_worst": 12
       },
       {
         "id": "Castilla-La Mancha",
@@ -264,11 +252,23 @@
         "avg_delay_min": 0.0,
         "max_delay_min": 0.0,
         "delayed_pct": 0.0,
+        "rank_worst": 13
+      },
+      {
+        "id": "La Rioja",
+        "name": "La Rioja",
+        "stations_count": 0,
+        "total": 0,
+        "delayed": 0,
+        "cancelled": 0,
+        "avg_delay_min": 0.0,
+        "max_delay_min": 0.0,
+        "delayed_pct": 0.0,
         "rank_worst": 14
       },
       {
-        "id": "Región de Murcia",
-        "name": "Región de Murcia",
+        "id": "Extremadura",
+        "name": "Extremadura",
         "stations_count": 0,
         "total": 0,
         "delayed": 0,
@@ -320,31 +320,31 @@
         "id": "madrid",
         "name": "Núcleo Madrid",
         "stations_count": 3,
-        "total": 6,
+        "total": 4,
         "delayed": 2,
         "cancelled": 0,
-        "avg_delay_min": 9.5,
-        "max_delay_min": 11.0,
-        "delayed_pct": 0.333,
+        "avg_delay_min": 8.5,
+        "max_delay_min": 9.0,
+        "delayed_pct": 0.5,
         "rank_worst": 3
-      },
-      {
-        "id": "barcelona",
-        "name": "Núcleo Barcelona",
-        "stations_count": 3,
-        "total": 4,
-        "delayed": 1,
-        "cancelled": 0,
-        "avg_delay_min": 7.0,
-        "max_delay_min": 7.0,
-        "delayed_pct": 0.25,
-        "rank_worst": 4
       },
       {
         "id": "almeria",
         "name": "Núcleo Almería",
         "stations_count": 3,
         "total": 3,
+        "delayed": 3,
+        "cancelled": 0,
+        "avg_delay_min": 6.0,
+        "max_delay_min": 6.0,
+        "delayed_pct": 1.0,
+        "rank_worst": 4
+      },
+      {
+        "id": "barcelona",
+        "name": "Núcleo Barcelona",
+        "stations_count": 3,
+        "total": 4,
         "delayed": 0,
         "cancelled": 0,
         "avg_delay_min": 0.0,
@@ -365,8 +365,8 @@
         "rank_worst": 6
       },
       {
-        "id": "murcia",
-        "name": "Núcleo Murcia-Alicante",
+        "id": "bilbao",
+        "name": "Núcleo Bilbao",
         "stations_count": 0,
         "total": 0,
         "delayed": 0,
@@ -401,8 +401,8 @@
         "rank_worst": 9
       },
       {
-        "id": "bilbao",
-        "name": "Núcleo Bilbao",
+        "id": "murcia",
+        "name": "Núcleo Murcia-Alicante",
         "stations_count": 0,
         "total": 0,
         "delayed": 0,
@@ -413,8 +413,8 @@
         "rank_worst": 10
       },
       {
-        "id": "santander",
-        "name": "Núcleo Santander",
+        "id": "san_sebastian",
+        "name": "Núcleo San Sebastián",
         "stations_count": 0,
         "total": 0,
         "delayed": 0,
@@ -425,8 +425,8 @@
         "rank_worst": 11
       },
       {
-        "id": "san_sebastian",
-        "name": "Núcleo San Sebastián",
+        "id": "santander",
+        "name": "Núcleo Santander",
         "stations_count": 0,
         "total": 0,
         "delayed": 0,
@@ -1234,8 +1234,8 @@
       "id": "71801",
       "name": "Barcelona-Sants",
       "arrivals_count": 2,
-      "delayed_count": 1,
-      "max_delay_min": 7.0
+      "delayed_count": 0,
+      "max_delay_min": 5.0
     },
     {
       "id": "05273",
@@ -2677,7 +2677,7 @@
       "name": "Ferrol",
       "arrivals_count": 1,
       "delayed_count": 0,
-      "max_delay_min": 1.0
+      "max_delay_min": 2.0
     },
     {
       "id": "05557",
@@ -2865,8 +2865,8 @@
       "id": "56308",
       "name": "Gador",
       "arrivals_count": 1,
-      "delayed_count": 0,
-      "max_delay_min": 5.0
+      "delayed_count": 1,
+      "max_delay_min": 6.0
     },
     {
       "id": "10104",
@@ -2914,8 +2914,8 @@
       "id": "56305",
       "name": "Gergal",
       "arrivals_count": 1,
-      "delayed_count": 0,
-      "max_delay_min": 5.0
+      "delayed_count": 1,
+      "max_delay_min": 6.0
     },
     {
       "id": "05691",
@@ -2941,9 +2941,9 @@
     {
       "id": "79300",
       "name": "Girona",
-      "arrivals_count": 2,
+      "arrivals_count": 1,
       "delayed_count": 0,
-      "max_delay_min": 2.0
+      "max_delay_min": 0
     },
     {
       "id": "78404",
@@ -3173,8 +3173,8 @@
       "id": "56310",
       "name": "Huercal-Viator",
       "arrivals_count": 1,
-      "delayed_count": 0,
-      "max_delay_min": 5.0
+      "delayed_count": 1,
+      "max_delay_min": 6.0
     },
     {
       "id": "74200",
@@ -3970,7 +3970,7 @@
     {
       "id": "60000",
       "name": "Madrid Pta.Atocha - Almudena Grandes",
-      "arrivals_count": 4,
+      "arrivals_count": 2,
       "delayed_count": 1,
       "max_delay_min": 8.0
     },
@@ -3979,7 +3979,7 @@
       "name": "Madrid-Chamartín-Clara Campoamor",
       "arrivals_count": 1,
       "delayed_count": 1,
-      "max_delay_min": 11.0
+      "max_delay_min": 9.0
     },
     {
       "id": "18002",
@@ -5127,7 +5127,7 @@
       "name": "Pontedeume",
       "arrivals_count": 1,
       "delayed_count": 0,
-      "max_delay_min": 1.0
+      "max_delay_min": 2.0
     },
     {
       "id": "23004",
@@ -5442,7 +5442,7 @@
       "name": "Reus",
       "arrivals_count": 1,
       "delayed_count": 0,
-      "max_delay_min": 1.0
+      "max_delay_min": 2.0
     },
     {
       "id": "71209",
@@ -5615,9 +5615,9 @@
     {
       "id": "30100",
       "name": "Salamanca",
-      "arrivals_count": 1,
+      "arrivals_count": 0,
       "delayed_count": 0,
-      "max_delay_min": 5.0
+      "max_delay_min": 0
     },
     {
       "id": "30110",
@@ -6343,9 +6343,9 @@
     {
       "id": "71500",
       "name": "Tarragona",
-      "arrivals_count": 1,
+      "arrivals_count": 0,
       "delayed_count": 0,
-      "max_delay_min": 1.0
+      "max_delay_min": 0
     },
     {
       "id": "20316",
@@ -6833,9 +6833,9 @@
     {
       "id": "11000",
       "name": "Venta De Baños",
-      "arrivals_count": 2,
-      "delayed_count": 1,
-      "max_delay_min": 11.0
+      "arrivals_count": 0,
+      "delayed_count": 0,
+      "max_delay_min": 0
     },
     {
       "id": "10504",
@@ -6884,7 +6884,7 @@
       "name": "Vigo Urzaiz",
       "arrivals_count": 2,
       "delayed_count": 0,
-      "max_delay_min": 1.0
+      "max_delay_min": 0
     },
     {
       "id": "65208",
@@ -6898,7 +6898,7 @@
       "name": "Vila-Seca",
       "arrivals_count": 1,
       "delayed_count": 0,
-      "max_delay_min": 1.0
+      "max_delay_min": 2.0
     },
     {
       "id": "76002",
