@@ -1,9 +1,17 @@
 {
-  "generated_at": "2026-04-14T23:40",
+  "generated_at": "2026-04-14T23:45",
   "insights": [
     {
       "id": "J",
-      "text": "Anomalía en trenes AVLO: los retrasos están a 2.7× su media histórica (50% hoy vs 18% habitual). Basado en 1538 registros.",
+      "text": "Anomalía en trenes Regional: los retrasos están a 2.2× su media histórica (22% hoy vs 10% habitual). Basado en 1717 registros.",
+      "severity": "high",
+      "meta": {
+        "train_type": "Regional"
+      }
+    },
+    {
+      "id": "J",
+      "text": "Anomalía en trenes AVLO: los retrasos están a 5.5× su media histórica (100% hoy vs 18% habitual). Basado en 1538 registros.",
       "severity": "high",
       "meta": {
         "train_type": "AVLO"
@@ -11,15 +19,7 @@
     },
     {
       "id": "J",
-      "text": "Anomalía en trenes AVE: los retrasos están a 1.8× su media histórica (29% hoy vs 16% habitual). Basado en 1672 registros.",
-      "severity": "high",
-      "meta": {
-        "train_type": "AVE"
-      }
-    },
-    {
-      "id": "J",
-      "text": "Anomalía en trenes Media Distancia: los retrasos están a 3.1× su media histórica (47% hoy vs 15% habitual). Basado en 1703 registros.",
+      "text": "Anomalía en trenes Media Distancia: los retrasos están a 3.6× su media histórica (54% hoy vs 15% habitual). Basado en 1704 registros.",
       "severity": "high",
       "meta": {
         "train_type": "Media Distancia"
@@ -27,7 +27,7 @@
     },
     {
       "id": "A",
-      "text": "A las 23h se están acumulando los retrasos — 10 trenes afectados",
+      "text": "A las 23h se están acumulando los retrasos — 9 trenes afectados",
       "severity": "warn",
       "meta": {
         "hour": 23
@@ -43,22 +43,13 @@
       }
     },
     {
-      "id": "C",
-      "text": "Madrid Pta.Atocha - Almudena Grandes es la estación más afectada ahora mismo: 2 de 3 trenes con retraso",
-      "severity": "bad",
-      "meta": {
-        "station_id": "60000",
-        "station_name": "Madrid Pta.Atocha - Almudena Grandes"
-      }
-    },
-    {
       "id": "D",
       "text": "Históricamente los miércoles son el día con más retrasos (media 20%); los martes son los más puntuales",
       "severity": "info"
     },
     {
       "id": "E",
-      "text": "Hasta las 23:40 hay un 84% más retrasos de lo habitual para un martes (26% vs media histórica 14%)",
+      "text": "Hasta las 23:45 hay un 148% más retrasos de lo habitual para un martes (34% vs media histórica 14%)",
       "severity": "bad"
     },
     {
@@ -75,6 +66,11 @@
       "id": "H",
       "text": "La semana del 23/03 fue la peor del último mes con un 22% de trenes con retraso de media",
       "severity": "info"
+    },
+    {
+      "id": "I",
+      "text": "Hasta las 23:45, este martes va inusualmente mal — los retrasos duplican la media histórica (34% vs 14% habitual)",
+      "severity": "bad"
     }
   ]
 }
