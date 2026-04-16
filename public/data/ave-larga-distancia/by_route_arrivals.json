@@ -1,56 +1,6 @@
 {
-  "generated_at": "2026-04-16T15:00:03+02:00",
+  "generated_at": "2026-04-16T15:05:03+02:00",
   "routes": [
-    {
-      "train_name": "EUROMED 01101",
-      "train_type": "Otros",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 1,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 10.0,
-      "max_delay_min": 10.0,
-      "arrivals": [
-        {
-          "train_name": "EUROMED 01101",
-          "headsign": "Alicante/Alacant",
-          "origin": "Figueres Vilafant",
-          "stop_id": "60911",
-          "stop_name": "Alicante/Alacant",
-          "scheduled_time": "15:40",
-          "estimated_time": "15:50",
-          "delay_min": 10.0,
-          "status": "retraso_leve"
-        }
-      ]
-    },
-    {
-      "train_name": "EUROMED 01162",
-      "train_type": "Otros",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 1,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 15.0,
-      "max_delay_min": 15.0,
-      "arrivals": [
-        {
-          "train_name": "EUROMED 01162",
-          "headsign": "Barcelona-Sants",
-          "origin": "Alicante/Alacant",
-          "stop_id": "65000",
-          "stop_name": "Valencia-Estaciò Del Nord",
-          "scheduled_time": "15:26",
-          "estimated_time": "15:41",
-          "delay_min": 15.0,
-          "status": "retraso_alto"
-        }
-      ]
-    },
     {
       "train_name": "AVE 10213",
       "train_type": "AVE",
@@ -72,6 +22,56 @@
           "scheduled_time": "15:45",
           "estimated_time": "15:56",
           "delay_min": 11.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "EUROMED 01101",
+      "train_type": "Otros",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 11.0,
+      "max_delay_min": 11.0,
+      "arrivals": [
+        {
+          "train_name": "EUROMED 01101",
+          "headsign": "Alicante/Alacant",
+          "origin": "Figueres Vilafant",
+          "stop_id": "60911",
+          "stop_name": "Alicante/Alacant",
+          "scheduled_time": "15:40",
+          "estimated_time": "15:51",
+          "delay_min": 11.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "EUROMED 01162",
+      "train_type": "Otros",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 17.0,
+      "max_delay_min": 17.0,
+      "arrivals": [
+        {
+          "train_name": "EUROMED 01162",
+          "headsign": "Barcelona-Sants",
+          "origin": "Alicante/Alacant",
+          "stop_id": "65000",
+          "stop_name": "Valencia-Estaciò Del Nord",
+          "scheduled_time": "15:26",
+          "estimated_time": "15:43",
+          "delay_min": 17.0,
           "status": "retraso_alto"
         }
       ]
@@ -113,16 +113,41 @@
       ]
     },
     {
-      "train_name": "MD 18012",
-      "train_type": "Media Distancia",
-      "total": 2,
-      "unique_trips": 2,
-      "unique_trips_delayed": 2,
-      "delayed": 2,
+      "train_name": "AVE 05131",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 12.0,
-      "max_delay_min": 12.0,
+      "avg_delay_min": 7.0,
+      "max_delay_min": 7.0,
+      "arrivals": [
+        {
+          "train_name": "AVE 05131",
+          "headsign": "Madrid-Chamartín-Clara Campoamor",
+          "origin": "Valencia Joaquin Sorolla",
+          "stop_id": "17000",
+          "stop_name": "Madrid-Chamartín-Clara Campoamor",
+          "scheduled_time": "15:38",
+          "estimated_time": "15:45",
+          "delay_min": 7.0,
+          "status": "retraso_leve"
+        }
+      ]
+    },
+    {
+      "train_name": "MD 18012",
+      "train_type": "Media Distancia",
+      "total": 3,
+      "unique_trips": 2,
+      "unique_trips_delayed": 2,
+      "delayed": 3,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 11.0,
+      "max_delay_min": 11.0,
       "arrivals": [
         {
           "train_name": "MD 18012",
@@ -131,8 +156,19 @@
           "stop_id": "14100",
           "stop_name": "Palencia",
           "scheduled_time": "15:07",
-          "estimated_time": "15:19",
-          "delay_min": 12.0,
+          "estimated_time": "15:18",
+          "delay_min": 11.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "MD 18012",
+          "headsign": "Madrid-Principe Pio",
+          "origin": "Irun",
+          "stop_id": "10600",
+          "stop_name": "Valladolid",
+          "scheduled_time": "16:01",
+          "estimated_time": "16:12",
+          "delay_min": 11.0,
           "status": "retraso_alto"
         },
         {
@@ -142,8 +178,8 @@
           "stop_id": "11000",
           "stop_name": "Venta De Baños",
           "scheduled_time": "15:37",
-          "estimated_time": "15:49",
-          "delay_min": 12.0,
+          "estimated_time": "15:48",
+          "delay_min": 11.0,
           "status": "retraso_alto"
         }
       ]
@@ -151,26 +187,15 @@
     {
       "train_name": "MD 18061",
       "train_type": "Media Distancia",
-      "total": 6,
+      "total": 5,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 6,
+      "delayed": 5,
       "cancelled": 0,
       "delayed_pct": 1.0,
       "avg_delay_min": 6.0,
       "max_delay_min": 6.0,
       "arrivals": [
-        {
-          "train_name": "MD 18061",
-          "headsign": "Irun",
-          "origin": "Madrid-Principe Pio",
-          "stop_id": "11400",
-          "stop_name": "Zumarraga",
-          "scheduled_time": "15:37",
-          "estimated_time": "15:43",
-          "delay_min": 6.0,
-          "status": "retraso_leve"
-        },
         {
           "train_name": "MD 18061",
           "headsign": "Irun",
@@ -197,10 +222,10 @@
           "train_name": "MD 18061",
           "headsign": "Irun",
           "origin": "Madrid-Principe Pio",
-          "stop_id": "11213",
-          "stop_name": "Araia",
-          "scheduled_time": "15:02",
-          "estimated_time": "15:08",
+          "stop_id": "11400",
+          "stop_name": "Zumarraga",
+          "scheduled_time": "15:37",
+          "estimated_time": "15:43",
           "delay_min": 6.0,
           "status": "retraso_leve"
         },
@@ -257,7 +282,7 @@
     {
       "train_name": "Intercity 00279",
       "train_type": "Otros",
-      "total": 1,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -270,21 +295,8 @@
     {
       "train_name": "MD 37279",
       "train_type": "Media Distancia",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "ALVIA 00437",
-      "train_type": "Alvia",
       "total": 2,
-      "unique_trips": 2,
+      "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -372,19 +384,6 @@
       "arrivals": []
     },
     {
-      "train_name": "AVE 03308",
-      "train_type": "AVE",
-      "total": 3,
-      "unique_trips": 2,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "REG.EXP. 15053",
       "train_type": "Regional",
       "total": 1,
@@ -424,19 +423,6 @@
       "arrivals": []
     },
     {
-      "train_name": "AVE 03122",
-      "train_type": "AVE",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "ALVIA 00609",
       "train_type": "Alvia",
       "total": 1,
@@ -452,6 +438,136 @@
     {
       "train_name": "ALVIA 00602",
       "train_type": "Alvia",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVE 02121",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVE 03305",
+      "train_type": "AVE",
+      "total": 2,
+      "unique_trips": 2,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVE 10152",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVANT 08150",
+      "train_type": "Avant",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVE 03122",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVANT 08152",
+      "train_type": "Avant",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVE 03161",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVANT 08153",
+      "train_type": "Avant",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVE 02160",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "ALVIA 02164",
+      "train_type": "Alvia",
       "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
@@ -465,20 +581,7 @@
     {
       "train_name": "ALVIA 00606",
       "train_type": "Alvia",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REG.EXP. 18021",
-      "train_type": "Regional",
-      "total": 2,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -517,7 +620,7 @@
     {
       "train_name": "REGIONAL 35852",
       "train_type": "Regional",
-      "total": 2,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -530,7 +633,7 @@
     {
       "train_name": "REG.EXP. 15510",
       "train_type": "Regional",
-      "total": 5,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -543,7 +646,7 @@
     {
       "train_name": "REG.EXP. 18048",
       "train_type": "Regional",
-      "total": 6,
+      "total": 5,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -556,7 +659,7 @@
     {
       "train_name": "REGIONAL 35752",
       "train_type": "Regional",
-      "total": 4,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -571,6 +674,19 @@
       "train_type": "Otros",
       "total": 3,
       "unique_trips": 3,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVE 03308",
+      "train_type": "AVE",
+      "total": 2,
+      "unique_trips": 2,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -632,19 +748,6 @@
       "arrivals": []
     },
     {
-      "train_name": "MD 18170",
-      "train_type": "Media Distancia",
-      "total": 4,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "MD 17041",
       "train_type": "Media Distancia",
       "total": 5,
@@ -673,7 +776,7 @@
     {
       "train_name": "MD 18330",
       "train_type": "Media Distancia",
-      "total": 2,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -723,10 +826,10 @@
       "arrivals": []
     },
     {
-      "train_name": "EUROMED 01152",
-      "train_type": "Otros",
+      "train_name": "REG.EXP. 14022",
+      "train_type": "Regional",
       "total": 4,
-      "unique_trips": 2,
+      "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -736,10 +839,72 @@
       "arrivals": []
     },
     {
-      "train_name": "Intercity 01463",
-      "train_type": "Otros",
+      "train_name": "REGIONAL 38022",
+      "train_type": "Regional",
+      "total": 4,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REGIONAL 14302",
+      "train_type": "Regional",
       "total": 6,
-      "unique_trips": 3,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "EUROMED 01152",
+      "train_type": "Otros",
+      "total": 2,
+      "unique_trips": 2,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 1.0,
+      "max_delay_min": 1.0,
+      "arrivals": [
+        {
+          "train_name": "EUROMED 01152",
+          "headsign": "Barcelona-Sants",
+          "origin": "Valencia-Estaciò Del Nord",
+          "stop_id": "65300",
+          "stop_name": "Castelló",
+          "scheduled_time": "15:48",
+          "estimated_time": "15:49",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "EUROMED 01152",
+          "headsign": "Figueres Vilafant",
+          "origin": "Valencia-Estaciò Del Nord",
+          "stop_id": "65300",
+          "stop_name": "Castelló",
+          "scheduled_time": "15:48",
+          "estimated_time": "15:49",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        }
+      ]
+    },
+    {
+      "train_name": "REGIONAL 14446",
+      "train_type": "Regional",
+      "total": 8,
+      "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -764,7 +929,7 @@
     {
       "train_name": "REGIONAL 14450",
       "train_type": "Regional",
-      "total": 6,
+      "total": 7,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -853,71 +1018,6 @@
       "arrivals": []
     },
     {
-      "train_name": "REG.EXP. 14022",
-      "train_type": "Regional",
-      "total": 3,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REGIONAL 38022",
-      "train_type": "Regional",
-      "total": 3,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REGIONAL 14302",
-      "train_type": "Regional",
-      "total": 6,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REGIONAL 14446",
-      "train_type": "Regional",
-      "total": 8,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REGIONAL 14475",
-      "train_type": "Regional",
-      "total": 3,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "Intercity 01460",
       "train_type": "Otros",
       "total": 2,
@@ -933,112 +1033,34 @@
     {
       "train_name": "REGIONAL 14476",
       "train_type": "Regional",
+      "total": 4,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REGIONAL 14475",
+      "train_type": "Regional",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "Intercity 01463",
+      "train_type": "Otros",
       "total": 3,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVE 02121",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVE 03305",
-      "train_type": "AVE",
-      "total": 2,
-      "unique_trips": 2,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVE 10152",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVANT 08150",
-      "train_type": "Avant",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVANT 08152",
-      "train_type": "Avant",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVE 03161",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVANT 08153",
-      "train_type": "Avant",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVE 02160",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
+      "unique_trips": 3,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -1050,7 +1072,7 @@
     {
       "train_name": "ALVIA 02124",
       "train_type": "Alvia",
-      "total": 1,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1063,7 +1085,7 @@
     {
       "train_name": "MD 13393",
       "train_type": "Media Distancia",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1115,7 +1137,7 @@
     {
       "train_name": "MD 13032",
       "train_type": "Media Distancia",
-      "total": 3,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1181,6 +1203,32 @@
       "train_name": "AVE 02161",
       "train_type": "AVE",
       "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "MD 13013",
+      "train_type": "Media Distancia",
+      "total": 4,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "MD 13010",
+      "train_type": "Media Distancia",
+      "total": 5,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1295,6 +1343,58 @@
       "arrivals": []
     },
     {
+      "train_name": "MD 13011",
+      "train_type": "Media Distancia",
+      "total": 4,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "MD 35011",
+      "train_type": "Media Distancia",
+      "total": 4,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "PROXIMDAD 38011",
+      "train_type": "Otros",
+      "total": 3,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "PROXIMDAD 13260",
+      "train_type": "Otros",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "MD 13064",
       "train_type": "Media Distancia",
       "total": 1,
@@ -1334,6 +1434,19 @@
       "arrivals": []
     },
     {
+      "train_name": "AVE 02167",
+      "train_type": "AVE",
+      "total": 3,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "AVANT 08140",
       "train_type": "Avant",
       "total": 2,
@@ -1349,7 +1462,20 @@
     {
       "train_name": "AVANT 08151",
       "train_type": "Avant",
-      "total": 2,
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "MD 18170",
+      "train_type": "Media Distancia",
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1386,35 +1512,9 @@
       "arrivals": []
     },
     {
-      "train_name": "AVE 02167",
-      "train_type": "AVE",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "MD 13955",
       "train_type": "Media Distancia",
       "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REG.EXP. 18129",
-      "train_type": "Regional",
-      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1440,7 +1540,7 @@
     {
       "train_name": "REGIONAL 15862",
       "train_type": "Regional",
-      "total": 2,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1479,7 +1579,7 @@
     {
       "train_name": "REGIONAL 15918",
       "train_type": "Regional",
-      "total": 5,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1505,7 +1605,7 @@
     {
       "train_name": "REG.EXP. 15013",
       "train_type": "Regional",
-      "total": 3,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1594,6 +1694,19 @@
       "arrivals": []
     },
     {
+      "train_name": "AVANT 08166",
+      "train_type": "Avant",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "AVE 03143",
       "train_type": "AVE",
       "total": 3,
@@ -1622,7 +1735,7 @@
     {
       "train_name": "MD 15812",
       "train_type": "Media Distancia",
-      "total": 6,
+      "total": 5,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1659,35 +1772,9 @@
       "arrivals": []
     },
     {
-      "train_name": "ALVIA 04114",
-      "train_type": "Alvia",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REGIONAL 17102",
-      "train_type": "Regional",
-      "total": 4,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "REGIONAL 35052",
       "train_type": "Regional",
-      "total": 2,
+      "total": 4,
       "unique_trips": 2,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1735,31 +1822,6 @@
       "avg_delay_min": 0.0,
       "max_delay_min": 0.0,
       "arrivals": []
-    },
-    {
-      "train_name": "AVE 05131",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 5.0,
-      "max_delay_min": 5.0,
-      "arrivals": [
-        {
-          "train_name": "AVE 05131",
-          "headsign": "Madrid-Chamartín-Clara Campoamor",
-          "origin": "Valencia Joaquin Sorolla",
-          "stop_id": "17000",
-          "stop_name": "Madrid-Chamartín-Clara Campoamor",
-          "scheduled_time": "15:38",
-          "estimated_time": "15:43",
-          "delay_min": 5.0,
-          "status": "en_hora"
-        }
-      ]
     },
     {
       "train_name": "AVANT 08359",
@@ -1827,7 +1889,33 @@
       "arrivals": []
     },
     {
+      "train_name": "ALVIA 04114",
+      "train_type": "Alvia",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "AVE 05162",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVE 04565",
       "train_type": "AVE",
       "total": 1,
       "unique_trips": 1,
@@ -1881,7 +1969,7 @@
     {
       "train_name": "REGIONAL 71811",
       "train_type": "Regional",
-      "total": 11,
+      "total": 10,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -1894,7 +1982,7 @@
     {
       "train_name": "PROXIMDAD 38112",
       "train_type": "Otros",
-      "total": 2,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2002,7 +2090,7 @@
     {
       "train_name": "PROXIMDAD 18218",
       "train_type": "Otros",
-      "total": 3,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2016,6 +2104,19 @@
       "train_name": "AVE 05170",
       "train_type": "AVE",
       "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REG.EXP. 18214",
+      "train_type": "Regional",
+      "total": 8,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2106,7 +2207,7 @@
     {
       "train_name": "MD 18306",
       "train_type": "Media Distancia",
-      "total": 7,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2119,7 +2220,7 @@
     {
       "train_name": "PROXIMDAD 38306",
       "train_type": "Otros",
-      "total": 7,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2182,19 +2283,6 @@
       "arrivals": []
     },
     {
-      "train_name": "MD 12684",
-      "train_type": "Media Distancia",
-      "total": 9,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "AVANT 09351",
       "train_type": "Avant",
       "total": 2,
@@ -2236,7 +2324,7 @@
     {
       "train_name": "AVANT 09140",
       "train_type": "Avant",
-      "total": 2,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2288,7 +2376,7 @@
     {
       "train_name": "MD 09142",
       "train_type": "Media Distancia",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2314,7 +2402,7 @@
     {
       "train_name": "REGIONAL 12538",
       "train_type": "Regional",
-      "total": 6,
+      "total": 7,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2340,7 +2428,7 @@
     {
       "train_name": "MD 09143",
       "train_type": "Media Distancia",
-      "total": 4,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2366,7 +2454,7 @@
     {
       "train_name": "MD 18308",
       "train_type": "Media Distancia",
-      "total": 6,
+      "total": 5,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2444,7 +2532,7 @@
     {
       "train_name": "AVE 05143",
       "train_type": "AVE",
-      "total": 1,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2458,6 +2546,19 @@
       "train_name": "AVE 05142",
       "train_type": "AVE",
       "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "MD 14405",
+      "train_type": "Media Distancia",
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2598,58 +2699,6 @@
       "arrivals": []
     },
     {
-      "train_name": "AVANT 08764",
-      "train_type": "Avant",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "PROXIMDAD 13167",
-      "train_type": "Otros",
-      "total": 6,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVE 10503",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVE 10022",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "REGIONAL 12455",
       "train_type": "Regional",
       "total": 5,
@@ -2728,6 +2777,45 @@
       "arrivals": []
     },
     {
+      "train_name": "PROXIMDAD 13167",
+      "train_type": "Otros",
+      "total": 7,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVE 10503",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "AVE 10022",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "PROXIMDAD 14516",
       "train_type": "Otros",
       "total": 3,
@@ -2743,7 +2831,7 @@
     {
       "train_name": "REGIONAL 12100",
       "train_type": "Regional",
-      "total": 5,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2767,9 +2855,35 @@
       "arrivals": []
     },
     {
+      "train_name": "REG.EXP. 12607",
+      "train_type": "Regional",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "REG.EXP. 12608",
       "train_type": "Regional",
-      "total": 7,
+      "total": 6,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "MD 12684",
+      "train_type": "Media Distancia",
+      "total": 8,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2782,85 +2896,7 @@
     {
       "train_name": "MD 12696",
       "train_type": "Media Distancia",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "MD 13010",
-      "train_type": "Media Distancia",
-      "total": 4,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "MD 13013",
-      "train_type": "Media Distancia",
-      "total": 4,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "MD 13011",
-      "train_type": "Media Distancia",
-      "total": 4,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "MD 35011",
-      "train_type": "Media Distancia",
-      "total": 4,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "PROXIMDAD 38011",
-      "train_type": "Otros",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "PROXIMDAD 13258",
-      "train_type": "Otros",
-      "total": 3,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2873,7 +2909,20 @@
     {
       "train_name": "MD 13015",
       "train_type": "Media Distancia",
-      "total": 3,
+      "total": 4,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "PROXIMDAD 13258",
+      "train_type": "Otros",
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2897,22 +2946,9 @@
       "arrivals": []
     },
     {
-      "train_name": "PROXIMDAD 13260",
-      "train_type": "Otros",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "MD 13905",
       "train_type": "Media Distancia",
-      "total": 3,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2924,45 +2960,6 @@
     },
     {
       "train_name": "REGIONAL 14443",
-      "train_type": "Regional",
-      "total": 5,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "MD 14405",
-      "train_type": "Media Distancia",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REGIONAL 14416",
-      "train_type": "Regional",
-      "total": 3,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REGIONAL 35416",
       "train_type": "Regional",
       "total": 4,
       "unique_trips": 1,
@@ -3001,9 +2998,61 @@
       "arrivals": []
     },
     {
+      "train_name": "REGIONAL 14416",
+      "train_type": "Regional",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REGIONAL 35416",
+      "train_type": "Regional",
+      "total": 3,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "REG.EXP. 15011",
       "train_type": "Regional",
       "total": 6,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REG.EXP. 15052",
+      "train_type": "Regional",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REG.EXP. 15043",
+      "train_type": "Regional",
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3027,7 +3076,7 @@
       "arrivals": []
     },
     {
-      "train_name": "REG.EXP. 15052",
+      "train_name": "REG.EXP. 18129",
       "train_type": "Regional",
       "total": 3,
       "unique_trips": 1,
@@ -3040,9 +3089,9 @@
       "arrivals": []
     },
     {
-      "train_name": "REG.EXP. 15043",
+      "train_name": "REG.EXP. 17050",
       "train_type": "Regional",
-      "total": 2,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3079,9 +3128,9 @@
       "arrivals": []
     },
     {
-      "train_name": "REG.EXP. 17050",
-      "train_type": "Regional",
-      "total": 2,
+      "train_name": "MD 15782",
+      "train_type": "Media Distancia",
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3120,7 +3169,7 @@
     {
       "train_name": "REGIONAL 15609",
       "train_type": "Regional",
-      "total": 3,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3157,22 +3206,9 @@
       "arrivals": []
     },
     {
-      "train_name": "MD 15782",
-      "train_type": "Media Distancia",
-      "total": 4,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REGIONAL 15916",
+      "train_name": "REGIONAL 15759",
       "train_type": "Regional",
-      "total": 11,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3185,6 +3221,45 @@
     {
       "train_name": "MD 15868",
       "train_type": "Media Distancia",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REGIONAL 15916",
+      "train_type": "Regional",
+      "total": 10,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REGIONAL 15870",
+      "train_type": "Regional",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REGIONAL 30916",
+      "train_type": "Regional",
       "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
@@ -3198,7 +3273,7 @@
     {
       "train_name": "REG.EXP. 17012",
       "train_type": "Regional",
-      "total": 4,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3211,7 +3286,7 @@
     {
       "train_name": "PROXIMDAD 38012",
       "train_type": "Otros",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3250,7 +3325,7 @@
     {
       "train_name": "MD 17907",
       "train_type": "Media Distancia",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3263,6 +3338,32 @@
     {
       "train_name": "MD 35807",
       "train_type": "Media Distancia",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "MD 18040",
+      "train_type": "Media Distancia",
+      "total": 6,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REGIONAL 17102",
+      "train_type": "Regional",
       "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
@@ -3276,7 +3377,20 @@
     {
       "train_name": "REGIONAL 17104",
       "train_type": "Regional",
-      "total": 8,
+      "total": 9,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "MD 18004",
+      "train_type": "Media Distancia",
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3289,7 +3403,7 @@
     {
       "train_name": "REGIONAL 17161",
       "train_type": "Regional",
-      "total": 10,
+      "total": 8,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3341,19 +3455,6 @@
     {
       "train_name": "REG.EXP. 17221",
       "train_type": "Regional",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "MD 18004",
-      "train_type": "Media Distancia",
       "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
@@ -3367,7 +3468,7 @@
     {
       "train_name": "REG.EXP. 18777",
       "train_type": "Regional",
-      "total": 3,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3380,7 +3481,7 @@
     {
       "train_name": "MD 17902",
       "train_type": "Media Distancia",
-      "total": 8,
+      "total": 10,
       "unique_trips": 2,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3393,7 +3494,7 @@
     {
       "train_name": "MD 35802",
       "train_type": "Media Distancia",
-      "total": 4,
+      "total": 5,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3406,7 +3507,7 @@
     {
       "train_name": "REG.EXP. 18770",
       "train_type": "Regional",
-      "total": 2,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3419,7 +3520,7 @@
     {
       "train_name": "MD 18014",
       "train_type": "Media Distancia",
-      "total": 14,
+      "total": 12,
       "unique_trips": 2,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3432,7 +3533,20 @@
     {
       "train_name": "REG.EXP. 18029",
       "train_type": "Regional",
-      "total": 8,
+      "total": 7,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "REG.EXP. 18021",
+      "train_type": "Regional",
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3445,20 +3559,7 @@
     {
       "train_name": "MD 18035",
       "train_type": "Media Distancia",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "MD 18040",
-      "train_type": "Media Distancia",
-      "total": 5,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3471,7 +3572,7 @@
     {
       "train_name": "REG.EXP. 18073",
       "train_type": "Regional",
-      "total": 9,
+      "total": 8,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3484,7 +3585,7 @@
     {
       "train_name": "REG.EXP. 18076",
       "train_type": "Regional",
-      "total": 5,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3497,7 +3598,7 @@
     {
       "train_name": "REG.EXP. 18127",
       "train_type": "Regional",
-      "total": 5,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3521,22 +3622,9 @@
       "arrivals": []
     },
     {
-      "train_name": "REG.EXP. 18214",
-      "train_type": "Regional",
-      "total": 8,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "MD 18504",
       "train_type": "Media Distancia",
-      "total": 2,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3588,7 +3676,7 @@
     {
       "train_name": "MD 35083",
       "train_type": "Media Distancia",
-      "total": 2,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3640,7 +3728,7 @@
     {
       "train_name": "REGIONAL 71802",
       "train_type": "Regional",
-      "total": 18,
+      "total": 17,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3653,7 +3741,7 @@
     {
       "train_name": "REGIONAL 71813",
       "train_type": "Regional",
-      "total": 12,
+      "total": 13,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3666,7 +3754,7 @@
     {
       "train_name": "REGIONAL 71822",
       "train_type": "Regional",
-      "total": 12,
+      "total": 11,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3679,7 +3767,7 @@
     {
       "train_name": "REGIONAL 71832",
       "train_type": "Regional",
-      "total": 10,
+      "total": 11,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3692,7 +3780,7 @@
     {
       "train_name": "REGIONAL 71833",
       "train_type": "Regional",
-      "total": 7,
+      "total": 8,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3705,7 +3793,7 @@
     {
       "train_name": "REGIONAL 71852",
       "train_type": "Regional",
-      "total": 2,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
