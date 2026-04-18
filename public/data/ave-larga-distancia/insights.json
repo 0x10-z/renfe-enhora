@@ -1,13 +1,46 @@
 {
-  "generated_at": "2026-04-18T18:10",
+  "generated_at": "2026-04-18T18:15",
   "insights": [
     {
-      "id": "B",
-      "text": "El mayor retraso en este momento es de 23 minutos — tren desde Barcelona-Sants con parada en Valencia-Estaciò Del Nord",
+      "id": "J",
+      "text": "Anomalía en trenes Media Distancia: los retrasos están a 2.3× su media histórica (30% hoy vs 13% habitual). Basado en 2567 registros.",
+      "severity": "high",
+      "meta": {
+        "train_type": "Media Distancia"
+      }
+    },
+    {
+      "id": "J",
+      "text": "Anomalía en trenes Otros: los retrasos están a 4.6× su media histórica (34% hoy vs 7% habitual). Basado en 2503 registros.",
+      "severity": "high",
+      "meta": {
+        "train_type": "Otros"
+      }
+    },
+    {
+      "id": "A",
+      "text": "A las 18h se están acumulando los retrasos — 117 trenes afectados",
       "severity": "warn",
       "meta": {
-        "station_id": "65000",
-        "station_name": "Valencia-Estaciò Del Nord"
+        "hour": 18
+      }
+    },
+    {
+      "id": "B",
+      "text": "El mayor retraso en este momento es de 31 minutos — tren desde Cordoba con parada en Benicarló-Peñíscola",
+      "severity": "bad",
+      "meta": {
+        "station_id": "65311",
+        "station_name": "Benicarló-Peñíscola"
+      }
+    },
+    {
+      "id": "C",
+      "text": "Elche Parque/Elx Parc es la estación más afectada ahora mismo: 3 de 3 trenes con retraso",
+      "severity": "bad",
+      "meta": {
+        "station_id": "62103",
+        "station_name": "Elche Parque/Elx Parc"
       }
     },
     {
@@ -17,8 +50,8 @@
     },
     {
       "id": "E",
-      "text": "Hasta las 18:10 hay un 99% menos retrasos de lo habitual para un sábado (0% vs media histórica 12%)",
-      "severity": "ok"
+      "text": "Hasta las 18:15 hay un 62% más retrasos de lo habitual para un sábado (20% vs media histórica 12%)",
+      "severity": "bad"
     },
     {
       "id": "F",
@@ -34,11 +67,6 @@
       "id": "H",
       "text": "La semana del 23/03 fue la peor del último mes con un 22% de trenes con retraso de media",
       "severity": "info"
-    },
-    {
-      "id": "I",
-      "text": "Hasta las 18:10, este sábado va excepcionalmente bien — muy por debajo de la media histórica (0% vs 12% habitual)",
-      "severity": "ok"
     }
   ]
 }
