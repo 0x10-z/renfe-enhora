@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-31T21:50:04+02:00",
+  "generated_at": "2026-05-31T21:55:04+02:00",
   "routes": [
     {
       "train_name": "ALVIA 00295",
@@ -28,10 +28,10 @@
           "train_name": "ALVIA 00295",
           "headsign": "Madrid-Chamartín-Clara Campoamor",
           "origin": "Badajoz",
-          "stop_id": "35001",
-          "stop_name": "Leganés",
-          "scheduled_time": "21:59",
-          "estimated_time": "22:08",
+          "stop_id": "17000",
+          "stop_name": "Madrid-Chamartín-Clara Campoamor",
+          "scheduled_time": "22:40",
+          "estimated_time": "22:49",
           "delay_min": 9.0,
           "status": "retraso_leve"
         },
@@ -39,10 +39,10 @@
           "train_name": "ALVIA 00295",
           "headsign": "Madrid-Chamartín-Clara Campoamor",
           "origin": "Badajoz",
-          "stop_id": "17000",
-          "stop_name": "Madrid-Chamartín-Clara Campoamor",
-          "scheduled_time": "22:40",
-          "estimated_time": "22:49",
+          "stop_id": "35001",
+          "stop_name": "Leganés",
+          "scheduled_time": "21:59",
+          "estimated_time": "22:08",
           "delay_min": 9.0,
           "status": "retraso_leve"
         }
@@ -51,14 +51,14 @@
     {
       "train_name": "Intercity 00279",
       "train_type": "Otros",
-      "total": 1,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 1,
+      "delayed": 2,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 24.0,
-      "max_delay_min": 24.0,
+      "avg_delay_min": 25.0,
+      "max_delay_min": 25.0,
       "arrivals": [
         {
           "train_name": "Intercity 00279",
@@ -67,8 +67,19 @@
           "stop_id": "18000",
           "stop_name": "Madrid-Atocha Cercanías",
           "scheduled_time": "22:34",
-          "estimated_time": "22:58",
-          "delay_min": 24.0,
+          "estimated_time": "22:59",
+          "delay_min": 25.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "Intercity 00279",
+          "headsign": "Madrid-Chamartín-Clara Campoamor",
+          "origin": "Almería",
+          "stop_id": "17000",
+          "stop_name": "Madrid-Chamartín-Clara Campoamor",
+          "scheduled_time": "22:52",
+          "estimated_time": "23:17",
+          "delay_min": 25.0,
           "status": "retraso_alto"
         }
       ]
@@ -82,8 +93,8 @@
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 41.0,
-      "max_delay_min": 41.0,
+      "avg_delay_min": 43.0,
+      "max_delay_min": 43.0,
       "arrivals": [
         {
           "train_name": "ALVIA 04176",
@@ -92,8 +103,8 @@
           "stop_id": "17000",
           "stop_name": "Madrid-Chamartín-Clara Campoamor",
           "scheduled_time": "22:20",
-          "estimated_time": "23:01",
-          "delay_min": 41.0,
+          "estimated_time": "23:03",
+          "delay_min": 43.0,
           "status": "retraso_alto"
         }
       ]
@@ -132,8 +143,8 @@
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 13.0,
-      "max_delay_min": 13.0,
+      "avg_delay_min": 18.0,
+      "max_delay_min": 18.0,
       "arrivals": [
         {
           "train_name": "Intercity 01382",
@@ -142,9 +153,45 @@
           "stop_id": "71801",
           "stop_name": "Barcelona-Sants",
           "scheduled_time": "22:13",
-          "estimated_time": "22:26",
-          "delay_min": 13.0,
+          "estimated_time": "22:31",
+          "delay_min": 18.0,
           "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "REG.EXP. 15024",
+      "train_type": "Regional",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 2,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 7.0,
+      "max_delay_min": 7.0,
+      "arrivals": [
+        {
+          "train_name": "REG.EXP. 15024",
+          "headsign": "Barcelona Estació de França",
+          "origin": "Reus",
+          "stop_id": "71801",
+          "stop_name": "Barcelona-Sants",
+          "scheduled_time": "22:55",
+          "estimated_time": "23:02",
+          "delay_min": 7.0,
+          "status": "retraso_leve"
+        },
+        {
+          "train_name": "REG.EXP. 15024",
+          "headsign": "Barcelona Estació de França",
+          "origin": "Reus",
+          "stop_id": "71700",
+          "stop_name": "Vilanova i la Geltrú",
+          "scheduled_time": "22:43",
+          "estimated_time": "22:50",
+          "delay_min": 7.0,
+          "status": "retraso_leve"
         }
       ]
     },
@@ -169,42 +216,6 @@
           "scheduled_time": "22:34",
           "estimated_time": "22:55",
           "delay_min": 21.0,
-          "status": "retraso_alto"
-        }
-      ]
-    },
-    {
-      "train_name": "Intercity 01402",
-      "train_type": "Otros",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 2,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 12.0,
-      "max_delay_min": 12.0,
-      "arrivals": [
-        {
-          "train_name": "Intercity 01402",
-          "headsign": "Barcelona-Sants",
-          "origin": "Alicante/Alacant-Terminal",
-          "stop_id": "04104",
-          "stop_name": "Camp de Tarragona",
-          "scheduled_time": "22:47",
-          "estimated_time": "22:59",
-          "delay_min": 12.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "Intercity 01402",
-          "headsign": "Barcelona-Sants",
-          "origin": "Alicante/Alacant-Terminal",
-          "stop_id": "65422",
-          "stop_name": "Cambrils",
-          "scheduled_time": "22:21",
-          "estimated_time": "22:33",
-          "delay_min": 12.0,
           "status": "retraso_alto"
         }
       ]
@@ -254,8 +265,8 @@
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 22.0,
-      "max_delay_min": 22.0,
+      "avg_delay_min": 23.0,
+      "max_delay_min": 23.0,
       "arrivals": [
         {
           "train_name": "Intercity 00632",
@@ -264,8 +275,44 @@
           "stop_id": "30100",
           "stop_name": "Salamanca",
           "scheduled_time": "22:07",
-          "estimated_time": "22:29",
-          "delay_min": 22.0,
+          "estimated_time": "22:30",
+          "delay_min": 23.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "ALVIA 04909",
+      "train_type": "Alvia",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 2,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 13.0,
+      "max_delay_min": 13.0,
+      "arrivals": [
+        {
+          "train_name": "ALVIA 04909",
+          "headsign": "Salamanca",
+          "origin": "Madrid-Chamartín-Clara Campoamor",
+          "stop_id": "30100",
+          "stop_name": "Salamanca",
+          "scheduled_time": "22:51",
+          "estimated_time": "23:04",
+          "delay_min": 13.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "ALVIA 04909",
+          "headsign": "Salamanca",
+          "origin": "Madrid-Chamartín-Clara Campoamor",
+          "stop_id": "08240",
+          "stop_name": "Medina del Campo AV",
+          "scheduled_time": "22:06",
+          "estimated_time": "22:19",
+          "delay_min": 13.0,
           "status": "retraso_alto"
         }
       ]
@@ -279,8 +326,8 @@
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 20.0,
-      "max_delay_min": 20.0,
+      "avg_delay_min": 17.0,
+      "max_delay_min": 17.0,
       "arrivals": [
         {
           "train_name": "AVE 02193",
@@ -289,8 +336,8 @@
           "stop_id": "60000",
           "stop_name": "Madrid-Puerta de Atocha-Almudena Grandes",
           "scheduled_time": "21:58",
-          "estimated_time": "22:18",
-          "delay_min": 20.0,
+          "estimated_time": "22:15",
+          "delay_min": 17.0,
           "status": "retraso_alto"
         }
       ]
@@ -304,8 +351,8 @@
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 17.0,
-      "max_delay_min": 17.0,
+      "avg_delay_min": 16.0,
+      "max_delay_min": 16.0,
       "arrivals": [
         {
           "train_name": "AVE 02191",
@@ -314,8 +361,8 @@
           "stop_id": "60000",
           "stop_name": "Madrid-Puerta de Atocha-Almudena Grandes",
           "scheduled_time": "22:10",
-          "estimated_time": "22:27",
-          "delay_min": 17.0,
+          "estimated_time": "22:26",
+          "delay_min": 16.0,
           "status": "retraso_alto"
         }
       ]
@@ -396,6 +443,31 @@
       ]
     },
     {
+      "train_name": "AVE 03190",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 8.0,
+      "max_delay_min": 8.0,
+      "arrivals": [
+        {
+          "train_name": "AVE 03190",
+          "headsign": "Madrid-Puerta de Atocha-Almudena Grandes",
+          "origin": "Barcelona-Sants",
+          "stop_id": "60000",
+          "stop_name": "Madrid-Puerta de Atocha-Almudena Grandes",
+          "scheduled_time": "22:27",
+          "estimated_time": "22:35",
+          "delay_min": 8.0,
+          "status": "retraso_leve"
+        }
+      ]
+    },
+    {
       "train_name": "ALVIA 02175",
       "train_type": "Alvia",
       "total": 1,
@@ -404,8 +476,8 @@
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 35.0,
-      "max_delay_min": 35.0,
+      "avg_delay_min": 34.0,
+      "max_delay_min": 34.0,
       "arrivals": [
         {
           "train_name": "ALVIA 02175",
@@ -414,34 +486,34 @@
           "stop_id": "60000",
           "stop_name": "Madrid-Puerta de Atocha-Almudena Grandes",
           "scheduled_time": "22:36",
-          "estimated_time": "23:11",
-          "delay_min": 35.0,
+          "estimated_time": "23:10",
+          "delay_min": 34.0,
           "status": "retraso_alto"
         }
       ]
     },
     {
-      "train_name": "EUROMED 01201",
-      "train_type": "Otros",
+      "train_name": "AVANT 08211",
+      "train_type": "Avant",
       "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 6.0,
-      "max_delay_min": 6.0,
+      "avg_delay_min": 17.0,
+      "max_delay_min": 17.0,
       "arrivals": [
         {
-          "train_name": "EUROMED 01201",
-          "headsign": "València-Estació del Nord",
-          "origin": "Barcelona-Sants",
-          "stop_id": "65300",
-          "stop_name": "Castelló de la Plana",
-          "scheduled_time": "22:28",
-          "estimated_time": "22:34",
-          "delay_min": 6.0,
-          "status": "retraso_leve"
+          "train_name": "AVANT 08211",
+          "headsign": "Madrid-Puerta de Atocha-Almudena Grandes",
+          "origin": "Puertollano",
+          "stop_id": "60000",
+          "stop_name": "Madrid-Puerta de Atocha-Almudena Grandes",
+          "scheduled_time": "22:51",
+          "estimated_time": "23:08",
+          "delay_min": 17.0,
+          "status": "retraso_alto"
         }
       ]
     },
@@ -471,16 +543,52 @@
       ]
     },
     {
-      "train_name": "AVANT 08195",
-      "train_type": "Avant",
+      "train_name": "Intercity 01402",
+      "train_type": "Otros",
       "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
       "delayed": 2,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 13.0,
-      "max_delay_min": 13.0,
+      "avg_delay_min": 12.0,
+      "max_delay_min": 12.0,
+      "arrivals": [
+        {
+          "train_name": "Intercity 01402",
+          "headsign": "Barcelona-Sants",
+          "origin": "Alicante/Alacant-Terminal",
+          "stop_id": "65422",
+          "stop_name": "Cambrils",
+          "scheduled_time": "22:21",
+          "estimated_time": "22:33",
+          "delay_min": 12.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "Intercity 01402",
+          "headsign": "Barcelona-Sants",
+          "origin": "Alicante/Alacant-Terminal",
+          "stop_id": "04104",
+          "stop_name": "Camp de Tarragona",
+          "scheduled_time": "22:47",
+          "estimated_time": "22:59",
+          "delay_min": 12.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "AVANT 08195",
+      "train_type": "Avant",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 14.0,
+      "max_delay_min": 14.0,
       "arrivals": [
         {
           "train_name": "AVANT 08195",
@@ -489,78 +597,34 @@
           "stop_id": "54413",
           "stop_name": "Málaga María Zambrano",
           "scheduled_time": "22:26",
-          "estimated_time": "22:39",
-          "delay_min": 13.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "AVANT 08195",
-          "headsign": "Málaga María Zambrano",
-          "origin": "Sevilla-Santa Justa",
-          "stop_id": "02003",
-          "stop_name": "Antequera-Santa Ana",
-          "scheduled_time": "21:54",
-          "estimated_time": "22:07",
-          "delay_min": 13.0,
+          "estimated_time": "22:40",
+          "delay_min": 14.0,
           "status": "retraso_alto"
         }
       ]
     },
     {
-      "train_name": "MD 13073",
-      "train_type": "Media Distancia",
-      "total": 4,
+      "train_name": "AVE 02192",
+      "train_type": "AVE",
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 4,
+      "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 7.0,
-      "max_delay_min": 7.0,
+      "avg_delay_min": 18.0,
+      "max_delay_min": 18.0,
       "arrivals": [
         {
-          "train_name": "MD 13073",
-          "headsign": "Cádiz",
-          "origin": "Jaén",
-          "stop_id": "51003",
-          "stop_name": "Sevilla-Santa Justa",
-          "scheduled_time": "21:53",
-          "estimated_time": "22:00",
-          "delay_min": 7.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "MD 13073",
-          "headsign": "Cádiz",
-          "origin": "Jaén",
-          "stop_id": "51200",
-          "stop_name": "Utrera",
-          "scheduled_time": "22:32",
-          "estimated_time": "22:39",
-          "delay_min": 7.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "MD 13073",
-          "headsign": "Cádiz",
-          "origin": "Jaén",
-          "stop_id": "51103",
-          "stop_name": "Dos Hermanas",
-          "scheduled_time": "22:22",
-          "estimated_time": "22:29",
-          "delay_min": 7.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "MD 13073",
-          "headsign": "Cádiz",
-          "origin": "Jaén",
-          "stop_id": "51100",
-          "stop_name": "San Bernardo",
-          "scheduled_time": "22:13",
-          "estimated_time": "22:20",
-          "delay_min": 7.0,
-          "status": "retraso_leve"
+          "train_name": "AVE 02192",
+          "headsign": "Málaga María Zambrano",
+          "origin": "Madrid-Puerta de Atocha-Almudena Grandes",
+          "stop_id": "54413",
+          "stop_name": "Málaga María Zambrano",
+          "scheduled_time": "22:55",
+          "estimated_time": "23:13",
+          "delay_min": 18.0,
+          "status": "retraso_alto"
         }
       ]
     },
@@ -615,6 +679,31 @@
       ]
     },
     {
+      "train_name": "AVANT 08704",
+      "train_type": "Avant",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 6.0,
+      "max_delay_min": 6.0,
+      "arrivals": [
+        {
+          "train_name": "AVANT 08704",
+          "headsign": "Sevilla-Santa Justa",
+          "origin": "Málaga María Zambrano",
+          "stop_id": "51003",
+          "stop_name": "Sevilla-Santa Justa",
+          "scheduled_time": "22:51",
+          "estimated_time": "22:57",
+          "delay_min": 6.0,
+          "status": "retraso_leve"
+        }
+      ]
+    },
+    {
       "train_name": "MD 13031",
       "train_type": "Media Distancia",
       "total": 1,
@@ -623,8 +712,8 @@
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 20.0,
-      "max_delay_min": 20.0,
+      "avg_delay_min": 19.0,
+      "max_delay_min": 19.0,
       "arrivals": [
         {
           "train_name": "MD 13031",
@@ -633,8 +722,8 @@
           "stop_id": "50500",
           "stop_name": "Córdoba-Julio Anguita",
           "scheduled_time": "22:08",
-          "estimated_time": "22:28",
-          "delay_min": 20.0,
+          "estimated_time": "22:27",
+          "delay_min": 19.0,
           "status": "retraso_alto"
         }
       ]
@@ -642,14 +731,14 @@
     {
       "train_name": "AVE 02202",
       "train_type": "AVE",
-      "total": 1,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 1,
+      "delayed": 2,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 12.0,
-      "max_delay_min": 12.0,
+      "avg_delay_min": 14.0,
+      "max_delay_min": 14.0,
       "arrivals": [
         {
           "train_name": "AVE 02202",
@@ -658,8 +747,19 @@
           "stop_id": "50500",
           "stop_name": "Córdoba-Julio Anguita",
           "scheduled_time": "22:19",
-          "estimated_time": "22:31",
-          "delay_min": 12.0,
+          "estimated_time": "22:33",
+          "delay_min": 14.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "AVE 02202",
+          "headsign": "Málaga María Zambrano",
+          "origin": "Madrid-Puerta de Atocha-Almudena Grandes",
+          "stop_id": "02002",
+          "stop_name": "Puente Genil-Herrera",
+          "scheduled_time": "22:53",
+          "estimated_time": "23:07",
+          "delay_min": 14.0,
           "status": "retraso_alto"
         }
       ]
@@ -750,10 +850,10 @@
     {
       "train_name": "MD 15792",
       "train_type": "Media Distancia",
-      "total": 5,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 5,
+      "delayed": 6,
       "cancelled": 0,
       "delayed_pct": 1.0,
       "avg_delay_min": 9.0,
@@ -767,6 +867,17 @@
           "stop_name": "Girona",
           "scheduled_time": "22:21",
           "estimated_time": "22:30",
+          "delay_min": 9.0,
+          "status": "retraso_leve"
+        },
+        {
+          "train_name": "MD 15792",
+          "headsign": "Barcelona-Sants",
+          "origin": "Portbou",
+          "stop_id": "79104",
+          "stop_name": "Sant Celoni",
+          "scheduled_time": "22:54",
+          "estimated_time": "23:03",
           "delay_min": 9.0,
           "status": "retraso_leve"
         },
@@ -817,41 +928,16 @@
       ]
     },
     {
-      "train_name": "AVE 03201",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 1,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 7.0,
-      "max_delay_min": 7.0,
-      "arrivals": [
-        {
-          "train_name": "AVE 03201",
-          "headsign": "Barcelona-Sants",
-          "origin": "Madrid-Puerta de Atocha-Almudena Grandes",
-          "stop_id": "04040",
-          "stop_name": "Zaragoza Delicias",
-          "scheduled_time": "22:06",
-          "estimated_time": "22:13",
-          "delay_min": 7.0,
-          "status": "retraso_leve"
-        }
-      ]
-    },
-    {
       "train_name": "MD 13910",
       "train_type": "Media Distancia",
-      "total": 6,
+      "total": 4,
       "unique_trips": 3,
       "unique_trips_delayed": 3,
-      "delayed": 6,
+      "delayed": 4,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 17.0,
-      "max_delay_min": 17.0,
+      "avg_delay_min": 36.0,
+      "max_delay_min": 36.0,
       "arrivals": [
         {
           "train_name": "MD 13910",
@@ -860,8 +946,8 @@
           "stop_id": "02003",
           "stop_name": "Antequera-Santa Ana",
           "scheduled_time": "22:18",
-          "estimated_time": "22:35",
-          "delay_min": 17.0,
+          "estimated_time": "22:54",
+          "delay_min": 36.0,
           "status": "retraso_alto"
         },
         {
@@ -871,30 +957,8 @@
           "stop_id": "02003",
           "stop_name": "Antequera-Santa Ana",
           "scheduled_time": "22:18",
-          "estimated_time": "22:35",
-          "delay_min": 17.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "MD 13910",
-          "headsign": "Málaga María Zambrano",
-          "origin": "Sevilla-Santa Justa",
-          "stop_id": "01009",
-          "stop_name": "Pedrera",
-          "scheduled_time": "21:54",
-          "estimated_time": "22:11",
-          "delay_min": 17.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "MD 13910",
-          "headsign": "Bobadilla",
-          "origin": "Sevilla-Santa Justa",
-          "stop_id": "01009",
-          "stop_name": "Pedrera",
-          "scheduled_time": "21:54",
-          "estimated_time": "22:11",
-          "delay_min": 17.0,
+          "estimated_time": "22:54",
+          "delay_min": 36.0,
           "status": "retraso_alto"
         },
         {
@@ -904,8 +968,8 @@
           "stop_id": "54400",
           "stop_name": "Bobadilla",
           "scheduled_time": "22:13",
-          "estimated_time": "22:30",
-          "delay_min": 17.0,
+          "estimated_time": "22:49",
+          "delay_min": 36.0,
           "status": "retraso_alto"
         },
         {
@@ -915,8 +979,8 @@
           "stop_id": "54400",
           "stop_name": "Bobadilla",
           "scheduled_time": "22:48",
-          "estimated_time": "23:05",
-          "delay_min": 17.0,
+          "estimated_time": "23:24",
+          "delay_min": 36.0,
           "status": "retraso_alto"
         }
       ]
@@ -930,8 +994,8 @@
       "delayed": 2,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 23.0,
-      "max_delay_min": 23.0,
+      "avg_delay_min": 25.0,
+      "max_delay_min": 25.0,
       "arrivals": [
         {
           "train_name": "AVE 05192",
@@ -940,8 +1004,8 @@
           "stop_id": "03309",
           "stop_name": "Villena Alta Velocidad",
           "scheduled_time": "21:59",
-          "estimated_time": "22:22",
-          "delay_min": 23.0,
+          "estimated_time": "22:24",
+          "delay_min": 25.0,
           "status": "retraso_alto"
         },
         {
@@ -951,8 +1015,8 @@
           "stop_id": "60911",
           "stop_name": "Alicante/Alacant-Terminal",
           "scheduled_time": "22:20",
-          "estimated_time": "22:43",
-          "delay_min": 23.0,
+          "estimated_time": "22:45",
+          "delay_min": 25.0,
           "status": "retraso_alto"
         }
       ]
@@ -960,14 +1024,14 @@
     {
       "train_name": "ALVIA 04140",
       "train_type": "Alvia",
-      "total": 1,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 1,
+      "delayed": 2,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 13.0,
-      "max_delay_min": 13.0,
+      "avg_delay_min": 12.0,
+      "max_delay_min": 12.0,
       "arrivals": [
         {
           "train_name": "ALVIA 04140",
@@ -976,8 +1040,19 @@
           "stop_id": "03309",
           "stop_name": "Villena Alta Velocidad",
           "scheduled_time": "22:26",
-          "estimated_time": "22:39",
-          "delay_min": 13.0,
+          "estimated_time": "22:38",
+          "delay_min": 12.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "ALVIA 04140",
+          "headsign": "Alicante/Alacant-Terminal",
+          "origin": "Gijón-Sanz Crespo",
+          "stop_id": "60911",
+          "stop_name": "Alicante/Alacant-Terminal",
+          "scheduled_time": "22:52",
+          "estimated_time": "23:04",
+          "delay_min": 12.0,
           "status": "retraso_alto"
         }
       ]
@@ -985,10 +1060,10 @@
     {
       "train_name": "ALVIA 04167",
       "train_type": "Alvia",
-      "total": 1,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 1,
+      "delayed": 2,
       "cancelled": 0,
       "delayed_pct": 1.0,
       "avg_delay_min": 36.0,
@@ -1004,53 +1079,17 @@
           "estimated_time": "22:55",
           "delay_min": 36.0,
           "status": "retraso_alto"
-        }
-      ]
-    },
-    {
-      "train_name": "ALVIA 04181",
-      "train_type": "Alvia",
-      "total": 3,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 3,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 7.0,
-      "max_delay_min": 7.0,
-      "arrivals": [
-        {
-          "train_name": "ALVIA 04181",
-          "headsign": "Gijón-Sanz Crespo",
-          "origin": "Alicante/Alacant-Terminal",
-          "stop_id": "15203",
-          "stop_name": "Mieres-Puente",
-          "scheduled_time": "22:05",
-          "estimated_time": "22:12",
-          "delay_min": 7.0,
-          "status": "retraso_leve"
         },
         {
-          "train_name": "ALVIA 04181",
-          "headsign": "Gijón-Sanz Crespo",
-          "origin": "Alicante/Alacant-Terminal",
-          "stop_id": "15211",
-          "stop_name": "Oviedo",
-          "scheduled_time": "22:22",
-          "estimated_time": "22:29",
-          "delay_min": 7.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "ALVIA 04181",
-          "headsign": "Gijón-Sanz Crespo",
-          "origin": "Alicante/Alacant-Terminal",
-          "stop_id": "15410",
-          "stop_name": "Gijón-Sanz Crespo",
-          "scheduled_time": "22:50",
-          "estimated_time": "22:57",
-          "delay_min": 7.0,
-          "status": "retraso_leve"
+          "train_name": "ALVIA 04167",
+          "headsign": "Irun",
+          "origin": "Madrid-Chamartín-Clara Campoamor",
+          "stop_id": "11511",
+          "stop_name": "San Sebastián-Donostia",
+          "scheduled_time": "22:52",
+          "estimated_time": "23:28",
+          "delay_min": 36.0,
+          "status": "retraso_alto"
         }
       ]
     },
@@ -1080,12 +1119,48 @@
       ]
     },
     {
-      "train_name": "REGIONAL 12554",
-      "train_type": "Regional",
-      "total": 4,
+      "train_name": "AVE 04395",
+      "train_type": "AVE",
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 4,
+      "delayed": 2,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 12.0,
+      "max_delay_min": 12.0,
+      "arrivals": [
+        {
+          "train_name": "AVE 04395",
+          "headsign": "A Coruña",
+          "origin": "Madrid-Chamartín-Clara Campoamor",
+          "stop_id": "31400",
+          "stop_name": "Santiago de Compostela-Daniel Castelao",
+          "scheduled_time": "22:19",
+          "estimated_time": "22:31",
+          "delay_min": 12.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "AVE 04395",
+          "headsign": "A Coruña",
+          "origin": "Madrid-Chamartín-Clara Campoamor",
+          "stop_id": "31412",
+          "stop_name": "A Coruña",
+          "scheduled_time": "22:54",
+          "estimated_time": "23:06",
+          "delay_min": 12.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "REGIONAL 12554",
+      "train_type": "Regional",
+      "total": 3,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 3,
       "cancelled": 0,
       "delayed_pct": 1.0,
       "avg_delay_min": 7.0,
@@ -1095,21 +1170,10 @@
           "train_name": "REGIONAL 12554",
           "headsign": "A Coruña",
           "origin": "Vigo Urzaiz",
-          "stop_id": "31400",
-          "stop_name": "Santiago de Compostela-Daniel Castelao",
-          "scheduled_time": "21:54",
-          "estimated_time": "22:01",
-          "delay_min": 7.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "REGIONAL 12554",
-          "headsign": "A Coruña",
-          "origin": "Vigo Urzaiz",
-          "stop_id": "31416",
-          "stop_name": "Cerceda-Meirama",
-          "scheduled_time": "22:19",
-          "estimated_time": "22:26",
+          "stop_id": "31412",
+          "stop_name": "A Coruña",
+          "scheduled_time": "22:35",
+          "estimated_time": "22:42",
           "delay_min": 7.0,
           "status": "retraso_leve"
         },
@@ -1128,37 +1192,12 @@
           "train_name": "REGIONAL 12554",
           "headsign": "A Coruña",
           "origin": "Vigo Urzaiz",
-          "stop_id": "31412",
-          "stop_name": "A Coruña",
-          "scheduled_time": "22:35",
-          "estimated_time": "22:42",
+          "stop_id": "31416",
+          "stop_name": "Cerceda-Meirama",
+          "scheduled_time": "22:19",
+          "estimated_time": "22:26",
           "delay_min": 7.0,
           "status": "retraso_leve"
-        }
-      ]
-    },
-    {
-      "train_name": "AVE 04395",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 1,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 16.0,
-      "max_delay_min": 16.0,
-      "arrivals": [
-        {
-          "train_name": "AVE 04395",
-          "headsign": "A Coruña",
-          "origin": "Madrid-Chamartín-Clara Campoamor",
-          "stop_id": "31400",
-          "stop_name": "Santiago de Compostela-Daniel Castelao",
-          "scheduled_time": "22:19",
-          "estimated_time": "22:35",
-          "delay_min": 16.0,
-          "status": "retraso_alto"
         }
       ]
     },
@@ -1188,53 +1227,17 @@
       ]
     },
     {
-      "train_name": "ALVIA 04909",
-      "train_type": "Alvia",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 1,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 14.0,
-      "max_delay_min": 14.0,
-      "arrivals": [
-        {
-          "train_name": "ALVIA 04909",
-          "headsign": "Salamanca",
-          "origin": "Madrid-Chamartín-Clara Campoamor",
-          "stop_id": "08240",
-          "stop_name": "Medina del Campo AV",
-          "scheduled_time": "22:06",
-          "estimated_time": "22:20",
-          "delay_min": 14.0,
-          "status": "retraso_alto"
-        }
-      ]
-    },
-    {
       "train_name": "AVLO 04975",
       "train_type": "AVLO",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 3,
+      "delayed": 2,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 15.0,
-      "max_delay_min": 15.0,
+      "avg_delay_min": 22.0,
+      "max_delay_min": 22.0,
       "arrivals": [
-        {
-          "train_name": "AVLO 04975",
-          "headsign": "Vigo Urzaiz",
-          "origin": "Madrid-Chamartín-Clara Campoamor",
-          "stop_id": "23008",
-          "stop_name": "Vilagarcía de Arousa",
-          "scheduled_time": "21:53",
-          "estimated_time": "22:08",
-          "delay_min": 15.0,
-          "status": "retraso_alto"
-        },
         {
           "train_name": "AVLO 04975",
           "headsign": "Vigo Urzaiz",
@@ -1242,8 +1245,8 @@
           "stop_id": "23004",
           "stop_name": "Pontevedra",
           "scheduled_time": "22:11",
-          "estimated_time": "22:26",
-          "delay_min": 15.0,
+          "estimated_time": "22:33",
+          "delay_min": 22.0,
           "status": "retraso_alto"
         },
         {
@@ -1253,67 +1256,9 @@
           "stop_id": "08223",
           "stop_name": "Vigo Urzaiz",
           "scheduled_time": "22:29",
-          "estimated_time": "22:44",
-          "delay_min": 15.0,
+          "estimated_time": "22:51",
+          "delay_min": 22.0,
           "status": "retraso_alto"
-        }
-      ]
-    },
-    {
-      "train_name": "MD 18005",
-      "train_type": "Media Distancia",
-      "total": 4,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 4,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 6.0,
-      "max_delay_min": 6.0,
-      "arrivals": [
-        {
-          "train_name": "MD 18005",
-          "headsign": "León",
-          "origin": "Madrid-Príncipe Pío",
-          "stop_id": "14100",
-          "stop_name": "Palencia",
-          "scheduled_time": "21:56",
-          "estimated_time": "22:02",
-          "delay_min": 6.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "MD 18005",
-          "headsign": "León",
-          "origin": "Madrid-Príncipe Pío",
-          "stop_id": "15004",
-          "stop_name": "Paredes de Nava",
-          "scheduled_time": "22:11",
-          "estimated_time": "22:17",
-          "delay_min": 6.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "MD 18005",
-          "headsign": "León",
-          "origin": "Madrid-Príncipe Pío",
-          "stop_id": "15007",
-          "stop_name": "Villada",
-          "scheduled_time": "22:24",
-          "estimated_time": "22:30",
-          "delay_min": 6.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "MD 18005",
-          "headsign": "León",
-          "origin": "Madrid-Príncipe Pío",
-          "stop_id": "15009",
-          "stop_name": "Sahagún",
-          "scheduled_time": "22:33",
-          "estimated_time": "22:39",
-          "delay_min": 6.0,
-          "status": "retraso_leve"
         }
       ]
     },
@@ -1326,8 +1271,8 @@
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 10.0,
-      "max_delay_min": 10.0,
+      "avg_delay_min": 9.0,
+      "max_delay_min": 9.0,
       "arrivals": [
         {
           "train_name": "AVE 05200",
@@ -1336,8 +1281,66 @@
           "stop_id": "03216",
           "stop_name": "València-Joaquín Sorolla",
           "scheduled_time": "22:24",
-          "estimated_time": "22:34",
-          "delay_min": 10.0,
+          "estimated_time": "22:33",
+          "delay_min": 9.0,
+          "status": "retraso_leve"
+        }
+      ]
+    },
+    {
+      "train_name": "AVLO 05214",
+      "train_type": "AVLO",
+      "total": 4,
+      "unique_trips": 2,
+      "unique_trips_delayed": 2,
+      "delayed": 4,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 8.0,
+      "max_delay_min": 8.0,
+      "arrivals": [
+        {
+          "train_name": "AVLO 05214",
+          "headsign": "València-Joaquín Sorolla",
+          "origin": "Madrid-Chamartín-Clara Campoamor",
+          "stop_id": "03208",
+          "stop_name": "Cuenca-Fernando Zóbel",
+          "scheduled_time": "22:02",
+          "estimated_time": "22:10",
+          "delay_min": 8.0,
+          "status": "retraso_leve"
+        },
+        {
+          "train_name": "AVLO 05214",
+          "headsign": "Requena-Utiel",
+          "origin": "Madrid-Chamartín-Clara Campoamor",
+          "stop_id": "03208",
+          "stop_name": "Cuenca-Fernando Zóbel",
+          "scheduled_time": "22:02",
+          "estimated_time": "22:10",
+          "delay_min": 8.0,
+          "status": "retraso_leve"
+        },
+        {
+          "train_name": "AVLO 05214",
+          "headsign": "València-Joaquín Sorolla",
+          "origin": "Madrid-Chamartín-Clara Campoamor",
+          "stop_id": "03213",
+          "stop_name": "Requena-Utiel",
+          "scheduled_time": "22:37",
+          "estimated_time": "22:45",
+          "delay_min": 8.0,
+          "status": "retraso_leve"
+        },
+        {
+          "train_name": "AVLO 05214",
+          "headsign": "Requena-Utiel",
+          "origin": "Madrid-Chamartín-Clara Campoamor",
+          "stop_id": "03213",
+          "stop_name": "Requena-Utiel",
+          "scheduled_time": "22:37",
+          "estimated_time": "22:45",
+          "delay_min": 8.0,
           "status": "retraso_leve"
         }
       ]
@@ -1345,26 +1348,15 @@
     {
       "train_name": "AVE 05792",
       "train_type": "AVE",
-      "total": 2,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 2,
+      "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 49.0,
-      "max_delay_min": 49.0,
+      "avg_delay_min": 47.0,
+      "max_delay_min": 47.0,
       "arrivals": [
-        {
-          "train_name": "AVE 05792",
-          "headsign": "Murcia del Carmen",
-          "origin": "Burgos-Rosa Manzano",
-          "stop_id": "62002",
-          "stop_name": "Orihuela-Miguel Hernández",
-          "scheduled_time": "21:51",
-          "estimated_time": "22:40",
-          "delay_min": 49.0,
-          "status": "retraso_alto"
-        },
         {
           "train_name": "AVE 05792",
           "headsign": "Murcia del Carmen",
@@ -1372,8 +1364,8 @@
           "stop_id": "61200",
           "stop_name": "Murcia del Carmen",
           "scheduled_time": "22:09",
-          "estimated_time": "22:58",
-          "delay_min": 49.0,
+          "estimated_time": "22:56",
+          "delay_min": 47.0,
           "status": "retraso_alto"
         }
       ]
@@ -1387,8 +1379,8 @@
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 55.0,
-      "max_delay_min": 55.0,
+      "avg_delay_min": 53.0,
+      "max_delay_min": 53.0,
       "arrivals": [
         {
           "train_name": "AVANT 08395",
@@ -1397,8 +1389,8 @@
           "stop_id": "05000",
           "stop_name": "Granada",
           "scheduled_time": "21:58",
-          "estimated_time": "22:53",
-          "delay_min": 55.0,
+          "estimated_time": "22:51",
+          "delay_min": 53.0,
           "status": "retraso_alto"
         }
       ]
@@ -1415,17 +1407,6 @@
       "avg_delay_min": 31.0,
       "max_delay_min": 31.0,
       "arrivals": [
-        {
-          "train_name": "MD 12646",
-          "headsign": "A Coruña",
-          "origin": "Ourense",
-          "stop_id": "20312",
-          "stop_name": "Baamonde",
-          "scheduled_time": "21:51",
-          "estimated_time": "22:22",
-          "delay_min": 31.0,
-          "status": "retraso_alto"
-        },
         {
           "train_name": "MD 12646",
           "headsign": "A Coruña",
@@ -1502,32 +1483,79 @@
           "estimated_time": "23:14",
           "delay_min": 31.0,
           "status": "retraso_alto"
+        },
+        {
+          "train_name": "MD 12646",
+          "headsign": "A Coruña",
+          "origin": "Ourense",
+          "stop_id": "20400",
+          "stop_name": "Betanzos-Infesta",
+          "scheduled_time": "22:52",
+          "estimated_time": "23:23",
+          "delay_min": 31.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "MD 13073",
+      "train_type": "Media Distancia",
+      "total": 3,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 3,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 6.0,
+      "max_delay_min": 6.0,
+      "arrivals": [
+        {
+          "train_name": "MD 13073",
+          "headsign": "Cádiz",
+          "origin": "Jaén",
+          "stop_id": "51103",
+          "stop_name": "Dos Hermanas",
+          "scheduled_time": "22:22",
+          "estimated_time": "22:28",
+          "delay_min": 6.0,
+          "status": "retraso_leve"
+        },
+        {
+          "train_name": "MD 13073",
+          "headsign": "Cádiz",
+          "origin": "Jaén",
+          "stop_id": "51100",
+          "stop_name": "San Bernardo",
+          "scheduled_time": "22:13",
+          "estimated_time": "22:19",
+          "delay_min": 6.0,
+          "status": "retraso_leve"
+        },
+        {
+          "train_name": "MD 13073",
+          "headsign": "Cádiz",
+          "origin": "Jaén",
+          "stop_id": "51200",
+          "stop_name": "Utrera",
+          "scheduled_time": "22:32",
+          "estimated_time": "22:38",
+          "delay_min": 6.0,
+          "status": "retraso_leve"
         }
       ]
     },
     {
       "train_name": "MD 13035",
       "train_type": "Media Distancia",
-      "total": 4,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 4,
+      "delayed": 3,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 8.0,
-      "max_delay_min": 8.0,
+      "avg_delay_min": 9.0,
+      "max_delay_min": 9.0,
       "arrivals": [
-        {
-          "train_name": "MD 13035",
-          "headsign": "Cádiz",
-          "origin": "Jaén",
-          "stop_id": "51300",
-          "stop_name": "Jerez de la Frontera",
-          "scheduled_time": "21:52",
-          "estimated_time": "22:00",
-          "delay_min": 8.0,
-          "status": "retraso_leve"
-        },
         {
           "train_name": "MD 13035",
           "headsign": "Cádiz",
@@ -1535,8 +1563,8 @@
           "stop_id": "51400",
           "stop_name": "Puerto de Santa María",
           "scheduled_time": "22:01",
-          "estimated_time": "22:09",
-          "delay_min": 8.0,
+          "estimated_time": "22:10",
+          "delay_min": 9.0,
           "status": "retraso_leve"
         },
         {
@@ -1546,8 +1574,8 @@
           "stop_id": "51406",
           "stop_name": "San Fernando-Bahía Sur",
           "scheduled_time": "22:16",
-          "estimated_time": "22:24",
-          "delay_min": 8.0,
+          "estimated_time": "22:25",
+          "delay_min": 9.0,
           "status": "retraso_leve"
         },
         {
@@ -1557,56 +1585,9 @@
           "stop_id": "51405",
           "stop_name": "Cádiz",
           "scheduled_time": "22:28",
-          "estimated_time": "22:36",
-          "delay_min": 8.0,
+          "estimated_time": "22:37",
+          "delay_min": 9.0,
           "status": "retraso_leve"
-        }
-      ]
-    },
-    {
-      "train_name": "REG.EXP. 18055",
-      "train_type": "Regional",
-      "total": 3,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 3,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 18.0,
-      "max_delay_min": 18.0,
-      "arrivals": [
-        {
-          "train_name": "REG.EXP. 18055",
-          "headsign": "Tortosa",
-          "origin": "Barcelona Estació de França",
-          "stop_id": "65402",
-          "stop_name": "L'Aldea-Amposta-Tortosa",
-          "scheduled_time": "21:53",
-          "estimated_time": "22:11",
-          "delay_min": 18.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "REG.EXP. 18055",
-          "headsign": "Tortosa",
-          "origin": "Barcelona Estació de França",
-          "stop_id": "65401",
-          "stop_name": "Camp-redó",
-          "scheduled_time": "22:00",
-          "estimated_time": "22:18",
-          "delay_min": 18.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "REG.EXP. 18055",
-          "headsign": "Tortosa",
-          "origin": "Barcelona Estació de França",
-          "stop_id": "65400",
-          "stop_name": "Tortosa",
-          "scheduled_time": "22:12",
-          "estimated_time": "22:30",
-          "delay_min": 18.0,
-          "status": "retraso_alto"
         }
       ]
     },
@@ -1619,8 +1600,8 @@
       "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 16.0,
-      "max_delay_min": 16.0,
+      "avg_delay_min": 14.0,
+      "max_delay_min": 14.0,
       "arrivals": [
         {
           "train_name": "REGIONAL 14209",
@@ -1629,34 +1610,9 @@
           "stop_id": "65000",
           "stop_name": "València-Estació del Nord",
           "scheduled_time": "22:05",
-          "estimated_time": "22:21",
-          "delay_min": 16.0,
+          "estimated_time": "22:19",
+          "delay_min": 14.0,
           "status": "retraso_alto"
-        }
-      ]
-    },
-    {
-      "train_name": "REG.EXP. 15024",
-      "train_type": "Regional",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 1,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 7.0,
-      "max_delay_min": 7.0,
-      "arrivals": [
-        {
-          "train_name": "REG.EXP. 15024",
-          "headsign": "Barcelona Estació de França",
-          "origin": "Reus",
-          "stop_id": "71700",
-          "stop_name": "Vilanova i la Geltrú",
-          "scheduled_time": "22:43",
-          "estimated_time": "22:50",
-          "delay_min": 7.0,
-          "status": "retraso_leve"
         }
       ]
     },
@@ -1672,17 +1628,6 @@
       "avg_delay_min": 14.0,
       "max_delay_min": 14.0,
       "arrivals": [
-        {
-          "train_name": "REGIONAL 15055",
-          "headsign": "La Plana-Picamoixons",
-          "origin": "Barcelona Estació de França",
-          "stop_id": "71503",
-          "stop_name": "Torredembarra",
-          "scheduled_time": "21:52",
-          "estimated_time": "22:06",
-          "delay_min": 14.0,
-          "status": "retraso_alto"
-        },
         {
           "train_name": "REGIONAL 15055",
           "headsign": "La Plana-Picamoixons",
@@ -1709,17 +1654,6 @@
           "train_name": "REGIONAL 15055",
           "headsign": "La Plana-Picamoixons",
           "origin": "Barcelona Estació de França",
-          "stop_id": "73101",
-          "stop_name": "Alcover",
-          "scheduled_time": "22:45",
-          "estimated_time": "22:59",
-          "delay_min": 14.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "REGIONAL 15055",
-          "headsign": "La Plana-Picamoixons",
-          "origin": "Barcelona Estació de França",
           "stop_id": "71401",
           "stop_name": "Vila-seca",
           "scheduled_time": "22:16",
@@ -1731,10 +1665,21 @@
           "train_name": "REGIONAL 15055",
           "headsign": "La Plana-Picamoixons",
           "origin": "Barcelona Estació de França",
-          "stop_id": "71400",
-          "stop_name": "Reus",
-          "scheduled_time": "22:27",
-          "estimated_time": "22:41",
+          "stop_id": "73100",
+          "stop_name": "La Plana-Picamoixons",
+          "scheduled_time": "22:51",
+          "estimated_time": "23:05",
+          "delay_min": 14.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "REGIONAL 15055",
+          "headsign": "La Plana-Picamoixons",
+          "origin": "Barcelona Estació de França",
+          "stop_id": "73101",
+          "stop_name": "Alcover",
+          "scheduled_time": "22:45",
+          "estimated_time": "22:59",
           "delay_min": 14.0,
           "status": "retraso_alto"
         },
@@ -1748,20 +1693,31 @@
           "estimated_time": "22:52",
           "delay_min": 14.0,
           "status": "retraso_alto"
+        },
+        {
+          "train_name": "REGIONAL 15055",
+          "headsign": "La Plana-Picamoixons",
+          "origin": "Barcelona Estació de França",
+          "stop_id": "71400",
+          "stop_name": "Reus",
+          "scheduled_time": "22:27",
+          "estimated_time": "22:41",
+          "delay_min": 14.0,
+          "status": "retraso_alto"
         }
       ]
     },
     {
       "train_name": "REG.EXP. 15047",
       "train_type": "Regional",
-      "total": 2,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 2,
+      "delayed": 3,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 13.0,
-      "max_delay_min": 13.0,
+      "avg_delay_min": 15.0,
+      "max_delay_min": 15.0,
       "arrivals": [
         {
           "train_name": "REG.EXP. 15047",
@@ -1770,8 +1726,8 @@
           "stop_id": "76004",
           "stop_name": "Valls",
           "scheduled_time": "22:00",
-          "estimated_time": "22:13",
-          "delay_min": 13.0,
+          "estimated_time": "22:15",
+          "delay_min": 15.0,
           "status": "retraso_alto"
         },
         {
@@ -1781,33 +1737,19 @@
           "stop_id": "73100",
           "stop_name": "La Plana-Picamoixons",
           "scheduled_time": "22:20",
-          "estimated_time": "22:33",
-          "delay_min": 13.0,
+          "estimated_time": "22:35",
+          "delay_min": 15.0,
           "status": "retraso_alto"
-        }
-      ]
-    },
-    {
-      "train_name": "REGIONAL 15628",
-      "train_type": "Regional",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 1,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 13.0,
-      "max_delay_min": 13.0,
-      "arrivals": [
+        },
         {
-          "train_name": "REGIONAL 15628",
-          "headsign": "Terrassa Estació del Nord",
-          "origin": "Lleida-Pirineus",
-          "stop_id": "78700",
-          "stop_name": "Terrassa Estació del Nord",
-          "scheduled_time": "21:51",
-          "estimated_time": "22:04",
-          "delay_min": 13.0,
+          "train_name": "REG.EXP. 15047",
+          "headsign": "Lleida-Pirineus",
+          "origin": "Barcelona-Sants",
+          "stop_id": "73008",
+          "stop_name": "Montblanc",
+          "scheduled_time": "22:52",
+          "estimated_time": "23:07",
+          "delay_min": 15.0,
           "status": "retraso_alto"
         }
       ]
@@ -1815,14 +1757,14 @@
     {
       "train_name": "REGIONAL 15790",
       "train_type": "Regional",
-      "total": 8,
+      "total": 9,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 8,
+      "delayed": 9,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 32.0,
-      "max_delay_min": 32.0,
+      "avg_delay_min": 43.0,
+      "max_delay_min": 43.0,
       "arrivals": [
         {
           "train_name": "REGIONAL 15790",
@@ -1831,8 +1773,8 @@
           "stop_id": "79104",
           "stop_name": "Sant Celoni",
           "scheduled_time": "22:24",
-          "estimated_time": "22:56",
-          "delay_min": 32.0,
+          "estimated_time": "23:07",
+          "delay_min": 43.0,
           "status": "retraso_alto"
         },
         {
@@ -1842,8 +1784,8 @@
           "stop_id": "79200",
           "stop_name": "Maçanet-Massanes",
           "scheduled_time": "22:07",
-          "estimated_time": "22:39",
-          "delay_min": 32.0,
+          "estimated_time": "22:50",
+          "delay_min": 43.0,
           "status": "retraso_alto"
         },
         {
@@ -1853,8 +1795,8 @@
           "stop_id": "79202",
           "stop_name": "Sils",
           "scheduled_time": "22:01",
-          "estimated_time": "22:33",
-          "delay_min": 32.0,
+          "estimated_time": "22:44",
+          "delay_min": 43.0,
           "status": "retraso_alto"
         },
         {
@@ -1864,8 +1806,8 @@
           "stop_id": "79203",
           "stop_name": "Caldes de Malavella",
           "scheduled_time": "21:56",
-          "estimated_time": "22:28",
-          "delay_min": 32.0,
+          "estimated_time": "22:39",
+          "delay_min": 43.0,
           "status": "retraso_alto"
         },
         {
@@ -1875,8 +1817,8 @@
           "stop_id": "79107",
           "stop_name": "Hostalric",
           "scheduled_time": "22:11",
-          "estimated_time": "22:43",
-          "delay_min": 32.0,
+          "estimated_time": "22:54",
+          "delay_min": 43.0,
           "status": "retraso_alto"
         },
         {
@@ -1886,8 +1828,8 @@
           "stop_id": "79106",
           "stop_name": "Riells i Viabrea-Breda",
           "scheduled_time": "22:16",
-          "estimated_time": "22:48",
-          "delay_min": 32.0,
+          "estimated_time": "22:59",
+          "delay_min": 43.0,
           "status": "retraso_alto"
         },
         {
@@ -1897,8 +1839,8 @@
           "stop_id": "79105",
           "stop_name": "Gualba",
           "scheduled_time": "22:19",
-          "estimated_time": "22:51",
-          "delay_min": 32.0,
+          "estimated_time": "23:02",
+          "delay_min": 43.0,
           "status": "retraso_alto"
         },
         {
@@ -1908,19 +1850,66 @@
           "stop_id": "79100",
           "stop_name": "Granollers Centre",
           "scheduled_time": "22:38",
-          "estimated_time": "23:10",
-          "delay_min": 32.0,
+          "estimated_time": "23:21",
+          "delay_min": 43.0,
           "status": "retraso_alto"
+        },
+        {
+          "train_name": "REGIONAL 15790",
+          "headsign": "Barcelona-Sants",
+          "origin": "Portbou",
+          "stop_id": "79004",
+          "stop_name": "Barcelona Sant Andreu",
+          "scheduled_time": "22:55",
+          "estimated_time": "23:38",
+          "delay_min": 43.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "REGIONAL 15758",
+      "train_type": "Regional",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 2,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 6.0,
+      "max_delay_min": 6.0,
+      "arrivals": [
+        {
+          "train_name": "REGIONAL 15758",
+          "headsign": "Huesca",
+          "origin": "Zaragoza Delicias",
+          "stop_id": "78200",
+          "stop_name": "Tardienta",
+          "scheduled_time": "22:23",
+          "estimated_time": "22:29",
+          "delay_min": 6.0,
+          "status": "retraso_leve"
+        },
+        {
+          "train_name": "REGIONAL 15758",
+          "headsign": "Huesca",
+          "origin": "Zaragoza Delicias",
+          "stop_id": "74200",
+          "stop_name": "Huesca",
+          "scheduled_time": "22:38",
+          "estimated_time": "22:44",
+          "delay_min": 6.0,
+          "status": "retraso_leve"
         }
       ]
     },
     {
       "train_name": "REGIONAL 16025",
       "train_type": "Regional",
-      "total": 2,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 2,
+      "delayed": 1,
       "cancelled": 0,
       "delayed_pct": 1.0,
       "avg_delay_min": 8.0,
@@ -1935,53 +1924,6 @@
           "scheduled_time": "22:04",
           "estimated_time": "22:12",
           "delay_min": 8.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "REGIONAL 16025",
-          "headsign": "Altsasu",
-          "origin": "Miranda de Ebro",
-          "stop_id": "11213",
-          "stop_name": "Araia",
-          "scheduled_time": "21:52",
-          "estimated_time": "22:00",
-          "delay_min": 8.0,
-          "status": "retraso_leve"
-        }
-      ]
-    },
-    {
-      "train_name": "MD 18065",
-      "train_type": "Media Distancia",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 2,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 6.0,
-      "max_delay_min": 6.0,
-      "arrivals": [
-        {
-          "train_name": "MD 18065",
-          "headsign": "Altsasu",
-          "origin": "Madrid-Príncipe Pío",
-          "stop_id": "11200",
-          "stop_name": "Miranda de Ebro",
-          "scheduled_time": "22:38",
-          "estimated_time": "22:44",
-          "delay_min": 6.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "MD 18065",
-          "headsign": "Altsasu",
-          "origin": "Madrid-Príncipe Pío",
-          "stop_id": "11109",
-          "stop_name": "Briviesca",
-          "scheduled_time": "22:10",
-          "estimated_time": "22:16",
-          "delay_min": 6.0,
           "status": "retraso_leve"
         }
       ]
@@ -1998,28 +1940,6 @@
       "avg_delay_min": 10.0,
       "max_delay_min": 10.0,
       "arrivals": [
-        {
-          "train_name": "REG.EXP. 17018",
-          "headsign": "Cáceres",
-          "origin": "Madrid-Atocha Cercanías",
-          "stop_id": "35206",
-          "stop_name": "Navalmoral de la Mata",
-          "scheduled_time": "21:54",
-          "estimated_time": "22:04",
-          "delay_min": 10.0,
-          "status": "retraso_leve"
-        },
-        {
-          "train_name": "REG.EXP. 17018",
-          "headsign": "Plasencia",
-          "origin": "Madrid-Atocha Cercanías",
-          "stop_id": "35206",
-          "stop_name": "Navalmoral de la Mata",
-          "scheduled_time": "21:54",
-          "estimated_time": "22:04",
-          "delay_min": 10.0,
-          "status": "retraso_leve"
-        },
         {
           "train_name": "REG.EXP. 17018",
           "headsign": "Cáceres",
@@ -2089,6 +2009,17 @@
         {
           "train_name": "REG.EXP. 17018",
           "headsign": "Cáceres",
+          "origin": "Madrid-Atocha Cercanías",
+          "stop_id": "35303",
+          "stop_name": "Cañaveral",
+          "scheduled_time": "22:54",
+          "estimated_time": "23:04",
+          "delay_min": 10.0,
+          "status": "retraso_leve"
+        },
+        {
+          "train_name": "REG.EXP. 17018",
+          "headsign": "Cáceres",
           "origin": "Plasencia",
           "stop_id": "30002",
           "stop_name": "Plasencia",
@@ -2096,195 +2027,15 @@
           "estimated_time": "22:10",
           "delay_min": 10.0,
           "status": "retraso_leve"
-        }
-      ]
-    },
-    {
-      "train_name": "REG.EXP. 18779",
-      "train_type": "Regional",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 1,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 21.0,
-      "max_delay_min": 21.0,
-      "arrivals": [
+        },
         {
-          "train_name": "REG.EXP. 18779",
+          "train_name": "REG.EXP. 17018",
           "headsign": "Plasencia",
-          "origin": "Sevilla-Santa Justa",
+          "origin": "Madrid-Atocha Cercanías",
           "stop_id": "30002",
           "stop_name": "Plasencia",
-          "scheduled_time": "22:40",
-          "estimated_time": "23:01",
-          "delay_min": 21.0,
-          "status": "retraso_alto"
-        }
-      ]
-    },
-    {
-      "train_name": "REG.EXP. 18022",
-      "train_type": "Regional",
-      "total": 3,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 3,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 14.0,
-      "max_delay_min": 14.0,
-      "arrivals": [
-        {
-          "train_name": "REG.EXP. 18022",
-          "headsign": "Zaragoza-Miraflores",
-          "origin": "Pamplona/Iruña",
-          "stop_id": "71100",
-          "stop_name": "Zaragoza-Miraflores",
-          "scheduled_time": "21:58",
-          "estimated_time": "22:12",
-          "delay_min": 14.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "REG.EXP. 18022",
-          "headsign": "Zaragoza-Miraflores",
-          "origin": "Pamplona/Iruña",
-          "stop_id": "70807",
-          "stop_name": "Zaragoza-Goya",
-          "scheduled_time": "21:55",
-          "estimated_time": "22:09",
-          "delay_min": 14.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "REG.EXP. 18022",
-          "headsign": "Zaragoza-Miraflores",
-          "origin": "Pamplona/Iruña",
-          "stop_id": "70806",
-          "stop_name": "Zaragoza-Portillo",
-          "scheduled_time": "21:52",
-          "estimated_time": "22:06",
-          "delay_min": 14.0,
-          "status": "retraso_alto"
-        }
-      ]
-    },
-    {
-      "train_name": "REGIONAL 17706",
-      "train_type": "Regional",
-      "total": 3,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 3,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 11.0,
-      "max_delay_min": 11.0,
-      "arrivals": [
-        {
-          "train_name": "REGIONAL 17706",
-          "headsign": "Talavera de la Reina",
-          "origin": "Madrid-Atocha Cercanías",
-          "stop_id": "35002",
-          "stop_name": "Fuenlabrada",
-          "scheduled_time": "21:53",
-          "estimated_time": "22:04",
-          "delay_min": 11.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "REGIONAL 17706",
-          "headsign": "Talavera de la Reina",
-          "origin": "Madrid-Atocha Cercanías",
-          "stop_id": "35005",
-          "stop_name": "Illescas",
-          "scheduled_time": "22:06",
-          "estimated_time": "22:17",
-          "delay_min": 11.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "REGIONAL 17706",
-          "headsign": "Talavera de la Reina",
-          "origin": "Madrid-Atocha Cercanías",
-          "stop_id": "35105",
-          "stop_name": "Torrijos",
-          "scheduled_time": "22:30",
-          "estimated_time": "22:41",
-          "delay_min": 11.0,
-          "status": "retraso_alto"
-        }
-      ]
-    },
-    {
-      "train_name": "REG.EXP. 17803",
-      "train_type": "Regional",
-      "total": 3,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 3,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 16.0,
-      "max_delay_min": 16.0,
-      "arrivals": [
-        {
-          "train_name": "REG.EXP. 17803",
-          "headsign": "Cabeza del Buey",
-          "origin": "Badajoz",
-          "stop_id": "37402",
-          "stop_name": "Castuera",
-          "scheduled_time": "21:56",
-          "estimated_time": "22:12",
-          "delay_min": 16.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "REG.EXP. 17803",
-          "headsign": "Cabeza del Buey",
-          "origin": "Badajoz",
-          "stop_id": "37400",
-          "stop_name": "Almorchón",
-          "scheduled_time": "22:15",
-          "estimated_time": "22:31",
-          "delay_min": 16.0,
-          "status": "retraso_alto"
-        },
-        {
-          "train_name": "REG.EXP. 17803",
-          "headsign": "Cabeza del Buey",
-          "origin": "Badajoz",
-          "stop_id": "37311",
-          "stop_name": "Cabeza del Buey",
-          "scheduled_time": "22:22",
-          "estimated_time": "22:38",
-          "delay_min": 16.0,
-          "status": "retraso_alto"
-        }
-      ]
-    },
-    {
-      "train_name": "REGIONAL 17823",
-      "train_type": "Regional",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 1,
-      "delayed": 1,
-      "cancelled": 0,
-      "delayed_pct": 1.0,
-      "avg_delay_min": 10.0,
-      "max_delay_min": 10.0,
-      "arrivals": [
-        {
-          "train_name": "REGIONAL 17823",
-          "headsign": "Zafra",
-          "origin": "Mérida",
-          "stop_id": "40100",
-          "stop_name": "Zafra",
-          "scheduled_time": "21:53",
-          "estimated_time": "22:03",
+          "scheduled_time": "22:55",
+          "estimated_time": "23:05",
           "delay_min": 10.0,
           "status": "retraso_leve"
         }
@@ -2293,15 +2044,26 @@
     {
       "train_name": "REG.EXP. 18008",
       "train_type": "Regional",
-      "total": 6,
+      "total": 7,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 6,
+      "delayed": 7,
       "cancelled": 0,
       "delayed_pct": 1.0,
       "avg_delay_min": 7.0,
       "max_delay_min": 7.0,
       "arrivals": [
+        {
+          "train_name": "REG.EXP. 18008",
+          "headsign": "Madrid-Príncipe Pío",
+          "origin": "Vitoria-Gasteiz",
+          "stop_id": "10203",
+          "stop_name": "El Escorial",
+          "scheduled_time": "22:52",
+          "estimated_time": "22:59",
+          "delay_min": 7.0,
+          "status": "retraso_leve"
+        },
         {
           "train_name": "REG.EXP. 18008",
           "headsign": "Madrid-Príncipe Pío",
@@ -2371,6 +2133,114 @@
       ]
     },
     {
+      "train_name": "REG.EXP. 18022",
+      "train_type": "Regional",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 1,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 14.0,
+      "max_delay_min": 14.0,
+      "arrivals": [
+        {
+          "train_name": "REG.EXP. 18022",
+          "headsign": "Zaragoza-Miraflores",
+          "origin": "Pamplona/Iruña",
+          "stop_id": "71100",
+          "stop_name": "Zaragoza-Miraflores",
+          "scheduled_time": "21:58",
+          "estimated_time": "22:12",
+          "delay_min": 14.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "REGIONAL 17706",
+      "train_type": "Regional",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 2,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 12.0,
+      "max_delay_min": 12.0,
+      "arrivals": [
+        {
+          "train_name": "REGIONAL 17706",
+          "headsign": "Talavera de la Reina",
+          "origin": "Madrid-Atocha Cercanías",
+          "stop_id": "35005",
+          "stop_name": "Illescas",
+          "scheduled_time": "22:06",
+          "estimated_time": "22:18",
+          "delay_min": 12.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "REGIONAL 17706",
+          "headsign": "Talavera de la Reina",
+          "origin": "Madrid-Atocha Cercanías",
+          "stop_id": "35105",
+          "stop_name": "Torrijos",
+          "scheduled_time": "22:30",
+          "estimated_time": "22:42",
+          "delay_min": 12.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "REG.EXP. 17803",
+      "train_type": "Regional",
+      "total": 3,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 3,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 16.0,
+      "max_delay_min": 16.0,
+      "arrivals": [
+        {
+          "train_name": "REG.EXP. 17803",
+          "headsign": "Cabeza del Buey",
+          "origin": "Badajoz",
+          "stop_id": "37402",
+          "stop_name": "Castuera",
+          "scheduled_time": "21:56",
+          "estimated_time": "22:12",
+          "delay_min": 16.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "REG.EXP. 17803",
+          "headsign": "Cabeza del Buey",
+          "origin": "Badajoz",
+          "stop_id": "37400",
+          "stop_name": "Almorchón",
+          "scheduled_time": "22:15",
+          "estimated_time": "22:31",
+          "delay_min": 16.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "REG.EXP. 17803",
+          "headsign": "Cabeza del Buey",
+          "origin": "Badajoz",
+          "stop_id": "37311",
+          "stop_name": "Cabeza del Buey",
+          "scheduled_time": "22:22",
+          "estimated_time": "22:38",
+          "delay_min": 16.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
       "train_name": "MD 18036",
       "train_type": "Media Distancia",
       "total": 3,
@@ -2418,28 +2288,53 @@
       ]
     },
     {
-      "train_name": "REGIONAL 71803",
+      "train_name": "REG.EXP. 18055",
       "train_type": "Regional",
-      "total": 8,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 8,
+      "delayed": 2,
+      "cancelled": 0,
+      "delayed_pct": 1.0,
+      "avg_delay_min": 18.0,
+      "max_delay_min": 18.0,
+      "arrivals": [
+        {
+          "train_name": "REG.EXP. 18055",
+          "headsign": "Tortosa",
+          "origin": "Barcelona Estació de França",
+          "stop_id": "65401",
+          "stop_name": "Camp-redó",
+          "scheduled_time": "22:00",
+          "estimated_time": "22:18",
+          "delay_min": 18.0,
+          "status": "retraso_alto"
+        },
+        {
+          "train_name": "REG.EXP. 18055",
+          "headsign": "Tortosa",
+          "origin": "Barcelona Estació de França",
+          "stop_id": "65400",
+          "stop_name": "Tortosa",
+          "scheduled_time": "22:12",
+          "estimated_time": "22:30",
+          "delay_min": 18.0,
+          "status": "retraso_alto"
+        }
+      ]
+    },
+    {
+      "train_name": "REGIONAL 71803",
+      "train_type": "Regional",
+      "total": 7,
+      "unique_trips": 1,
+      "unique_trips_delayed": 1,
+      "delayed": 7,
       "cancelled": 0,
       "delayed_pct": 1.0,
       "avg_delay_min": 22.0,
       "max_delay_min": 22.0,
       "arrivals": [
-        {
-          "train_name": "REGIONAL 71803",
-          "headsign": "Ribadeo",
-          "origin": "Ferrol",
-          "stop_id": "05179",
-          "stop_name": "Marzán",
-          "scheduled_time": "21:54",
-          "estimated_time": "22:16",
-          "delay_min": 22.0,
-          "status": "retraso_alto"
-        },
         {
           "train_name": "REGIONAL 71803",
           "headsign": "Ribadeo",
@@ -2522,26 +2417,15 @@
     {
       "train_name": "REGIONAL 71855",
       "train_type": "Regional",
-      "total": 7,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 1,
-      "delayed": 7,
+      "delayed": 6,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 16.0,
-      "max_delay_min": 16.0,
+      "avg_delay_min": 27.0,
+      "max_delay_min": 27.0,
       "arrivals": [
-        {
-          "train_name": "REGIONAL 71855",
-          "headsign": "Bilbao la Concordia",
-          "origin": "Santander",
-          "stop_id": "05467",
-          "stop_name": "Sodupe",
-          "scheduled_time": "21:53",
-          "estimated_time": "22:09",
-          "delay_min": 16.0,
-          "status": "retraso_alto"
-        },
         {
           "train_name": "REGIONAL 71855",
           "headsign": "Bilbao la Concordia",
@@ -2549,8 +2433,8 @@
           "stop_id": "05463",
           "stop_name": "Zaramillo",
           "scheduled_time": "21:56",
-          "estimated_time": "22:12",
-          "delay_min": 16.0,
+          "estimated_time": "22:23",
+          "delay_min": 27.0,
           "status": "retraso_alto"
         },
         {
@@ -2560,8 +2444,8 @@
           "stop_id": "05461",
           "stop_name": "Irauregui",
           "scheduled_time": "22:04",
-          "estimated_time": "22:20",
-          "delay_min": 16.0,
+          "estimated_time": "22:31",
+          "delay_min": 27.0,
           "status": "retraso_alto"
         },
         {
@@ -2571,8 +2455,8 @@
           "stop_id": "05457",
           "stop_name": "Zorrotza Zorrozgoiti",
           "scheduled_time": "22:10",
-          "estimated_time": "22:26",
-          "delay_min": 16.0,
+          "estimated_time": "22:37",
+          "delay_min": 27.0,
           "status": "retraso_alto"
         },
         {
@@ -2582,8 +2466,8 @@
           "stop_id": "05455",
           "stop_name": "Basurto Hospital",
           "scheduled_time": "22:15",
-          "estimated_time": "22:31",
-          "delay_min": 16.0,
+          "estimated_time": "22:42",
+          "delay_min": 27.0,
           "status": "retraso_alto"
         },
         {
@@ -2593,8 +2477,8 @@
           "stop_id": "13206",
           "stop_name": "Ametzola",
           "scheduled_time": "22:17",
-          "estimated_time": "22:33",
-          "delay_min": 16.0,
+          "estimated_time": "22:44",
+          "delay_min": 27.0,
           "status": "retraso_alto"
         },
         {
@@ -2604,8 +2488,8 @@
           "stop_id": "05451",
           "stop_name": "Bilbao la Concordia",
           "scheduled_time": "22:21",
-          "estimated_time": "22:37",
-          "delay_min": 16.0,
+          "estimated_time": "22:48",
+          "delay_min": 27.0,
           "status": "retraso_alto"
         }
       ]
@@ -2619,8 +2503,8 @@
       "delayed": 3,
       "cancelled": 0,
       "delayed_pct": 1.0,
-      "avg_delay_min": 18.0,
-      "max_delay_min": 18.0,
+      "avg_delay_min": 15.0,
+      "max_delay_min": 15.0,
       "arrivals": [
         {
           "train_name": "REGIONAL 71876",
@@ -2629,8 +2513,8 @@
           "stop_id": "05776",
           "stop_name": "San Feliz",
           "scheduled_time": "21:58",
-          "estimated_time": "22:16",
-          "delay_min": 18.0,
+          "estimated_time": "22:13",
+          "delay_min": 15.0,
           "status": "retraso_alto"
         },
         {
@@ -2640,8 +2524,8 @@
           "stop_id": "05803",
           "stop_name": "La Asunción Universidad",
           "scheduled_time": "22:12",
-          "estimated_time": "22:30",
-          "delay_min": 18.0,
+          "estimated_time": "22:27",
+          "delay_min": 15.0,
           "status": "retraso_alto"
         },
         {
@@ -2651,8 +2535,8 @@
           "stop_id": "05778",
           "stop_name": "Feve-León",
           "scheduled_time": "22:22",
-          "estimated_time": "22:40",
-          "delay_min": 18.0,
+          "estimated_time": "22:37",
+          "delay_min": 15.0,
           "status": "retraso_alto"
         }
       ]
@@ -2697,42 +2581,6 @@
       "arrivals": []
     },
     {
-      "train_name": "REG.EXP. 18045",
-      "train_type": "Regional",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 1.0,
-      "max_delay_min": 1.0,
-      "arrivals": [
-        {
-          "train_name": "REG.EXP. 18045",
-          "headsign": "Madrid-Chamartín-Clara Campoamor",
-          "origin": "Albacete-Los Llanos",
-          "stop_id": "18000",
-          "stop_name": "Madrid-Atocha Cercanías",
-          "scheduled_time": "21:54",
-          "estimated_time": "21:55",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "REG.EXP. 18045",
-          "headsign": "Madrid-Chamartín-Clara Campoamor",
-          "origin": "Albacete-Los Llanos",
-          "stop_id": "17000",
-          "stop_name": "Madrid-Chamartín-Clara Campoamor",
-          "scheduled_time": "22:08",
-          "estimated_time": "22:09",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        }
-      ]
-    },
-    {
       "train_name": "MD 37095",
       "train_type": "Media Distancia",
       "total": 3,
@@ -2757,6 +2605,31 @@
       "avg_delay_min": 0.0,
       "max_delay_min": 0.0,
       "arrivals": []
+    },
+    {
+      "train_name": "REG.EXP. 18045",
+      "train_type": "Regional",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 2.0,
+      "max_delay_min": 2.0,
+      "arrivals": [
+        {
+          "train_name": "REG.EXP. 18045",
+          "headsign": "Madrid-Chamartín-Clara Campoamor",
+          "origin": "Albacete-Los Llanos",
+          "stop_id": "17000",
+          "stop_name": "Madrid-Chamartín-Clara Campoamor",
+          "scheduled_time": "22:08",
+          "estimated_time": "22:10",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        }
+      ]
     },
     {
       "train_name": "ALVIA 04366",
@@ -2798,19 +2671,6 @@
       "arrivals": []
     },
     {
-      "train_name": "REG.EXP. 35106",
-      "train_type": "Regional",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "AVE 03191",
       "train_type": "AVE",
       "total": 1,
@@ -2826,7 +2686,7 @@
     {
       "train_name": "REG.EXP. 15023",
       "train_type": "Regional",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2845,8 +2705,8 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 3.0,
-      "max_delay_min": 3.0,
+      "avg_delay_min": 2.0,
+      "max_delay_min": 2.0,
       "arrivals": [
         {
           "train_name": "EUROMED 01192",
@@ -2855,8 +2715,8 @@
           "stop_id": "71801",
           "stop_name": "Barcelona-Sants",
           "scheduled_time": "22:04",
-          "estimated_time": "22:07",
-          "delay_min": 3.0,
+          "estimated_time": "22:06",
+          "delay_min": 2.0,
           "status": "en_hora"
         }
       ]
@@ -2916,7 +2776,7 @@
     {
       "train_name": "ALVIA 00621",
       "train_type": "Alvia",
-      "total": 2,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2940,9 +2800,22 @@
       "arrivals": []
     },
     {
+      "train_name": "REGIONAL 15888",
+      "train_type": "Regional",
+      "total": 8,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "MD 12642",
       "train_type": "Media Distancia",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -2955,57 +2828,6 @@
     {
       "train_name": "Intercity 00560",
       "train_type": "Otros",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVE 03931",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 5.0,
-      "max_delay_min": 5.0,
-      "arrivals": [
-        {
-          "train_name": "AVE 03931",
-          "headsign": "Barcelona-Sants",
-          "origin": "Granada",
-          "stop_id": "04104",
-          "stop_name": "Camp de Tarragona",
-          "scheduled_time": "22:15",
-          "estimated_time": "22:20",
-          "delay_min": 5.0,
-          "status": "en_hora"
-        }
-      ]
-    },
-    {
-      "train_name": "AVE 03941",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVE 03309",
-      "train_type": "AVE",
       "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
@@ -3124,14 +2946,81 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
+      "avg_delay_min": 2.0,
+      "max_delay_min": 2.0,
+      "arrivals": [
+        {
+          "train_name": "REG.EXP. 18079",
+          "headsign": "Logroño",
+          "origin": "Zaragoza-Miraflores",
+          "stop_id": "81202",
+          "stop_name": "Tudela de Navarra",
+          "scheduled_time": "22:02",
+          "estimated_time": "22:04",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REG.EXP. 18079",
+          "headsign": "Logroño",
+          "origin": "Zaragoza-Miraflores",
+          "stop_id": "81200",
+          "stop_name": "Castejón de Ebro",
+          "scheduled_time": "22:15",
+          "estimated_time": "22:17",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REG.EXP. 18079",
+          "headsign": "Logroño",
+          "origin": "Zaragoza-Miraflores",
+          "stop_id": "81203",
+          "stop_name": "Ribaforada",
+          "scheduled_time": "21:56",
+          "estimated_time": "21:58",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REG.EXP. 18079",
+          "headsign": "Logroño",
+          "origin": "Zaragoza-Miraflores",
+          "stop_id": "81110",
+          "stop_name": "Alfaro",
+          "scheduled_time": "22:22",
+          "estimated_time": "22:24",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REG.EXP. 18079",
+          "headsign": "Logroño",
+          "origin": "Zaragoza-Miraflores",
+          "stop_id": "81109",
+          "stop_name": "Rincón de Soto",
+          "scheduled_time": "22:31",
+          "estimated_time": "22:33",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REG.EXP. 18079",
+          "headsign": "Logroño",
+          "origin": "Zaragoza-Miraflores",
+          "stop_id": "81108",
+          "stop_name": "Calahorra",
+          "scheduled_time": "22:41",
+          "estimated_time": "22:43",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        }
+      ]
     },
     {
       "train_name": "REG.EXP. 18078",
       "train_type": "Regional",
-      "total": 8,
+      "total": 9,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3150,8 +3039,8 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 4.0,
-      "max_delay_min": 4.0,
+      "avg_delay_min": 2.0,
+      "max_delay_min": 2.0,
       "arrivals": [
         {
           "train_name": "ALVIA 00801",
@@ -3160,8 +3049,8 @@
           "stop_id": "81202",
           "stop_name": "Tudela de Navarra",
           "scheduled_time": "22:07",
-          "estimated_time": "22:11",
-          "delay_min": 4.0,
+          "estimated_time": "22:09",
+          "delay_min": 2.0,
           "status": "en_hora"
         },
         {
@@ -3171,8 +3060,8 @@
           "stop_id": "80108",
           "stop_name": "Tafalla",
           "scheduled_time": "22:42",
-          "estimated_time": "22:46",
-          "delay_min": 4.0,
+          "estimated_time": "22:44",
+          "delay_min": 2.0,
           "status": "en_hora"
         }
       ]
@@ -3180,20 +3069,7 @@
     {
       "train_name": "REG.EXP. 16011",
       "train_type": "Regional",
-      "total": 6,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVE 02197",
-      "train_type": "AVE",
-      "total": 1,
+      "total": 5,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3243,31 +3119,6 @@
       "arrivals": []
     },
     {
-      "train_name": "AVE 03190",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 1.0,
-      "max_delay_min": 1.0,
-      "arrivals": [
-        {
-          "train_name": "AVE 03190",
-          "headsign": "Madrid-Puerta de Atocha-Almudena Grandes",
-          "origin": "Barcelona-Sants",
-          "stop_id": "60000",
-          "stop_name": "Madrid-Puerta de Atocha-Almudena Grandes",
-          "scheduled_time": "22:27",
-          "estimated_time": "22:28",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        }
-      ]
-    },
-    {
       "train_name": "AVE 05903",
       "train_type": "AVE",
       "total": 1,
@@ -3300,17 +3151,6 @@
           "stop_name": "Castelló de la Plana",
           "scheduled_time": "22:12",
           "estimated_time": "22:15",
-          "delay_min": 3.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "REGIONAL 14465",
-          "headsign": "València-Estació del Nord",
-          "origin": "Vinaròs",
-          "stop_id": "65318",
-          "stop_name": "Benicàssim",
-          "scheduled_time": "21:52",
-          "estimated_time": "21:55",
           "delay_min": 3.0,
           "status": "en_hora"
         },
@@ -3401,6 +3241,42 @@
           "estimated_time": "22:50",
           "delay_min": 3.0,
           "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 14465",
+          "headsign": "València-Estació del Nord",
+          "origin": "Vinaròs",
+          "stop_id": "65201",
+          "stop_name": "Les Valls",
+          "scheduled_time": "22:51",
+          "estimated_time": "22:54",
+          "delay_min": 3.0,
+          "status": "en_hora"
+        }
+      ]
+    },
+    {
+      "train_name": "EUROMED 01201",
+      "train_type": "Otros",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 5.0,
+      "max_delay_min": 5.0,
+      "arrivals": [
+        {
+          "train_name": "EUROMED 01201",
+          "headsign": "València-Estació del Nord",
+          "origin": "Barcelona-Sants",
+          "stop_id": "65300",
+          "stop_name": "Castelló de la Plana",
+          "scheduled_time": "22:28",
+          "estimated_time": "22:33",
+          "delay_min": 5.0,
+          "status": "en_hora"
         }
       ]
     },
@@ -3431,8 +3307,33 @@
       "arrivals": []
     },
     {
-      "train_name": "MD 13908",
-      "train_type": "Media Distancia",
+      "train_name": "AVE 03931",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 3.0,
+      "max_delay_min": 3.0,
+      "arrivals": [
+        {
+          "train_name": "AVE 03931",
+          "headsign": "Barcelona-Sants",
+          "origin": "Granada",
+          "stop_id": "04104",
+          "stop_name": "Camp de Tarragona",
+          "scheduled_time": "22:15",
+          "estimated_time": "22:18",
+          "delay_min": 3.0,
+          "status": "en_hora"
+        }
+      ]
+    },
+    {
+      "train_name": "AVE 03941",
+      "train_type": "AVE",
       "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
@@ -3444,9 +3345,9 @@
       "arrivals": []
     },
     {
-      "train_name": "PROXIMDAD 38908",
-      "train_type": "Otros",
-      "total": 1,
+      "train_name": "AVE 03309",
+      "train_type": "AVE",
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3484,7 +3385,7 @@
     {
       "train_name": "AVE 03992",
       "train_type": "AVE",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3508,22 +3409,9 @@
       "arrivals": []
     },
     {
-      "train_name": "MD 35073",
-      "train_type": "Media Distancia",
-      "total": 4,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "MD 13021",
       "train_type": "Media Distancia",
-      "total": 4,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3532,31 +3420,6 @@
       "avg_delay_min": 0.0,
       "max_delay_min": 0.0,
       "arrivals": []
-    },
-    {
-      "train_name": "AVE 02213",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 4.0,
-      "max_delay_min": 4.0,
-      "arrivals": [
-        {
-          "train_name": "AVE 02213",
-          "headsign": "Madrid-Puerta de Atocha-Almudena Grandes",
-          "origin": "Málaga María Zambrano",
-          "stop_id": "50500",
-          "stop_name": "Córdoba-Julio Anguita",
-          "scheduled_time": "21:52",
-          "estimated_time": "21:56",
-          "delay_min": 4.0,
-          "status": "en_hora"
-        }
-      ]
     },
     {
       "train_name": "PROXIMDAD 38031",
@@ -3580,8 +3443,8 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 3.0,
-      "max_delay_min": 3.0,
+      "avg_delay_min": 4.0,
+      "max_delay_min": 4.0,
       "arrivals": [
         {
           "train_name": "REG.EXP. 18027",
@@ -3590,8 +3453,8 @@
           "stop_id": "37200",
           "stop_name": "Ciudad Real",
           "scheduled_time": "22:02",
-          "estimated_time": "22:05",
-          "delay_min": 3.0,
+          "estimated_time": "22:06",
+          "delay_min": 4.0,
           "status": "en_hora"
         }
       ]
@@ -3599,7 +3462,45 @@
     {
       "train_name": "MD 17045",
       "train_type": "Media Distancia",
-      "total": 2,
+      "total": 3,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "ALVIA 02366",
+      "train_type": "Alvia",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 1.0,
+      "max_delay_min": 1.0,
+      "arrivals": [
+        {
+          "train_name": "ALVIA 02366",
+          "headsign": "Almería",
+          "origin": "Madrid-Puerta de Atocha-Almudena Grandes",
+          "stop_id": "56310",
+          "stop_name": "Huercal-Viator",
+          "scheduled_time": "22:55",
+          "estimated_time": "22:56",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        }
+      ]
+    },
+    {
+      "train_name": "MD 37366",
+      "train_type": "Media Distancia",
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3688,10 +3589,10 @@
           "train_name": "MD 15738",
           "headsign": "Figueres",
           "origin": "Barcelona-Sants",
-          "stop_id": "79309",
-          "stop_name": "Figueres",
-          "scheduled_time": "22:45",
-          "estimated_time": "22:47",
+          "stop_id": "79202",
+          "stop_name": "Sils",
+          "scheduled_time": "21:56",
+          "estimated_time": "21:58",
           "delay_min": 2.0,
           "status": "en_hora"
         },
@@ -3699,10 +3600,10 @@
           "train_name": "MD 15738",
           "headsign": "Figueres",
           "origin": "Barcelona-Sants",
-          "stop_id": "79202",
-          "stop_name": "Sils",
-          "scheduled_time": "21:56",
-          "estimated_time": "21:58",
+          "stop_id": "79309",
+          "stop_name": "Figueres",
+          "scheduled_time": "22:45",
+          "estimated_time": "22:47",
           "delay_min": 2.0,
           "status": "en_hora"
         },
@@ -3731,6 +3632,31 @@
       ]
     },
     {
+      "train_name": "AVE 03201",
+      "train_type": "AVE",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 5.0,
+      "max_delay_min": 5.0,
+      "arrivals": [
+        {
+          "train_name": "AVE 03201",
+          "headsign": "Barcelona-Sants",
+          "origin": "Madrid-Puerta de Atocha-Almudena Grandes",
+          "stop_id": "04040",
+          "stop_name": "Zaragoza Delicias",
+          "scheduled_time": "22:06",
+          "estimated_time": "22:11",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        }
+      ]
+    },
+    {
       "train_name": "REGIONAL 35552",
       "train_type": "Regional",
       "total": 3,
@@ -3752,8 +3678,8 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 5.0,
-      "max_delay_min": 5.0,
+      "avg_delay_min": 4.0,
+      "max_delay_min": 4.0,
       "arrivals": [
         {
           "train_name": "REG.EXP. 17505",
@@ -3762,8 +3688,8 @@
           "stop_id": "04040",
           "stop_name": "Zaragoza Delicias",
           "scheduled_time": "22:25",
-          "estimated_time": "22:30",
-          "delay_min": 5.0,
+          "estimated_time": "22:29",
+          "delay_min": 4.0,
           "status": "en_hora"
         },
         {
@@ -3773,8 +3699,8 @@
           "stop_id": "71100",
           "stop_name": "Zaragoza-Miraflores",
           "scheduled_time": "22:10",
-          "estimated_time": "22:15",
-          "delay_min": 5.0,
+          "estimated_time": "22:14",
+          "delay_min": 4.0,
           "status": "en_hora"
         },
         {
@@ -3784,8 +3710,8 @@
           "stop_id": "70807",
           "stop_name": "Zaragoza-Goya",
           "scheduled_time": "22:19",
-          "estimated_time": "22:24",
-          "delay_min": 5.0,
+          "estimated_time": "22:23",
+          "delay_min": 4.0,
           "status": "en_hora"
         },
         {
@@ -3795,8 +3721,8 @@
           "stop_id": "70806",
           "stop_name": "Zaragoza-Portillo",
           "scheduled_time": "22:22",
-          "estimated_time": "22:27",
-          "delay_min": 5.0,
+          "estimated_time": "22:26",
+          "delay_min": 4.0,
           "status": "en_hora"
         }
       ]
@@ -3828,35 +3754,34 @@
       "arrivals": []
     },
     {
-      "train_name": "AVE 03393",
-      "train_type": "AVE",
+      "train_name": "AVANT 09217",
+      "train_type": "Avant",
       "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
+      "avg_delay_min": 4.0,
+      "max_delay_min": 4.0,
+      "arrivals": [
+        {
+          "train_name": "AVANT 09217",
+          "headsign": "Alicante/Alacant-Terminal",
+          "origin": "Murcia del Carmen",
+          "stop_id": "60911",
+          "stop_name": "Alicante/Alacant-Terminal",
+          "scheduled_time": "22:14",
+          "estimated_time": "22:18",
+          "delay_min": 4.0,
+          "status": "en_hora"
+        }
+      ]
     },
     {
-      "train_name": "AVE 10393",
-      "train_type": "AVE",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "REGIONAL 15758",
-      "train_type": "Regional",
-      "total": 2,
+      "train_name": "ALVIA 04181",
+      "train_type": "Alvia",
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3866,24 +3791,35 @@
       "max_delay_min": 5.0,
       "arrivals": [
         {
-          "train_name": "REGIONAL 15758",
-          "headsign": "Huesca",
-          "origin": "Zaragoza Delicias",
-          "stop_id": "74200",
-          "stop_name": "Huesca",
-          "scheduled_time": "22:38",
-          "estimated_time": "22:43",
+          "train_name": "ALVIA 04181",
+          "headsign": "Gijón-Sanz Crespo",
+          "origin": "Alicante/Alacant-Terminal",
+          "stop_id": "15203",
+          "stop_name": "Mieres-Puente",
+          "scheduled_time": "22:05",
+          "estimated_time": "22:10",
           "delay_min": 5.0,
           "status": "en_hora"
         },
         {
-          "train_name": "REGIONAL 15758",
-          "headsign": "Huesca",
-          "origin": "Zaragoza Delicias",
-          "stop_id": "78200",
-          "stop_name": "Tardienta",
-          "scheduled_time": "22:23",
-          "estimated_time": "22:28",
+          "train_name": "ALVIA 04181",
+          "headsign": "Gijón-Sanz Crespo",
+          "origin": "Alicante/Alacant-Terminal",
+          "stop_id": "15211",
+          "stop_name": "Oviedo",
+          "scheduled_time": "22:22",
+          "estimated_time": "22:27",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "ALVIA 04181",
+          "headsign": "Gijón-Sanz Crespo",
+          "origin": "Alicante/Alacant-Terminal",
+          "stop_id": "15410",
+          "stop_name": "Gijón-Sanz Crespo",
+          "scheduled_time": "22:50",
+          "estimated_time": "22:55",
           "delay_min": 5.0,
           "status": "en_hora"
         }
@@ -3898,8 +3834,8 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 4.0,
-      "max_delay_min": 4.0,
+      "avg_delay_min": 3.0,
+      "max_delay_min": 3.0,
       "arrivals": [
         {
           "train_name": "AVANT 08219",
@@ -3908,8 +3844,8 @@
           "stop_id": "08004",
           "stop_name": "Segovia-Guiomar",
           "scheduled_time": "21:57",
-          "estimated_time": "22:01",
-          "delay_min": 4.0,
+          "estimated_time": "22:00",
+          "delay_min": 3.0,
           "status": "en_hora"
         },
         {
@@ -3919,8 +3855,8 @@
           "stop_id": "10600",
           "stop_name": "Valladolid-Campo Grande",
           "scheduled_time": "22:35",
-          "estimated_time": "22:39",
-          "delay_min": 4.0,
+          "estimated_time": "22:38",
+          "delay_min": 3.0,
           "status": "en_hora"
         }
       ]
@@ -3953,7 +3889,7 @@
     {
       "train_name": "REG.EXP. 18312",
       "train_type": "Regional",
-      "total": 5,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -3977,21 +3913,10 @@
           "train_name": "REG.EXP. 18312",
           "headsign": "Valladolid-Campo Grande",
           "origin": "Salamanca",
-          "stop_id": "10501",
-          "stop_name": "Pozaldez",
-          "scheduled_time": "21:52",
-          "estimated_time": "21:56",
-          "delay_min": 4.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "REG.EXP. 18312",
-          "headsign": "Valladolid-Campo Grande",
-          "origin": "Salamanca",
-          "stop_id": "10502",
-          "stop_name": "Matapozuelos",
-          "scheduled_time": "21:58",
-          "estimated_time": "22:02",
+          "stop_id": "10504",
+          "stop_name": "Viana",
+          "scheduled_time": "22:07",
+          "estimated_time": "22:11",
           "delay_min": 4.0,
           "status": "en_hora"
         },
@@ -4010,10 +3935,10 @@
           "train_name": "REG.EXP. 18312",
           "headsign": "Valladolid-Campo Grande",
           "origin": "Salamanca",
-          "stop_id": "10504",
-          "stop_name": "Viana",
-          "scheduled_time": "22:07",
-          "estimated_time": "22:11",
+          "stop_id": "10502",
+          "stop_name": "Matapozuelos",
+          "scheduled_time": "21:58",
+          "estimated_time": "22:02",
           "delay_min": 4.0,
           "status": "en_hora"
         }
@@ -4022,7 +3947,7 @@
     {
       "train_name": "PROXIMDAD 38312",
       "train_type": "Otros",
-      "total": 5,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4035,7 +3960,7 @@
     {
       "train_name": "PROXIMDAD 17226",
       "train_type": "Otros",
-      "total": 1,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4087,20 +4012,65 @@
     {
       "train_name": "MD 09213",
       "train_type": "Media Distancia",
-      "total": 5,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
+      "avg_delay_min": 5.0,
+      "max_delay_min": 5.0,
+      "arrivals": [
+        {
+          "train_name": "MD 09213",
+          "headsign": "Vigo Urzaiz",
+          "origin": "A Coruña",
+          "stop_id": "31400",
+          "stop_name": "Santiago de Compostela-Daniel Castelao",
+          "scheduled_time": "22:12",
+          "estimated_time": "22:17",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "MD 09213",
+          "headsign": "Vigo Urzaiz",
+          "origin": "A Coruña",
+          "stop_id": "23008",
+          "stop_name": "Vilagarcía de Arousa",
+          "scheduled_time": "22:42",
+          "estimated_time": "22:47",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "MD 09213",
+          "headsign": "Vigo Urzaiz",
+          "origin": "A Coruña",
+          "stop_id": "23021",
+          "stop_name": "Padrón Barbanza",
+          "scheduled_time": "22:30",
+          "estimated_time": "22:35",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "MD 09213",
+          "headsign": "Vigo Urzaiz",
+          "origin": "A Coruña",
+          "stop_id": "99159",
+          "stop_name": "Santiago-Turístico",
+          "scheduled_time": "22:17",
+          "estimated_time": "22:22",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        }
+      ]
     },
     {
       "train_name": "AVANT 34395",
       "train_type": "Avant",
-      "total": 1,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4124,6 +4094,32 @@
       "arrivals": []
     },
     {
+      "train_name": "MD 09212",
+      "train_type": "Media Distancia",
+      "total": 7,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "MD 12687",
+      "train_type": "Media Distancia",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "MD 37722",
       "train_type": "Media Distancia",
       "total": 2,
@@ -4137,22 +4133,9 @@
       "arrivals": []
     },
     {
-      "train_name": "MD 09212",
-      "train_type": "Media Distancia",
-      "total": 6,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "AVE 05183",
       "train_type": "AVE",
-      "total": 2,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4165,142 +4148,11 @@
           "train_name": "AVE 05183",
           "headsign": "León",
           "origin": "Alicante/Alacant-Terminal",
-          "stop_id": "14100",
-          "stop_name": "Palencia",
-          "scheduled_time": "21:51",
-          "estimated_time": "21:53",
-          "delay_min": 2.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "AVE 05183",
-          "headsign": "León",
-          "origin": "Alicante/Alacant-Terminal",
           "stop_id": "15100",
           "stop_name": "León",
           "scheduled_time": "22:30",
           "estimated_time": "22:32",
           "delay_min": 2.0,
-          "status": "en_hora"
-        }
-      ]
-    },
-    {
-      "train_name": "PROXIMDAD 38005",
-      "train_type": "Otros",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVANT 09215",
-      "train_type": "Avant",
-      "total": 6,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "AVANT 09217",
-      "train_type": "Avant",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 5.0,
-      "max_delay_min": 5.0,
-      "arrivals": [
-        {
-          "train_name": "AVANT 09217",
-          "headsign": "Alicante/Alacant-Terminal",
-          "origin": "Murcia del Carmen",
-          "stop_id": "60911",
-          "stop_name": "Alicante/Alacant-Terminal",
-          "scheduled_time": "22:14",
-          "estimated_time": "22:19",
-          "delay_min": 5.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "AVANT 09217",
-          "headsign": "Alicante/Alacant-Terminal",
-          "origin": "Murcia del Carmen",
-          "stop_id": "03410",
-          "stop_name": "Elche/Elx AV",
-          "scheduled_time": "21:51",
-          "estimated_time": "21:56",
-          "delay_min": 5.0,
-          "status": "en_hora"
-        }
-      ]
-    },
-    {
-      "train_name": "AVLO 05214",
-      "train_type": "AVLO",
-      "total": 4,
-      "unique_trips": 2,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 4.0,
-      "max_delay_min": 4.0,
-      "arrivals": [
-        {
-          "train_name": "AVLO 05214",
-          "headsign": "València-Joaquín Sorolla",
-          "origin": "Madrid-Chamartín-Clara Campoamor",
-          "stop_id": "03208",
-          "stop_name": "Cuenca-Fernando Zóbel",
-          "scheduled_time": "22:02",
-          "estimated_time": "22:06",
-          "delay_min": 4.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "AVLO 05214",
-          "headsign": "Requena-Utiel",
-          "origin": "Madrid-Chamartín-Clara Campoamor",
-          "stop_id": "03208",
-          "stop_name": "Cuenca-Fernando Zóbel",
-          "scheduled_time": "22:02",
-          "estimated_time": "22:06",
-          "delay_min": 4.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "AVLO 05214",
-          "headsign": "València-Joaquín Sorolla",
-          "origin": "Madrid-Chamartín-Clara Campoamor",
-          "stop_id": "03213",
-          "stop_name": "Requena-Utiel",
-          "scheduled_time": "22:37",
-          "estimated_time": "22:41",
-          "delay_min": 4.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "AVLO 05214",
-          "headsign": "Requena-Utiel",
-          "origin": "Madrid-Chamartín-Clara Campoamor",
-          "stop_id": "03213",
-          "stop_name": "Requena-Utiel",
-          "scheduled_time": "22:37",
-          "estimated_time": "22:41",
-          "delay_min": 4.0,
           "status": "en_hora"
         }
       ]
@@ -4353,8 +4205,8 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 4.0,
-      "max_delay_min": 4.0,
+      "avg_delay_min": 3.0,
+      "max_delay_min": 3.0,
       "arrivals": [
         {
           "train_name": "MD 14407",
@@ -4363,8 +4215,8 @@
           "stop_id": "60600",
           "stop_name": "Albacete-Los Llanos",
           "scheduled_time": "22:34",
-          "estimated_time": "22:38",
-          "delay_min": 4.0,
+          "estimated_time": "22:37",
+          "delay_min": 3.0,
           "status": "en_hora"
         },
         {
@@ -4374,16 +4226,16 @@
           "stop_id": "60800",
           "stop_name": "Almansa",
           "scheduled_time": "21:58",
-          "estimated_time": "22:02",
-          "delay_min": 4.0,
+          "estimated_time": "22:01",
+          "delay_min": 3.0,
           "status": "en_hora"
         }
       ]
     },
     {
-      "train_name": "Intercity 11182",
+      "train_name": "PROXIMDAD 14521",
       "train_type": "Otros",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4394,10 +4246,10 @@
       "arrivals": []
     },
     {
-      "train_name": "PROXIMDAD 14521",
-      "train_type": "Otros",
-      "total": 3,
-      "unique_trips": 2,
+      "train_name": "AVANT 09215",
+      "train_type": "Avant",
+      "total": 5,
+      "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -4441,14 +4293,81 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
+      "avg_delay_min": 1.0,
+      "max_delay_min": 1.0,
+      "arrivals": [
+        {
+          "train_name": "PROXIMDAD 14546",
+          "headsign": "Cartagena",
+          "origin": "Murcia del Carmen",
+          "stop_id": "61303",
+          "stop_name": "Balsicas-Mar Menor",
+          "scheduled_time": "22:17",
+          "estimated_time": "22:18",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "PROXIMDAD 14546",
+          "headsign": "Torre-Pacheco",
+          "origin": "Murcia del Carmen",
+          "stop_id": "61303",
+          "stop_name": "Balsicas-Mar Menor",
+          "scheduled_time": "22:18",
+          "estimated_time": "22:19",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "PROXIMDAD 14546",
+          "headsign": "Cartagena",
+          "origin": "Murcia del Carmen",
+          "stop_id": "61304",
+          "stop_name": "Torre-Pacheco",
+          "scheduled_time": "22:24",
+          "estimated_time": "22:25",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "PROXIMDAD 14546",
+          "headsign": "Torre-Pacheco",
+          "origin": "Murcia del Carmen",
+          "stop_id": "61304",
+          "stop_name": "Torre-Pacheco",
+          "scheduled_time": "22:49",
+          "estimated_time": "22:50",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "PROXIMDAD 14546",
+          "headsign": "Cartagena",
+          "origin": "Torre-Pacheco",
+          "stop_id": "61304",
+          "stop_name": "Torre-Pacheco",
+          "scheduled_time": "22:49",
+          "estimated_time": "22:50",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "PROXIMDAD 14546",
+          "headsign": "Cartagena",
+          "origin": "Murcia del Carmen",
+          "stop_id": "61307",
+          "stop_name": "Cartagena",
+          "scheduled_time": "22:40",
+          "estimated_time": "22:41",
+          "delay_min": 1.0,
+          "status": "en_hora"
+        }
+      ]
     },
     {
-      "train_name": "REGIONAL 12102",
-      "train_type": "Regional",
-      "total": 3,
+      "train_name": "Intercity 11182",
+      "train_type": "Otros",
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4459,9 +4378,9 @@
       "arrivals": []
     },
     {
-      "train_name": "MD 12687",
-      "train_type": "Media Distancia",
-      "total": 1,
+      "train_name": "REGIONAL 12102",
+      "train_type": "Regional",
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4485,9 +4404,22 @@
       "arrivals": []
     },
     {
+      "train_name": "MD 35073",
+      "train_type": "Media Distancia",
+      "total": 3,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "MD 35035",
       "train_type": "Media Distancia",
-      "total": 4,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4513,7 +4445,7 @@
     {
       "train_name": "PROXIMDAD 13234",
       "train_type": "Otros",
-      "total": 3,
+      "total": 2,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4522,17 +4454,6 @@
       "avg_delay_min": 2.0,
       "max_delay_min": 2.0,
       "arrivals": [
-        {
-          "train_name": "PROXIMDAD 13234",
-          "headsign": "Palma del Río",
-          "origin": "Alcolea de Córdoba",
-          "stop_id": "50502",
-          "stop_name": "Villarrubia de Córdoba",
-          "scheduled_time": "21:54",
-          "estimated_time": "21:56",
-          "delay_min": 2.0,
-          "status": "en_hora"
-        },
         {
           "train_name": "PROXIMDAD 13234",
           "headsign": "Palma del Río",
@@ -4579,8 +4500,8 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 3.0,
-      "max_delay_min": 3.0,
+      "avg_delay_min": 5.0,
+      "max_delay_min": 5.0,
       "arrivals": [
         {
           "train_name": "REG.EXP. 14016",
@@ -4589,8 +4510,8 @@
           "stop_id": "65308",
           "stop_name": "Alcalá de Chivert",
           "scheduled_time": "21:59",
-          "estimated_time": "22:02",
-          "delay_min": 3.0,
+          "estimated_time": "22:04",
+          "delay_min": 5.0,
           "status": "en_hora"
         },
         {
@@ -4600,8 +4521,8 @@
           "stop_id": "65311",
           "stop_name": "Benicarló-Peñíscola",
           "scheduled_time": "22:13",
-          "estimated_time": "22:16",
-          "delay_min": 3.0,
+          "estimated_time": "22:18",
+          "delay_min": 5.0,
           "status": "en_hora"
         },
         {
@@ -4611,8 +4532,8 @@
           "stop_id": "65312",
           "stop_name": "Vinaròs",
           "scheduled_time": "22:19",
-          "estimated_time": "22:22",
-          "delay_min": 3.0,
+          "estimated_time": "22:24",
+          "delay_min": 5.0,
           "status": "en_hora"
         },
         {
@@ -4622,8 +4543,8 @@
           "stop_id": "65314",
           "stop_name": "Ulldecona-Alcanar-La Sénia",
           "scheduled_time": "22:32",
-          "estimated_time": "22:35",
-          "delay_min": 3.0,
+          "estimated_time": "22:37",
+          "delay_min": 5.0,
           "status": "en_hora"
         },
         {
@@ -4633,8 +4554,8 @@
           "stop_id": "65402",
           "stop_name": "L'Aldea-Amposta-Tortosa",
           "scheduled_time": "22:46",
-          "estimated_time": "22:49",
-          "delay_min": 3.0,
+          "estimated_time": "22:51",
+          "delay_min": 5.0,
           "status": "en_hora"
         }
       ]
@@ -4666,9 +4587,22 @@
       "arrivals": []
     },
     {
+      "train_name": "MD 18515",
+      "train_type": "Media Distancia",
+      "total": 3,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
       "train_name": "REGIONAL 14420",
       "train_type": "Regional",
-      "total": 7,
+      "total": 9,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4681,7 +4615,7 @@
     {
       "train_name": "REGIONAL 35420",
       "train_type": "Regional",
-      "total": 8,
+      "total": 10,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4718,31 +4652,6 @@
       "arrivals": []
     },
     {
-      "train_name": "REGIONAL 14479",
-      "train_type": "Regional",
-      "total": 1,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 5.0,
-      "max_delay_min": 5.0,
-      "arrivals": [
-        {
-          "train_name": "REGIONAL 14479",
-          "headsign": "Villena",
-          "origin": "Alicante/Alacant-Terminal",
-          "stop_id": "60902",
-          "stop_name": "Villena",
-          "scheduled_time": "21:52",
-          "estimated_time": "21:57",
-          "delay_min": 5.0,
-          "status": "en_hora"
-        }
-      ]
-    },
-    {
       "train_name": "MD 35223",
       "train_type": "Media Distancia",
       "total": 1,
@@ -4771,7 +4680,7 @@
     {
       "train_name": "REG.EXP. 15021",
       "train_type": "Regional",
-      "total": 5,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4784,7 +4693,7 @@
     {
       "train_name": "REG.EXP. 15064",
       "train_type": "Regional",
-      "total": 5,
+      "total": 4,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4836,24 +4745,13 @@
           "estimated_time": "22:08",
           "delay_min": 3.0,
           "status": "en_hora"
-        },
-        {
-          "train_name": "REG.EXP. 15064",
-          "headsign": "Barcelona Estació de França",
-          "origin": "Salou-Port Aventura",
-          "stop_id": "71500",
-          "stop_name": "Tarragona",
-          "scheduled_time": "21:54",
-          "estimated_time": "21:57",
-          "delay_min": 3.0,
-          "status": "en_hora"
         }
       ]
     },
     {
-      "train_name": "REGIONAL 15888",
+      "train_name": "REG.EXP. 35107",
       "train_type": "Regional",
-      "total": 8,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4864,56 +4762,22 @@
       "arrivals": []
     },
     {
-      "train_name": "REGIONAL 15308",
+      "train_name": "REG.EXP. 15035",
       "train_type": "Regional",
-      "total": 3,
+      "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 3.0,
-      "max_delay_min": 3.0,
-      "arrivals": [
-        {
-          "train_name": "REGIONAL 15308",
-          "headsign": "Móra la Nova",
-          "origin": "Zaragoza Delicias",
-          "stop_id": "71204",
-          "stop_name": "Caspe",
-          "scheduled_time": "21:52",
-          "estimated_time": "21:55",
-          "delay_min": 3.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "REGIONAL 15308",
-          "headsign": "Móra la Nova",
-          "origin": "Zaragoza Delicias",
-          "stop_id": "71206",
-          "stop_name": "Fabara",
-          "scheduled_time": "22:28",
-          "estimated_time": "22:31",
-          "delay_min": 3.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "REGIONAL 15308",
-          "headsign": "Móra la Nova",
-          "origin": "Zaragoza Delicias",
-          "stop_id": "71207",
-          "stop_name": "Nonaspe",
-          "scheduled_time": "22:43",
-          "estimated_time": "22:46",
-          "delay_min": 3.0,
-          "status": "en_hora"
-        }
-      ]
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
     },
     {
-      "train_name": "REG.EXP. 15035",
+      "train_name": "REG.EXP. 35135",
       "train_type": "Regional",
-      "total": 1,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -4950,19 +4814,6 @@
       "arrivals": []
     },
     {
-      "train_name": "REG.EXP. 35107",
-      "train_type": "Regional",
-      "total": 5,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "REG.EXP. 15054",
       "train_type": "Regional",
       "total": 9,
@@ -4971,8 +4822,8 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 1.0,
-      "max_delay_min": 1.0,
+      "avg_delay_min": 3.0,
+      "max_delay_min": 3.0,
       "arrivals": [
         {
           "train_name": "REG.EXP. 15054",
@@ -4981,52 +4832,8 @@
           "stop_id": "73100",
           "stop_name": "La Plana-Picamoixons",
           "scheduled_time": "22:37",
-          "estimated_time": "22:38",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "REG.EXP. 15054",
-          "headsign": "Tarragona",
-          "origin": "Lleida-Pirineus",
-          "stop_id": "73004",
-          "stop_name": "La Floresta",
-          "scheduled_time": "21:54",
-          "estimated_time": "21:55",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "REG.EXP. 15054",
-          "headsign": "Tarragona",
-          "origin": "Lleida-Pirineus",
-          "stop_id": "73005",
-          "stop_name": "Vinaixa",
-          "scheduled_time": "22:03",
-          "estimated_time": "22:04",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "REG.EXP. 15054",
-          "headsign": "Tarragona",
-          "origin": "Lleida-Pirineus",
-          "stop_id": "73006",
-          "stop_name": "Vimbodí i Poblet",
-          "scheduled_time": "22:11",
-          "estimated_time": "22:12",
-          "delay_min": 1.0,
-          "status": "en_hora"
-        },
-        {
-          "train_name": "REG.EXP. 15054",
-          "headsign": "Tarragona",
-          "origin": "Lleida-Pirineus",
-          "stop_id": "73007",
-          "stop_name": "L'Espluga de Francolí",
-          "scheduled_time": "22:16",
-          "estimated_time": "22:17",
-          "delay_min": 1.0,
+          "estimated_time": "22:40",
+          "delay_min": 3.0,
           "status": "en_hora"
         },
         {
@@ -5036,8 +4843,41 @@
           "stop_id": "73008",
           "stop_name": "Montblanc",
           "scheduled_time": "22:22",
-          "estimated_time": "22:23",
-          "delay_min": 1.0,
+          "estimated_time": "22:25",
+          "delay_min": 3.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REG.EXP. 15054",
+          "headsign": "Tarragona",
+          "origin": "Lleida-Pirineus",
+          "stop_id": "73005",
+          "stop_name": "Vinaixa",
+          "scheduled_time": "22:03",
+          "estimated_time": "22:06",
+          "delay_min": 3.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REG.EXP. 15054",
+          "headsign": "Tarragona",
+          "origin": "Lleida-Pirineus",
+          "stop_id": "73006",
+          "stop_name": "Vimbodí i Poblet",
+          "scheduled_time": "22:11",
+          "estimated_time": "22:14",
+          "delay_min": 3.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REG.EXP. 15054",
+          "headsign": "Tarragona",
+          "origin": "Lleida-Pirineus",
+          "stop_id": "73007",
+          "stop_name": "L'Espluga de Francolí",
+          "scheduled_time": "22:16",
+          "estimated_time": "22:19",
+          "delay_min": 3.0,
           "status": "en_hora"
         },
         {
@@ -5047,8 +4887,8 @@
           "stop_id": "73009",
           "stop_name": "Vilaverd",
           "scheduled_time": "22:28",
-          "estimated_time": "22:29",
-          "delay_min": 1.0,
+          "estimated_time": "22:31",
+          "delay_min": 3.0,
           "status": "en_hora"
         },
         {
@@ -5058,8 +4898,8 @@
           "stop_id": "73010",
           "stop_name": "La Riba",
           "scheduled_time": "22:33",
-          "estimated_time": "22:34",
-          "delay_min": 1.0,
+          "estimated_time": "22:36",
+          "delay_min": 3.0,
           "status": "en_hora"
         },
         {
@@ -5069,14 +4909,25 @@
           "stop_id": "73101",
           "stop_name": "Alcover",
           "scheduled_time": "22:44",
-          "estimated_time": "22:45",
-          "delay_min": 1.0,
+          "estimated_time": "22:47",
+          "delay_min": 3.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REG.EXP. 15054",
+          "headsign": "Tarragona",
+          "origin": "Lleida-Pirineus",
+          "stop_id": "73102",
+          "stop_name": "La Selva del Camp",
+          "scheduled_time": "22:52",
+          "estimated_time": "22:55",
+          "delay_min": 3.0,
           "status": "en_hora"
         }
       ]
     },
     {
-      "train_name": "REG.EXP. 35135",
+      "train_name": "REGIONAL 15308",
       "train_type": "Regional",
       "total": 2,
       "unique_trips": 1,
@@ -5084,14 +4935,37 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
+      "avg_delay_min": 3.0,
+      "max_delay_min": 3.0,
+      "arrivals": [
+        {
+          "train_name": "REGIONAL 15308",
+          "headsign": "Móra la Nova",
+          "origin": "Zaragoza Delicias",
+          "stop_id": "71206",
+          "stop_name": "Fabara",
+          "scheduled_time": "22:28",
+          "estimated_time": "22:31",
+          "delay_min": 3.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 15308",
+          "headsign": "Móra la Nova",
+          "origin": "Zaragoza Delicias",
+          "stop_id": "71207",
+          "stop_name": "Nonaspe",
+          "scheduled_time": "22:43",
+          "estimated_time": "22:46",
+          "delay_min": 3.0,
+          "status": "en_hora"
+        }
+      ]
     },
     {
       "train_name": "REGIONAL 15613",
       "train_type": "Regional",
-      "total": 4,
+      "total": 5,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -5117,7 +4991,7 @@
     {
       "train_name": "REGIONAL 15820",
       "train_type": "Regional",
-      "total": 7,
+      "total": 6,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -5281,6 +5155,42 @@
       ]
     },
     {
+      "train_name": "MD 18065",
+      "train_type": "Media Distancia",
+      "total": 2,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 5.0,
+      "max_delay_min": 5.0,
+      "arrivals": [
+        {
+          "train_name": "MD 18065",
+          "headsign": "Altsasu",
+          "origin": "Madrid-Príncipe Pío",
+          "stop_id": "11200",
+          "stop_name": "Miranda de Ebro",
+          "scheduled_time": "22:38",
+          "estimated_time": "22:43",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "MD 18065",
+          "headsign": "Altsasu",
+          "origin": "Madrid-Príncipe Pío",
+          "stop_id": "11109",
+          "stop_name": "Briviesca",
+          "scheduled_time": "22:10",
+          "estimated_time": "22:15",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        }
+      ]
+    },
+    {
       "train_name": "MD 17000",
       "train_type": "Media Distancia",
       "total": 3,
@@ -5289,8 +5199,8 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 4.0,
-      "max_delay_min": 4.0,
+      "avg_delay_min": 3.0,
+      "max_delay_min": 3.0,
       "arrivals": [
         {
           "train_name": "MD 17000",
@@ -5299,8 +5209,8 @@
           "stop_id": "60200",
           "stop_name": "Aranjuez",
           "scheduled_time": "22:29",
-          "estimated_time": "22:33",
-          "delay_min": 4.0,
+          "estimated_time": "22:32",
+          "delay_min": 3.0,
           "status": "en_hora"
         },
         {
@@ -5310,8 +5220,8 @@
           "stop_id": "60202",
           "stop_name": "Castillejo-Añover",
           "scheduled_time": "22:37",
-          "estimated_time": "22:41",
-          "delay_min": 4.0,
+          "estimated_time": "22:40",
+          "delay_min": 3.0,
           "status": "en_hora"
         },
         {
@@ -5321,11 +5231,24 @@
           "stop_id": "60203",
           "stop_name": "Villasequilla",
           "scheduled_time": "22:43",
-          "estimated_time": "22:47",
-          "delay_min": 4.0,
+          "estimated_time": "22:46",
+          "delay_min": 3.0,
           "status": "en_hora"
         }
       ]
+    },
+    {
+      "train_name": "REG.EXP. 18779",
+      "train_type": "Regional",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
     },
     {
       "train_name": "REGIONAL 17052",
@@ -5377,7 +5300,7 @@
     {
       "train_name": "REGIONAL 17113",
       "train_type": "Regional",
-      "total": 10,
+      "total": 9,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -5515,8 +5438,79 @@
     {
       "train_name": "REGIONAL 35408",
       "train_type": "Regional",
-      "total": 7,
+      "total": 5,
       "unique_trips": 3,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "MD 18005",
+      "train_type": "Media Distancia",
+      "total": 4,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 5.0,
+      "max_delay_min": 5.0,
+      "arrivals": [
+        {
+          "train_name": "MD 18005",
+          "headsign": "León",
+          "origin": "Madrid-Príncipe Pío",
+          "stop_id": "14100",
+          "stop_name": "Palencia",
+          "scheduled_time": "21:56",
+          "estimated_time": "22:01",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "MD 18005",
+          "headsign": "León",
+          "origin": "Madrid-Príncipe Pío",
+          "stop_id": "15004",
+          "stop_name": "Paredes de Nava",
+          "scheduled_time": "22:11",
+          "estimated_time": "22:16",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "MD 18005",
+          "headsign": "León",
+          "origin": "Madrid-Príncipe Pío",
+          "stop_id": "15007",
+          "stop_name": "Villada",
+          "scheduled_time": "22:24",
+          "estimated_time": "22:29",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "MD 18005",
+          "headsign": "León",
+          "origin": "Madrid-Príncipe Pío",
+          "stop_id": "15009",
+          "stop_name": "Sahagún",
+          "scheduled_time": "22:33",
+          "estimated_time": "22:38",
+          "delay_min": 5.0,
+          "status": "en_hora"
+        }
+      ]
+    },
+    {
+      "train_name": "PROXIMDAD 38005",
+      "train_type": "Otros",
+      "total": 1,
+      "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -5528,7 +5522,7 @@
     {
       "train_name": "MD 18007",
       "train_type": "Media Distancia",
-      "total": 2,
+      "total": 3,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -5541,6 +5535,19 @@
     {
       "train_name": "MD 18911",
       "train_type": "Media Distancia",
+      "total": 1,
+      "unique_trips": 1,
+      "unique_trips_delayed": 0,
+      "delayed": 0,
+      "cancelled": 0,
+      "delayed_pct": 0.0,
+      "avg_delay_min": 0.0,
+      "max_delay_min": 0.0,
+      "arrivals": []
+    },
+    {
+      "train_name": "PROXIMDAD 38007",
+      "train_type": "Otros",
       "total": 1,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
@@ -5573,8 +5580,8 @@
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 4.0,
-      "max_delay_min": 4.0,
+      "avg_delay_min": 2.0,
+      "max_delay_min": 2.0,
       "arrivals": [
         {
           "train_name": "REG.EXP. 18105",
@@ -5583,8 +5590,8 @@
           "stop_id": "14213",
           "stop_name": "Torrelavega",
           "scheduled_time": "21:59",
-          "estimated_time": "22:03",
-          "delay_min": 4.0,
+          "estimated_time": "22:01",
+          "delay_min": 2.0,
           "status": "en_hora"
         },
         {
@@ -5594,8 +5601,8 @@
           "stop_id": "14216",
           "stop_name": "Renedo",
           "scheduled_time": "22:09",
-          "estimated_time": "22:13",
-          "delay_min": 4.0,
+          "estimated_time": "22:11",
+          "delay_min": 2.0,
           "status": "en_hora"
         },
         {
@@ -5605,8 +5612,8 @@
           "stop_id": "14220",
           "stop_name": "Maliaño",
           "scheduled_time": "22:19",
-          "estimated_time": "22:23",
-          "delay_min": 4.0,
+          "estimated_time": "22:21",
+          "delay_min": 2.0,
           "status": "en_hora"
         },
         {
@@ -5616,8 +5623,8 @@
           "stop_id": "14230",
           "stop_name": "Valdecilla",
           "scheduled_time": "22:24",
-          "estimated_time": "22:28",
-          "delay_min": 4.0,
+          "estimated_time": "22:26",
+          "delay_min": 2.0,
           "status": "en_hora"
         },
         {
@@ -5627,29 +5634,16 @@
           "stop_id": "14223",
           "stop_name": "Santander",
           "scheduled_time": "22:29",
-          "estimated_time": "22:33",
-          "delay_min": 4.0,
+          "estimated_time": "22:31",
+          "delay_min": 2.0,
           "status": "en_hora"
         }
       ]
     },
     {
-      "train_name": "MD 18515",
-      "train_type": "Media Distancia",
-      "total": 2,
-      "unique_trips": 1,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
       "train_name": "REGIONAL 18517",
       "train_type": "Regional",
-      "total": 7,
+      "total": 6,
       "unique_trips": 2,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -5662,7 +5656,7 @@
     {
       "train_name": "REGIONAL 18755",
       "train_type": "Regional",
-      "total": 6,
+      "total": 5,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -5675,7 +5669,7 @@
     {
       "train_name": "REGIONAL 35855",
       "train_type": "Regional",
-      "total": 8,
+      "total": 7,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
@@ -5701,21 +5695,8 @@
     {
       "train_name": "MD 35017",
       "train_type": "Media Distancia",
-      "total": 3,
+      "total": 2,
       "unique_trips": 2,
-      "unique_trips_delayed": 0,
-      "delayed": 0,
-      "cancelled": 0,
-      "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
-    },
-    {
-      "train_name": "PROXIMDAD 38017",
-      "train_type": "Otros",
-      "total": 1,
-      "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
@@ -5727,15 +5708,148 @@
     {
       "train_name": "REGIONAL 71813",
       "train_type": "Regional",
-      "total": 11,
+      "total": 12,
       "unique_trips": 1,
       "unique_trips_delayed": 0,
       "delayed": 0,
       "cancelled": 0,
       "delayed_pct": 0.0,
-      "avg_delay_min": 0.0,
-      "max_delay_min": 0.0,
-      "arrivals": []
+      "avg_delay_min": 2.0,
+      "max_delay_min": 2.0,
+      "arrivals": [
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05323",
+          "stop_name": "Beifar",
+          "scheduled_time": "21:56",
+          "estimated_time": "21:58",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05321",
+          "stop_name": "San Román",
+          "scheduled_time": "22:03",
+          "estimated_time": "22:05",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05320",
+          "stop_name": "Aces",
+          "scheduled_time": "22:05",
+          "estimated_time": "22:07",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05319",
+          "stop_name": "Sandiche",
+          "scheduled_time": "22:10",
+          "estimated_time": "22:12",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05317",
+          "stop_name": "Grado",
+          "scheduled_time": "22:17",
+          "estimated_time": "22:19",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05316",
+          "stop_name": "Peñaflor de Grado",
+          "scheduled_time": "22:19",
+          "estimated_time": "22:21",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05315",
+          "stop_name": "Vega de Anzo",
+          "scheduled_time": "22:25",
+          "estimated_time": "22:27",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05313",
+          "stop_name": "Santa María de Grado",
+          "scheduled_time": "22:31",
+          "estimated_time": "22:33",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05311",
+          "stop_name": "Trubia",
+          "scheduled_time": "22:39",
+          "estimated_time": "22:41",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05308",
+          "stop_name": "Soto Udrión",
+          "scheduled_time": "22:46",
+          "estimated_time": "22:48",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05306",
+          "stop_name": "San Pedro de Nora",
+          "scheduled_time": "22:48",
+          "estimated_time": "22:50",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        },
+        {
+          "train_name": "REGIONAL 71813",
+          "headsign": "Oviedo",
+          "origin": "Ferrol",
+          "stop_id": "05304",
+          "stop_name": "San Claudio",
+          "scheduled_time": "22:55",
+          "estimated_time": "22:57",
+          "delay_min": 2.0,
+          "status": "en_hora"
+        }
+      ]
     },
     {
       "train_name": "REGIONAL 71874",
